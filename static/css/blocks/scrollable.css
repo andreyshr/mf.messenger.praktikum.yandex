@@ -1,0 +1,18 @@
+.scrollable {
+    overflow-y: auto;
+}
+
+.scrollable:hover {
+    overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    width: 6px;
+    background: var(--color-gray-3);
+    border-radius: 6px;
+}

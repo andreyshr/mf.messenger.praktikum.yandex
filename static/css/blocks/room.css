@@ -1,0 +1,113 @@
+.room {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--color-gray-3);
+    text-decoration: none;
+}
+
+.room--header {
+    padding: 0;
+    border: none;
+    align-items: center;
+}
+
+.room--header .room__info {
+    display: flex;
+}
+
+.room:first-of-type:not(.room--header) {
+    border-top: 1px solid var(--color-gray-3);
+}
+
+.room:not(.room--header):hover,
+.room:not(.room--header):focus {
+    background: var(--color-blue-2);
+    outline: none;
+}
+
+.room--active {
+    background: var(--color-blue-2);
+}
+
+.room__avatar .room__new-messages {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+}
+
+@media (min-width: 768px) {
+    .room__avatar .room__new-messages {
+        display: none;
+    }
+}
+
+.room__info {
+    display: none;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+@media (min-width: 768px) {
+    .room__info {
+        display: flex;
+    }
+}
+
+.room__info-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.room__info-row:first-of-type {
+    margin-bottom: 4px;
+}
+
+.room__title {
+    color: var(--color-dark);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.room__last-message {
+    max-width: 193px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--color-gray-1);
+}
+
+.room__last-message-user {
+    color: var(--color-dark);
+}
+
+.room__last-message-time {
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 13px;
+    color: var(--color-gray-1);
+}
+
+.room__new-messages {
+    display: flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--color-blue-1);
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 12px;
+    justify-content: center;
+}
+
+.room__new-messages span {
+    display: inline-block;
+}

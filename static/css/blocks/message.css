@@ -1,0 +1,127 @@
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+    min-width: 114px;
+}
+
+.message.message--emoji {
+    min-width: 80px;
+}
+
+.message--me {
+    margin-left: auto;
+    align-self: flex-end;
+}
+
+.message.message--image {
+    max-width: 316px;
+    line-height: 0;
+}
+
+.message:not(:last-of-type) {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .message {
+        max-width: 60%;
+    }
+}
+
+.message__body {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #EAEAEA;
+    padding: 11px;
+    background: var(--color-gray-5);
+}
+
+.message:last-of-type .message__body {
+    border-bottom-right-radius: 0;
+}
+
+.message--image.message--image .message__body {
+    padding: 0;
+}
+
+.message.message--me .message__body {
+    background: var(--color-blue-2);
+    border: none;
+}
+
+.message__text {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--color-dark);
+}
+
+.message--emoji .message__text {
+    font-size: 32px;
+    line-height: 42px;
+    text-align: center;
+}
+
+.message__text:not(:last-of-type) {
+    margin-bottom: 12px;
+}
+
+.message__time {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 9px;
+    padding-top: 4px;
+    color: var(--color-gray-1);
+}
+
+.message__time span {
+    display: block;
+    position: relative;
+}
+
+.message--image.message--image .message__time {
+    position: absolute;
+    right: 11px;
+    bottom: 11px;
+    background: rgba(82, 82, 82, 0.5);
+    color: var(--color-white);
+    border-radius: 30px;
+    padding: 2px 7px;
+}
+
+.message--me.message--read .message__time {
+    color: var(--color-blue-1);
+}
+
+.message--me .message__time span::before {
+    position: absolute;
+    content: "";
+    left: -14px;
+    top: 0;
+    width: 7px;
+    height: 5px;
+    border-left: 2px solid var(--color-gray-1);
+    border-bottom: 2px solid var(--color-gray-1);
+    transform: rotate(-45deg);
+}
+
+.message--me .message__time span::after {
+    position: absolute;
+    content: "";
+    left: -10px;
+    top: 0;
+    width: 7px;
+    height: 5px;
+    border-bottom: 2px solid var(--color-gray-1);
+    transform: rotate(-45deg);
+}
+
+.message--me.message--read .message__time span::before,
+.message--me.message--read .message__time span::after {
+    border-color: var(--color-blue-1);
+}
