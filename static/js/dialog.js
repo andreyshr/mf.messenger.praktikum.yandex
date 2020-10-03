@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const dialog = document.querySelector(`#${id}`);
         const closeButton = document.querySelector('.js-close-dialog-button');
         showDialog(dialog);
-        closeButton.addEventListener('click', closeDialog.bind(this, dialog, closeButton));
-        overlay.addEventListener('click', closeDialog.bind(this, dialog, overlay));
+        closeButton.addEventListener('click', closeDialog.bind(this, dialog, [closeButton, overlay]));
+        overlay.addEventListener('click', closeDialog.bind(this, dialog, [closeButton, overlay]));
     }
 
-    function closeDialog(dialog, activator) {
+    function closeDialog(dialog, activators = []) {
         hideDialog(dialog);
-        activator.removeEventListener('click', closeDialog);
+        activators.forEach(activator => activator.removeEventListener('click', closeDialog));
     }
 
     function showDialog(dialog) {
