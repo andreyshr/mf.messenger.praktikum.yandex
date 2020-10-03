@@ -5,6 +5,54 @@
     border-right: 1px solid var(--color-gray-3);
 }
 
+.sidebar__list {
+    display: flex;
+    flex-direction: column;
+}
+
 .sidebar__list-item {
     display: flex;
+}
+
+.sidebar__header {
+    display: none;
+    padding: 0 10px;
+    border-bottom: 1px solid var(--color-gray-3);
+}
+
+@media (min-width: 768px) {
+    .sidebar__header {
+        display: block;
+    }
+}
+
+
+.sidebar__profile-link {
+    display: inline-block;
+    width: 100%;
+    padding: 20px 0 10px 0;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    color: var(--color-gray-1);
+    text-decoration: none;
+    text-align: right;
+}
+
+.sidebar__search {
+    width: 100%;
+    padding: 10px 0 20px 0;
+}
+
+.sidebar__search input {
+    width: 100%;
+    padding: 10px;
+    background: var(--color-gray-2);
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    text-align: center;
 }

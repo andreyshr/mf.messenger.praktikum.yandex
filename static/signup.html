@@ -21,10 +21,34 @@
             <div class="form__row">
                 <div class="text-field text-field--regular">
                     <div class="text-field__inner">
-                        <input id="email" name="email" type="email" autofocus required>
+                        <input id="first-name" name="first_name" type="text" autofocus required>
+                        <label for="first-name" class="text-field__label">Имя</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="text-field text-field--regular">
+                    <div class="text-field__inner">
+                        <input id="second-name" name="second_name" type="text" required>
+                        <label for="second-name" class="text-field__label">Фамилия</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="text-field text-field--regular">
+                    <div class="text-field__inner">
+                        <input id="email" name="email" type="email" required>
                         <label for="email" class="text-field__label">Почта</label>
                     </div>
                     <span class="error-message error-message--active">Некорректно написано</span>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="text-field text-field--regular">
+                    <div class="text-field__inner">
+                        <input id="phone" name="phone" type="tel" required>
+                        <label for="phone" class="text-field__label">Телефон</label>
+                    </div>
                 </div>
             </div>
             <div class="form__row">
@@ -38,7 +62,7 @@
             <div class="form__row">
                 <div class="text-field text-field--error text-field--regular">
                     <div class="text-field__inner">
-                        <input id="password" name="password" type="password" required>
+                        <input id="password" type="password" autocomplete="new-password" required>
                         <label for="password" class="text-field__label">Пароль</label>
                     </div>
                 </div>
@@ -46,8 +70,8 @@
             <div class="form__row mb-auto">
                 <div class="text-field text-field--error text-field--regular">
                     <div class="text-field__inner">
-                        <input id="password-repeat" name="repeatPassword" type="password" required>
-                        <label for="password-repeat" class="text-field__label">Пароль ещё раз</label>
+                        <input id="repeat-password" name="password" type="password" autocomplete="new-password" required>
+                        <label for="repeat-password" class="text-field__label">Пароль (ещё раз)</label>
                     </div>
                     <span class="error-message error-message--active">Пароли не совпадают</span>
                 </div>
