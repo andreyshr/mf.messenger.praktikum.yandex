@@ -28,7 +28,7 @@
 
 .text-field input:focus ~ label,
 .text-field input:valid ~ label,
-.text-filed__label.text-field__label--top {
+.text-field__label.text-field__label--top {
     transform: translateY(-20px);
     font-size: 9px;
     line-height: 9px;
