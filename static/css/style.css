@@ -8,6 +8,7 @@
     --color-gray-3: #eaeaea;
     --color-gray-4: #fbfbfb;
     --color-gray-5: #f8f8f8;
+    --color-gray-6: #e2e2e2;
     --color-red: #FF2F2F;
     --shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
 }
@@ -111,6 +112,10 @@ li {
     position: relative;
 }
 
+.d-none {
+    display: none !important;
+}
+
 .overflow-hidden {
     overflow: hidden;
 }
@@ -118,4 +123,12 @@ li {
 .responsive-img {
     max-width: 100%;
     height: auto;
+}
+
+.color-blue {
+    color: var(--color-blue-1) !important;
+}
+
+.color-red {
+    color: var(--color-red) !important;
 }

@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/css/blocks/menu.css">
     <link rel="stylesheet" href="/css/blocks/button.css">
     <link rel="stylesheet" href="/css/blocks/scrollable.css">
+    <link rel="stylesheet" href="/css/blocks/overlay.css">
+    <link rel="stylesheet" href="/css/blocks/dialog.css">
 </head>
 <body>
 <div class="container vh-100 overflow-hidden">
@@ -336,7 +338,7 @@
                                     </button>
                                 </li>
                                 <li class="menu__item">
-                                    <button type="button" class="menu__button">
+                                    <button type="button" class="menu__button js-open-dialog-button" data-dialog-id="remove-chat">
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="11" cy="11" r="10.25" stroke="#3369F3" stroke-width="1.5"/>
                                             <line x1="7.1109" y1="7.11103" x2="14.8891" y2="14.8892" stroke="#3369F3" stroke-width="1.5"/>
@@ -371,7 +373,7 @@
                 </div>
                 <div class="message message--image message--inbox">
                     <div class="message__body">
-                        <img class="responsive-img" src="https://www.yarkiy.ru//system/uploads/preview/good/24921/EOS_C700-FSL-UP.jpg" alt="#">
+                        <img class="responsive-img" src="https://images.unsplash.com/photo-1496680154270-b79e35576fe5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1310&q=80" alt="#">
                         <div class="message__time">
                             <span>11:56</span>
                         </div>
@@ -379,7 +381,7 @@
                 </div>
                 <div class="message message--image message--inbox">
                     <div class="message__body">
-                        <img class="responsive-img" src="https://65.img.avito.st/640x480/255883065.jpg" alt="#">
+                        <img class="responsive-img" src="https://images.unsplash.com/photo-1495707902641-75cac588d2e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="#">
                         <div class="message__time">
                             <span>11:56</span>
                         </div>
@@ -388,7 +390,7 @@
                 <div class="message message--image message--inbox">
                     <div class="message__body">
                         <img class="responsive-img"
-                             src="https://fotocccp.ru/image/cache/import_files/3e/3e488616bafc11e7a0f200155d1fae00_99-1920x1080.jpg" alt="#">
+                             src="https://images.unsplash.com/photo-1536627217140-899b0bc9d881?ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80" alt="#">
                         <div class="message__time">
                             <span>11:56</span>
                         </div>
@@ -582,7 +584,18 @@
                 </button>
             </div>
         </main>
+        <div class="overlay d-none"></div>
+        <div class="dialog d-none" id="remove-chat">
+            <div class="dialog__body">
+                <p class="dialog__title">Вы хотите удалить чат</p>
+                <div class="dialog__content">
+                    <button type="button" class="button button--md button--red">Удалить</button>
+                    <button type="button" class="button button--md button--gray js-close-dialog-button">Отменить</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script src="/js/dialog.js"></script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+.dialog {
+    position: absolute;
+    z-index: 101;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    background: var(--color-white);
+}
+
+.dialog__title {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.dialog__content {
+    display: flex;
+    justify-content: space-between;
+}
