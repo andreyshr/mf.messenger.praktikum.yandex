@@ -1,0 +1,42 @@
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 47px;
+    height: 47px;
+    border-radius: 50%;
+    background: var(--color-gray-2);
+}
+
+.avatar__wrapper {
+    overflow: hidden;
+}
+
+.avatar__stub {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--color-dark);
+    text-transform: uppercase;
+}
+
+.avatar--sm {
+    width: 34px;
+    height: 34px;
+}
+
+.avatar--sm .avatar__stub {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.avatar--lg {
+    width: 130px;
+    height: 130px;
+}
+
+.avatar--lg .avatar__stub {
+    font-size: 40px;
+    line-height: 40px;
+}

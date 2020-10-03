@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+          integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blocks/profile.css">
+    <link rel="stylesheet" href="/css/blocks/button.css">
+    <link rel="stylesheet" href="/css/blocks/avatar.css">
+</head>
+<body>
+<main class="container vh-100 overflow-hidden">
+    <div class="profile h-100">
+        <a class="profile__back-link" href="/messenger.html">
+            <div class="button button--icon button--blue button--round">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="14" fill="#3369F3"/>
+                    <rect x="8" y="13.2002" width="11" height="1.6" fill="white"/>
+                    <path d="M15 9L19 14L15 19" stroke="white" stroke-width="1.6"/>
+                </svg>
+            </div>
+        </a>
+        <div class="profile__wrapper">
+            <form class="profile__form" method="post" action="#">
+                <div class="avatar avatar--lg">
+                    <div class="avatar__wrapper">
+                        <span class="avatar__stub">А</span>
+                    </div>
+                </div>
+                <h1 class="profile__form-title">Андрей</h1>
+                <div class="profile__form-rows">
+                    <div class="profile__form-row">
+                        <label for="email">Почта</label>
+                        <input id="email" type="email" name="email" value="andrey.shaurov@gmail.com" disabled>
+                    </div>
+                    <div class="profile__form-row">
+                        <label for="login">Логин</label>
+                        <input id="login" type="text" name="login" value="andrew" disabled>
+                    </div>
+                    <div class="profile__form-row profile__form-row--hidden js-hidden-row">
+                        <label for="password">Новый пароль</label>
+                        <input id="password" type="password" name="password" placeholder="Введите" autocomplete="new-password" disabled>
+                    </div>
+                    <div class="profile__form-row profile__form-row--hidden js-hidden-row">
+                        <label for="repeat-password">Новый пароль(ещё раз)</label>
+                        <input id="repeat-password" type="password" name="repeatPassword" placeholder="Введите" autocomplete="new-password" disabled>
+                    </div>
+                </div>
+                <div class="profile__form-rows">
+                    <div class="profile__form-row js-hidden-row">
+                        <button type="button" class="button button--profile color-blue js-edit-profile-btn">Изменить</button>
+                    </div>
+                    <div class="profile__form-row js-hidden-row">
+                        <button type="button" class="button button--profile color-red">Выйти</button>
+                    </div>
+                    <div class="profile__form-row profile__form-row--borderless profile__form-row--hidden js-hidden-row">
+                        <button type="submit" class="button button--blue button--lg ma-auto">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="/js/form.js"></script>
+<script src="/js/profile.js"></script>
+</body>
+</html>
