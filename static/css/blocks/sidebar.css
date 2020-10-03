@@ -1,3 +1,10 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-gray-4);
+    border-right: 1px solid var(--color-gray-3);
+}
+
 .sidebar__list-item {
     display: flex;
 }
