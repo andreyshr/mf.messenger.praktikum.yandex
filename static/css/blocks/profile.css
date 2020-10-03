@@ -70,3 +70,9 @@
 .profile__form label {
     text-align: start;
 }
+
+.profile__form input#avatar {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}

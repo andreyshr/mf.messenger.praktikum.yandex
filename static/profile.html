@@ -29,26 +29,50 @@
             <form class="profile__form" method="post" action="#">
                 <div class="avatar avatar--lg">
                     <div class="avatar__wrapper">
-                        <span class="avatar__stub">А</span>
+                        <span class="avatar__stub">АШ</span>
                     </div>
                 </div>
-                <h1 class="profile__form-title">Андрей</h1>
+                <div class="profile__form-row profile__form-row--borderless profile__form-row--hidden js-hidden-row">
+                    <label for="avatar" class="button button--transparent ml-auto mr-auto">Загрузить аватар</label>
+                    <input id="avatar" type="file" name="avatar"/>
+                </div>
+                <h1 class="profile__form-title">Андрей Шауров</h1>
                 <div class="profile__form-rows">
+                    <div class="profile__form-row">
+                        <label for="first-name">Имя</label>
+                        <input id="first-name" type="text" name="first_name" value="Андрей" disabled>
+                    </div>
+                    <div class="profile__form-row">
+                        <label for="second-name">Фамилия</label>
+                        <input id="second-name" type="text" name="second_name" value="Шауров" disabled>
+                    </div>
+                    <div class="profile__form-row">
+                        <label for="display-name">Отображаемое имя</label>
+                        <input id="display-name" type="text" name="display_name" value="_andrew_" disabled>
+                    </div>
                     <div class="profile__form-row">
                         <label for="email">Почта</label>
                         <input id="email" type="email" name="email" value="andrey.shaurov@gmail.com" disabled>
+                    </div>
+                    <div class="profile__form-row">
+                        <label for="phone">Телефон</label>
+                        <input id="phone" type="tel" name="phone" value="81111111111" disabled>
                     </div>
                     <div class="profile__form-row">
                         <label for="login">Логин</label>
                         <input id="login" type="text" name="login" value="andrew" disabled>
                     </div>
                     <div class="profile__form-row profile__form-row--hidden js-hidden-row">
-                        <label for="password">Новый пароль</label>
-                        <input id="password" type="password" name="password" placeholder="Введите" autocomplete="new-password" disabled>
+                        <label for="old-password">Старый пароль</label>
+                        <input id="old-password" type="password" name="oldPassword" placeholder="Введите" disabled>
+                    </div>
+                    <div class="profile__form-row profile__form-row--hidden js-hidden-row">
+                        <label for="new-password">Новый пароль</label>
+                        <input id="new-password" type="password" placeholder="Введите" autocomplete="new-password" disabled>
                     </div>
                     <div class="profile__form-row profile__form-row--hidden js-hidden-row">
                         <label for="repeat-password">Новый пароль(ещё раз)</label>
-                        <input id="repeat-password" type="password" name="repeatPassword" placeholder="Введите" autocomplete="new-password" disabled>
+                        <input id="repeat-password" type="password" name="newPassword" placeholder="Введите" autocomplete="new-password" disabled>
                     </div>
                 </div>
                 <div class="profile__form-rows">
