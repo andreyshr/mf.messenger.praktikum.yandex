@@ -1,0 +1,2 @@
+export var template = "\n    <main class=\"container vh-100\">\n        <div class=\"error m-auto\">\n            <h1 class=\"error__title\">404</h1>\n            <p class=\"error__description\">\u041D\u0435 \u0442\u0443\u0434\u0430 \u043F\u043E\u043F\u0430\u043B\u0438</p>\n            <a class=\"link\" href=\"/messenger.html\">\u041D\u0430\u0437\u0430\u0434 \u043A \u0447\u0430\u0442\u0430\u043C</a>\n        </div>\n    </main>\n";
+//# sourceMappingURL=template.js.map
