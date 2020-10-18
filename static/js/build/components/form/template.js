@@ -1,0 +1,2 @@
+export var template = "\n    <form class=\"form {{ className }}\">\n        <h1 class=\"form__title\">{{ title }}</h1>\n        {{#each inputs}}\n            <div class=\"form__row {{#if @last}}mb-auto{{/if}}\">\n                {{{ this }}}\n            </div>\n        {{/each}}\n        {{#each buttons}}\n            <div class=\"form__row\">\n                {{{ this }}}\n            </div>\n        {{/each}}\n    </form>\n";
+//# sourceMappingURL=template.js.map
