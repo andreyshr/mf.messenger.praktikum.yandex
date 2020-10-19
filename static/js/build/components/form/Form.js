@@ -41,38 +41,47 @@ var Form = /** @class */ (function (_super) {
     function Form(props) {
         var _this = _super.call(this, "div", props) || this;
         _this.state = {
-            inputs: _this.props.inputs.reduce(function (acc, input) {
-                var _a;
-                return (__assign(__assign({}, acc), (_a = {}, _a[input.props.name] = input.props.value || null, _a)));
-            }, {}),
-            required: _this.props.inputs.reduce(function (acc, input) {
-                var _a;
-                return (__assign(__assign({}, acc), (_a = {}, _a[input.props.name] = input.props.required, _a)));
-            }, {}),
+            inputs: _this.props.inputs.reduce(_this.createStateInputs, {}),
+            required: _this.props.inputs.reduce(_this.createStateRequired, {}),
             action: _this.props.action
         };
         _this.bus = new AppBus();
         _this.bus.on(EVENTS.FORM_INPUT, function (name, value) {
             var _a;
             _this.state.inputs[name] = value;
-            var errors = [_this.validator.validate({ name: name, value: _this.state.inputs[name], rule: _this.state.required[name] })];
+            var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
         _this.bus.on(EVENTS.FORM_VALIDATE, function (name) {
             var _a;
-            var errors = [_this.validator.validate({ name: name, value: _this.state.inputs[name], rule: _this.state.required[name] })];
+            var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
         _this.validator = new Validator();
         _this.userService = new UserService();
         return _this;
     }
+    Form.prototype.createStateInputs = function (acc, input) {
+        var _a;
+        return __assign(__assign({}, acc), (_a = {}, _a[input.props.name] = input.props.value || null, _a));
+    };
+    Form.prototype.createStateRequired = function (acc, input) {
+        var _a;
+        return __assign(__assign({}, acc), (_a = {}, _a[input.props.name] = input.props.required, _a));
+    };
+    Form.prototype.createVerifiableInput = function (name) {
+        return {
+            name: name,
+            value: this.state.inputs[name],
+            rule: this.state.required[name]
+        };
+    };
     Form.prototype.onSubmit = function (evt) {
         var _a;
         var _this = this;
         evt.preventDefault();
         var errors = Object.keys(this.state.inputs)
-            .map(function (input) { return _this.validator.validate({ name: input, value: _this.state.inputs[input], rule: _this.state.required[input] }); });
+            .map(function (name) { return _this.validator.validate(_this.createVerifiableInput(name)); });
         (_a = this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         if (errors.every(function (e) { return e.status; })) {
             if (this.props.action === "signin") {
@@ -81,13 +90,13 @@ var Form = /** @class */ (function (_super) {
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "signup") {
-                var _c = this.state.inputs, login = _c.login, password = _c.password, name_1 = _c.name, second_name = _c.second_name, email = _c.email, phone = _c.phone;
+                var _c = this.state.inputs, name_1 = _c.name, second_name = _c.second_name, email = _c.email, password = _c.password, login = _c.login, phone = _c.phone;
                 this.userService.signup(name_1, second_name, email, password, login, phone)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "profile") {
-                var _d = this.state.inputs, login = _d.login, password = _d.password, name_2 = _d.name, second_name = _d.second_name, email = _d.email, phone = _d.phone;
-                this.userService.profile(name_2, second_name, email, password, login, phone)
+                var _d = this.state.inputs, first_name = _d.first_name, second_name = _d.second_name, display_name = _d.display_name, login = _d.login, newPassword = _d.newPassword, oldPassword = _d.oldPassword, email = _d.email, phone = _d.phone;
+                this.userService.profile(first_name, second_name, display_name, login, newPassword, oldPassword, email, phone)
                     .catch(function (e) { return console.log(e); });
             }
         }

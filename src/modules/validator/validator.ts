@@ -1,7 +1,7 @@
-import { IField } from "./types.js";
+import {IVerifiableInput} from "./types.js";
 
 export class Validator {
-    field: IField
+    input: IVerifiableInput
 
     required(value: any) {
         if (!value) return false;
@@ -23,8 +23,8 @@ export class Validator {
         return regExp.test(value);
     }
 
-    validate(field: IField) {
-        const { name, value, rule } = field;
+    validate(input: IVerifiableInput) {
+        const {name, value, rule} = input;
         const validateFn = this[rule];
         return {
             name,

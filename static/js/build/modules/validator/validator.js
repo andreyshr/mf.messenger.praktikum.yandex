@@ -18,8 +18,8 @@ var Validator = /** @class */ (function () {
         var regExp = /^([a-zA-Z0-9]{6,})$/gi;
         return regExp.test(value);
     };
-    Validator.prototype.validate = function (field) {
-        var name = field.name, value = field.value, rule = field.rule;
+    Validator.prototype.validate = function (input) {
+        var name = input.name, value = input.value, rule = input.rule;
         var validateFn = this[rule];
         return {
             name: name,

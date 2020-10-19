@@ -1,4 +1,4 @@
-import {EventBus} from "../event-bus/event-bus.js";
+import { EventBus } from "../event-bus/event-bus.js";
 import { IProps, IMeta } from "./types";
 
 class Block {
@@ -112,7 +112,7 @@ class Block {
         })
     }
 
-    setProps = (nextProps: object) => {
+    setProps = (nextProps: IProps) => {
         if (!nextProps) {
             return;
         }

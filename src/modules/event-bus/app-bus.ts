@@ -1,4 +1,4 @@
-import {EventBus} from "./event-bus.js";
+import { EventBus } from "./event-bus.js";
 
 export default class AppBus extends EventBus{
     static __instance: AppBus | null = null;

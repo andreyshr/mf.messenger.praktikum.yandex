@@ -11,28 +11,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
+import { addInputEvents } from "../../utils/addInputEvents.js";
 import { render } from "../../utils/renderDOM.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
 import "../../utils/handlebars-helpers.js";
-var bus = new AppBus();
-var inputs = [
+var inputsProps = [
     {
         name: "name",
         id: "name",
@@ -40,7 +27,8 @@ var inputs = [
         required: "required",
         typeName: "text",
         placeholder: "Введите имя",
-        autofocus: "autofocus"
+        autofocus: "autofocus",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "second_name",
@@ -48,7 +36,8 @@ var inputs = [
         label: "Фамилия",
         required: "required",
         typeName: "text",
-        placeholder: "Введите фамилию"
+        placeholder: "Введите фамилию",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "email",
@@ -56,7 +45,8 @@ var inputs = [
         label: "Email",
         required: "email",
         typeName: "text",
-        placeholder: "Введите email"
+        placeholder: "Введите email",
+        errorMessage: "Электронная почта в формате name@host.com"
     },
     {
         name: "phone",
@@ -64,7 +54,8 @@ var inputs = [
         label: "Телефон",
         required: "phone",
         typeName: "phone",
-        placeholder: "Введите телефон"
+        placeholder: "Введите телефон",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "login",
@@ -72,7 +63,8 @@ var inputs = [
         label: "Логин",
         required: "required",
         typeName: "text",
-        placeholder: "Введите логин"
+        placeholder: "Введите логин",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "password",
@@ -80,40 +72,11 @@ var inputs = [
         label: "Пароль",
         required: "password",
         typeName: "password",
-        placeholder: "Введите пароль"
-    },
-    {
-        name: "repeat_password",
-        id: "repeat_password",
-        label: "Пароль (еще раз)",
-        required: "password",
-        typeName: "password",
-        placeholder: "Подтвердите пароль"
-    },
+        placeholder: "Введите пароль",
+        errorMessage: "Символы латинского алфавита и цифры(мин. 6)"
+    }
 ];
-var inputsWithEvents = inputs.map(function (i) { return (__assign(__assign({}, i), { events: [
-        {
-            type: "input",
-            el: "input[name=" + i.name + "]",
-            handler: function (evt) {
-                bus.emit(EVENTS.FORM_INPUT, evt.target.name, evt.target.value);
-            }
-        },
-        {
-            type: "focus",
-            el: "input[name=" + i.name + "]",
-            handler: function (evt) {
-                bus.emit(EVENTS.FORM_VALIDATE, evt.target.name);
-            }
-        },
-        {
-            type: "blur",
-            el: "input[name=" + i.name + "]",
-            handler: function (evt) {
-                bus.emit(EVENTS.FORM_VALIDATE, evt.target.name);
-            }
-        }
-    ] })); });
+var inputs = inputsProps.map(addInputEvents);
 var buttons = [
     {
         className: 'button button--blue w-100',
@@ -132,7 +95,7 @@ var form = new Form({
     className: "form--signup",
     action: "signup",
     title: "Регистрация",
-    inputs: inputsWithEvents.map(function (props) { return new Input(props); }),
+    inputs: inputs.map(function (props) { return new Input(props); }),
     buttons: buttons.map(function (props) { return new Button(props); }),
     events: [
         {

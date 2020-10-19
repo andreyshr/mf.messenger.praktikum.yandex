@@ -1,22 +1,18 @@
 import Block from "../../modules/block/block.js";
-import {template} from "./template.js";
+import { template } from "./template.js";
 
-import {IProps} from "../../modules/block/types";
+import { IProps } from "../../modules/block/types";
 
 import Button from "../../components/button/Button.js";
 import Form from "../../components/form/Form.js";
 import Input from "../../components/input/Input.js";
+import { addInputEvents } from "../../utils/addInputEvents.js";
 
-import {render} from "../../utils/renderDOM.js";
-
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { render } from "../../utils/renderDOM.js";
 
 import "../../utils/handlebars-helpers.js";
 
-const bus = new AppBus();
-
-const inputs: Array<IProps> = [
+const inputsProps: Array<IProps> = [
     {
         template: "profile",
         name: "first_name",
@@ -74,59 +70,25 @@ const inputs: Array<IProps> = [
     },
     {
         template: "profile",
-        name: "password",
-        id: "password",
-        label: "Пароль",
+        name: "oldPassword",
+        id: "oldPassword",
+        label: "Старый пароль",
         required: "password",
         typeName: "password",
         value: ""
     },
     {
         template: "profile",
-        name: "repeat_password",
-        id: "repeat_password",
+        name: "newPassword",
+        id: "newPassword",
         label: "Новый пароль",
         required: "password",
         typeName: "password",
         value: ""
-    },
-    {
-        template: "profile",
-        name: "_repeat_password",
-        id: "_repeat_password",
-        label: "Новый пароль (еще раз)",
-        required: "password",
-        typeName: "password",
-        value: ""
-    },
+    }
 ]
 
-const inputsWithEvents = inputs.map(i => ({
-    ...i,
-    events: [
-        {
-            type: "input",
-            el: `input[name=${i.name}]`,
-            handler: function (evt: any) {
-                bus.emit(EVENTS.FORM_INPUT, evt.target.name, evt.target.value);
-            }
-        },
-        {
-            type: "focus",
-            el: `input[name=${i.name}]`,
-            handler: function (evt: any) {
-                bus.emit(EVENTS.FORM_VALIDATE, evt.target.name);
-            }
-        },
-        {
-            type: "blur",
-            el: `input[name=${i.name}]`,
-            handler: function (evt: any) {
-                bus.emit(EVENTS.FORM_VALIDATE, evt.target.name);
-            }
-        }
-    ]
-}));
+const inputs = inputsProps.map(addInputEvents);
 
 const buttons: Array<IProps> = [
     {
@@ -157,7 +119,7 @@ const form = new Form({
         className: "profile__form",
         action: "profile",
         title: "Андрей Шауров",
-        inputs: inputsWithEvents.map(props => new Input(props)),
+        inputs: inputs.map(props => new Input(props)),
         buttons: buttons.map(props => new Button(props)),
         events: [
             {
