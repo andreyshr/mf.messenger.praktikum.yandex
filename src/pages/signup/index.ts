@@ -1,22 +1,18 @@
 import Block from "../../modules/block/block.js";
-import {template} from "./template.js";
+import { template } from "./template.js";
 
-import {IProps} from "../../modules/block/types";
+import { IProps } from "../../modules/block/types";
 
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
+import { addInputEvents } from "../../utils/addInputEvents.js";
 
-import {render} from "../../utils/renderDOM.js";
-
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { render } from "../../utils/renderDOM.js";
 
 import "../../utils/handlebars-helpers.js";
 
-const bus = new AppBus();
-
-const inputs: Array<IProps> = [
+const inputsProps: Array<IProps> = [
     {
         name: "name",
         id: "name",
@@ -24,7 +20,8 @@ const inputs: Array<IProps> = [
         required: "required",
         typeName: "text",
         placeholder: "Введите имя",
-        autofocus: "autofocus"
+        autofocus: "autofocus",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "second_name",
@@ -32,7 +29,8 @@ const inputs: Array<IProps> = [
         label: "Фамилия",
         required: "required",
         typeName: "text",
-        placeholder: "Введите фамилию"
+        placeholder: "Введите фамилию",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "email",
@@ -40,7 +38,8 @@ const inputs: Array<IProps> = [
         label: "Email",
         required: "email",
         typeName: "text",
-        placeholder: "Введите email"
+        placeholder: "Введите email",
+        errorMessage: "Электронная почта в формате name@host.com"
     },
     {
         name: "phone",
@@ -48,7 +47,8 @@ const inputs: Array<IProps> = [
         label: "Телефон",
         required: "phone",
         typeName: "phone",
-        placeholder: "Введите телефон"
+        placeholder: "Введите телефон",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "login",
@@ -56,7 +56,8 @@ const inputs: Array<IProps> = [
         label: "Логин",
         required: "required",
         typeName: "text",
-        placeholder: "Введите логин"
+        placeholder: "Введите логин",
+        errorMessage: "Обязательное поле"
     },
     {
         name: "password",
@@ -64,44 +65,12 @@ const inputs: Array<IProps> = [
         label: "Пароль",
         required: "password",
         typeName: "password",
-        placeholder: "Введите пароль"
-    },
-    {
-        name: "repeat_password",
-        id: "repeat_password",
-        label: "Пароль (еще раз)",
-        required: "password",
-        typeName: "password",
-        placeholder: "Подтвердите пароль"
-    },
+        placeholder: "Введите пароль",
+        errorMessage: "Символы латинского алфавита и цифры(мин. 6)"
+    }
 ]
 
-const inputsWithEvents = inputs.map(i => ({
-    ...i,
-    events: [
-        {
-            type: "input",
-            el: `input[name=${i.name}]`,
-            handler: function (evt: any) {
-                bus.emit(EVENTS.FORM_INPUT, evt.target.name, evt.target.value);
-            }
-        },
-        {
-            type: "focus",
-            el: `input[name=${i.name}]`,
-            handler: function (evt: any) {
-                bus.emit(EVENTS.FORM_VALIDATE, evt.target.name);
-            }
-        },
-        {
-            type: "blur",
-            el: `input[name=${i.name}]`,
-            handler: function (evt: any) {
-                bus.emit(EVENTS.FORM_VALIDATE, evt.target.name);
-            }
-        }
-    ]
-}));
+const inputs = inputsProps.map(addInputEvents);
 
 const buttons: Array<IProps> = [
     {
@@ -122,7 +91,7 @@ const form = new Form({
         className: "form--signup",
         action: "signup",
         title: "Регистрация",
-        inputs: inputsWithEvents.map(props => new Input(props)),
+        inputs: inputs.map(props => new Input(props)),
         buttons: buttons.map(props => new Button(props)),
         events: [
             {

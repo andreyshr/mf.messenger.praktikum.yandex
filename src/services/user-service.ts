@@ -1,12 +1,4 @@
-class HTTP {
-    static async post(endpoint: string, data?: any) {
-        return { endpoint, data };
-    }
-
-    static async put(endpoint: string, data?: any) {
-        return { endpoint, data };
-    }
-}
+import {HTTP} from "./HTTP.js";
 
 export class UserService {
     auth(login: any, password: any) {
@@ -23,8 +15,8 @@ export class UserService {
             }.bind(this));
     }
 
-    profile(name: any, second_name: any, email: any, password: any, login: any, phone: any) {
-        return HTTP.put('/user/profile', {name, second_name, email, login, password, phone})
+    profile(first_name: any, second_name: any, display_name: any, login: any, newPassword:any, oldPassword:any, email: any, phone: any) {
+        return HTTP.put('/user/profile', {first_name, second_name, display_name, login, newPassword, oldPassword, email, phone})
             .then(function (data: any) {
                 console.log(data);
             }.bind(this));
