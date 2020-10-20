@@ -35,4 +35,4 @@ export var addInputEvents = function (input) { return (__assign(__assign({}, inp
             }
         }
     ] })); };
-//# sourceMappingURL=addInputEvents.js.map
+//# sourceMappingURL=add-input-events.js.map

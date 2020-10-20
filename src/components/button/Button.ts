@@ -2,8 +2,14 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
 export default class Button extends Block {
-    constructor(props: any) {
-        super("div", props);
+    constructor(tag: string, props: Props) {
+        super(tag, props);
+
+        Block._instances.push(this);
+    }
+
+    onClick() {
+
     }
 
     render() {

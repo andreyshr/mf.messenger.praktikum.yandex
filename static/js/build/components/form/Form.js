@@ -39,7 +39,7 @@ import { UserService } from "../../services/user-service.js";
 var Form = /** @class */ (function (_super) {
     __extends(Form, _super);
     function Form(props) {
-        var _this = _super.call(this, "div", props) || this;
+        var _this = _super.call(this, "form", props) || this;
         _this.state = {
             inputs: _this.props.inputs.reduce(_this.createStateInputs, {}),
             required: _this.props.inputs.reduce(_this.createStateRequired, {}),
@@ -59,6 +59,7 @@ var Form = /** @class */ (function (_super) {
         });
         _this.validator = new Validator();
         _this.userService = new UserService();
+        Block._instances.push(_this);
         return _this;
     }
     Form.prototype.createStateInputs = function (acc, input) {
@@ -90,24 +91,21 @@ var Form = /** @class */ (function (_super) {
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "signup") {
-                var _c = this.state.inputs, name_1 = _c.name, second_name = _c.second_name, email = _c.email, password = _c.password, login = _c.login, phone = _c.phone;
-                this.userService.signup(name_1, second_name, email, password, login, phone)
+                this.userService.signup(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "profile") {
-                var _d = this.state.inputs, first_name = _d.first_name, second_name = _d.second_name, display_name = _d.display_name, login = _d.login, newPassword = _d.newPassword, oldPassword = _d.oldPassword, email = _d.email, phone = _d.phone;
-                this.userService.profile(first_name, second_name, display_name, login, newPassword, oldPassword, email, phone)
+                this.userService.profile(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
         }
     };
     Form.prototype.render = function () {
-        var _this = this;
         return Handlebars.compile(this.props.template === "profile" ? templateProfile : templateMain)({
             className: this.props.className,
             title: this.props.title,
-            inputs: this.props.inputs.map(function (input) { return input.forceUpdate(_this); }),
-            buttons: this.props.buttons.map(function (button) { return button.forceUpdate(_this); })
+            inputs: this.props.inputs.map(function (input) { return input.renderToString(); }),
+            buttons: this.props.buttons.map(function (button) { return button.renderToString(); })
         });
     };
     return Form;

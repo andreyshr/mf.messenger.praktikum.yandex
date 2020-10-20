@@ -1,5 +1,5 @@
 export const template = `
-    <form class="form {{ className }}">
+    <div class="form__wrapper">
         <h1 class="form__title">{{ title }}</h1>
         {{#each inputs}}
             <div class="form__row {{#if @last}}mb-auto{{/if}}">
@@ -11,5 +11,5 @@ export const template = `
                 {{{ this }}}
             </div>
         {{/each}}
-    </form>
+    </div>
 `;

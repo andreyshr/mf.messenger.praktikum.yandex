@@ -1,0 +1,2 @@
+export var template = "\n            <div class=\"message__body\">\n                {{#if message}}\n                    <p class=\"message__text\">\n                        {{{ message }}}\n                    </p>\n                {{/if}}\n                {{#if img}}\n                    <img class=\"responsive-img\" src=\"{{ img }}\" alt=\"#\">\n                {{/if}}\n                <div class=\"message__time\">\n                    <time>{{ time }}</time>\n                </div>\n            </div>\n";
+//# sourceMappingURL=template.js.map

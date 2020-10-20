@@ -1,13 +1,11 @@
-import { IListener, IListeners } from "./types";
-
 export class EventBus {
-    listeners: IListeners;
+    listeners: Listeners;
 
     constructor() {
         this.listeners = {};
     }
 
-    on(event: string, callback: IListener): void {
+    on(event: string, callback: Listener): void {
         if (!this.listeners[event]) {
             this.listeners[event] = [];
         }
@@ -15,7 +13,7 @@ export class EventBus {
         this.listeners[event].push(callback);
     }
 
-    off(event: string, callback: IListener): void {
+    off(event: string, callback: Listener): void {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }
@@ -30,7 +28,7 @@ export class EventBus {
             throw new Error(`Нет события: ${event}`);
         }
 
-        this.listeners[event].forEach(function(listener: IListener) {
+        this.listeners[event].forEach(function(listener: Listener) {
             listener(...args);
         });
     }

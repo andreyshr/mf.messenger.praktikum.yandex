@@ -13,19 +13,46 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
+import Room from "../../components/room/Room.js";
+import Message from "../../components/message/Message.js";
+import Menu from "../../components/menu/Menu.js";
+import Dialog from "../../components/dialog/Dialog.js";
+import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.js";
+import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
+import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
+import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm } from "./data.js";
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);
     function MessengerChat(props) {
         return _super.call(this, "div", props) || this;
     }
     MessengerChat.prototype.render = function () {
-        return Handlebars.compile(template)({});
+        return Handlebars.compile(template)({
+            rooms: this.props.rooms.map(function (room) { return room.renderToString(); }),
+            messages: this.props.messages.map(function (message) { return message.renderToString(); }),
+            menuEmoji: this.props.menuEmoji.renderToString(),
+            menuMessage: this.props.menuMessage.renderToString(),
+            dialogRemoveChat: this.props.dialogRemoveChat.renderToString(),
+            workspaceHeader: this.props.workspaceHeader.renderToString(),
+            messageInputForm: this.props.messageInputForm.renderToString(),
+            sidebarHeader: this.props.sidebarHeader.renderToString(),
+        });
     };
     return MessengerChat;
 }(Block));
 export default MessengerChat;
-var messengerChat = new MessengerChat({});
+var messengerChat = new MessengerChat({
+    rooms: rooms.map(function (props) { return new Room(props); }),
+    messages: messages.map(function (props) { return new Message(props); }),
+    menuEmoji: new Menu(menuEmoji),
+    menuMessage: new Menu(menuMessage),
+    dialogRemoveChat: new Dialog({}),
+    workspaceHeader: new WorkSpaceHeader(workspaceHeader),
+    messageInputForm: new MessageInputForm(messageInputForm),
+    sidebarHeader: new SidebarHeader({}),
+});
 render(".app", messengerChat);
+Block.hydrate();
 //# sourceMappingURL=index.js.map

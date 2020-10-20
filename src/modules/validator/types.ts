@@ -1,7 +1,9 @@
-import {RULES} from "./rules.js";
+const ruleValues = ["email", "required", "phone", "password"] as const
 
-export interface IVerifiableInput {
+type ValidationRule = typeof ruleValues[number]
+
+type VerifiableInput = {
     name: string,
-    value: any,
-    rule: RULES
+    value: string,
+    rule: ValidationRule
 }

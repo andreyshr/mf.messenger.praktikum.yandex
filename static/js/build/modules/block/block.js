@@ -6,6 +6,7 @@ var Block = /** @class */ (function () {
         if (props === void 0) { props = {}; }
         this._element = null;
         this._meta = null;
+        this._mounted = false;
         this.setProps = function (nextProps) {
             if (!nextProps) {
                 return;
@@ -13,18 +14,29 @@ var Block = /** @class */ (function () {
             Object.assign(_this.props, nextProps);
         };
         var eventBus = new EventBus();
+        this._id = 'uniq' + parseInt(String(Math.random() * 1000000));
         this._meta = {
             tagName: tagName,
-            props: props
+            props: props,
+            className: props.className,
+            attributes: props.attributes
         };
         this.props = this._makePropsProxy(props);
         this.eventBus = function () { return eventBus; };
         this.events = this.props.events || [];
-        this._parent = null;
-        this._children = [];
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
     }
+    Block.hydrate = function () {
+        for (var _i = 0, _a = this._instances; _i < _a.length; _i++) {
+            var i = _a[_i];
+            var el = document.querySelector("[_key=" + i.id);
+            if (el) {
+                i.setElement(el);
+                i._attachEvents();
+            }
+        }
+    };
     Block.prototype._registerEvents = function (eventBus) {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
@@ -33,12 +45,42 @@ var Block = /** @class */ (function () {
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     };
     Block.prototype._createResources = function () {
-        var _a;
+        var _this = this;
+        var _a, _b, _c, _d;
         var tagName = (_a = this._meta) === null || _a === void 0 ? void 0 : _a.tagName;
         if (tagName) {
             this._element = this._createDocumentElement(tagName);
         }
+        if (this._element) {
+            if ((_b = this._meta) === null || _b === void 0 ? void 0 : _b.className)
+                this._element.className = this.props.className;
+            if ((_c = this._meta) === null || _c === void 0 ? void 0 : _c.attributes) {
+                Object.keys(this._meta.attributes).forEach(function (attr) {
+                    var _a, _b;
+                    // @ts-ignore
+                    (_a = _this._element) === null || _a === void 0 ? void 0 : _a.setAttribute(attr, (_b = _this._meta) === null || _b === void 0 ? void 0 : _b.attributes[attr]);
+                });
+            }
+        }
+        (_d = this._element) === null || _d === void 0 ? void 0 : _d.setAttribute('_key', this.id);
     };
+    Block.prototype.setElement = function (element) {
+        this._element = element;
+    };
+    Object.defineProperty(Block.prototype, "element", {
+        get: function () {
+            return this._element;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Block.prototype, "id", {
+        get: function () {
+            return this._id;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Block.prototype.init = function () {
         this._createResources();
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -54,13 +96,6 @@ var Block = /** @class */ (function () {
         if (oldProp === newProp)
             return false;
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-        if (this._parent) {
-            var el = this._parent;
-            while (el === null || el === void 0 ? void 0 : el._parent) {
-                el = el._parent;
-            }
-            el === null || el === void 0 ? void 0 : el.forceUpdate();
-        }
         this.componentDidUpdate(oldProp, newProp);
         return true;
     };
@@ -68,47 +103,42 @@ var Block = /** @class */ (function () {
         return oldProp === newProp;
     };
     Block.prototype._componentMounted = function () {
-        var _this = this;
-        if (!this._parent)
+        if (!this._mounted)
             this._attachEvents();
-        else {
-            this.events.forEach(function (event) {
-                var _a, _b;
-                if (!((_a = _this._parent) === null || _a === void 0 ? void 0 : _a.events.includes(event)))
-                    (_b = _this._parent) === null || _b === void 0 ? void 0 : _b.events.push(event);
-            });
-        }
+        this._mounted = true;
         this.componentMounted();
     };
-    Block.prototype.componentMounted = function () { };
+    Block.prototype.componentMounted = function () {
+    };
     Block.prototype._attachEvents = function () {
         var _this = this;
-        this.events.forEach(function (event) {
-            if (_this.getContent()) {
-                var target = _this.getContent().querySelector(event.el);
-                target ? target.addEventListener(event.type, event.handler.bind(_this)) : null;
-            }
-        });
+        var element = this.getContent();
+        if (element) {
+            this.events.forEach(function (event) {
+                var targetElement = element.querySelector(event.el);
+                if (targetElement) {
+                    targetElement.addEventListener(event.type, event.handler.bind(_this));
+                }
+                else {
+                    element.addEventListener(event.type, event.handler.bind(_this));
+                }
+            });
+        }
     };
-    Object.defineProperty(Block.prototype, "element", {
-        get: function () {
-            return this._element;
-        },
-        enumerable: false,
-        configurable: true
-    });
     Block.prototype._render = function () {
         var block = this.render();
-        this.element.innerHTML = block;
+        if (this._element)
+            this._element.innerHTML = block;
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return block;
     };
-    Block.prototype.render = function () {
-    };
-    Block.prototype.forceUpdate = function (prev) {
-        if (prev)
-            this._parent = prev;
-        return this._render();
+    Block.prototype.renderToString = function () {
+        var wrapper = document.createElement('div');
+        if (this._element)
+            this._element.innerHTML = this.render();
+        wrapper.appendChild(this._element);
+        this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
+        return wrapper.innerHTML;
     };
     Block.prototype.getContent = function () {
         return this.element;
@@ -118,9 +148,6 @@ var Block = /** @class */ (function () {
         return new Proxy(props, {
             get: function (target, prop) {
                 var value = target[prop];
-                if (value instanceof Block && Array.isArray(_this._children)) {
-                    _this._children.push(value);
-                }
                 return typeof value === "function" ? value.bind(_this) : value;
             },
             set: function (target, prop, nextVal) {
@@ -156,6 +183,7 @@ var Block = /** @class */ (function () {
         FLOW_MOUNTED: "flow:component-mounted",
         FLOW_RENDER: "flow:render",
     };
+    Block._instances = [];
     return Block;
 }());
 export default Block;

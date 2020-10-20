@@ -6,8 +6,8 @@ import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 export default class Input extends Block {
-    bus: any;
-    input: any;
+    bus: AppBus;
+    input: HTMLInputElement | null;
 
     constructor(props: any) {
         super("div", props);
@@ -16,6 +16,8 @@ export default class Input extends Block {
         this.bus.on(EVENTS.FORM_INVALID, this.showError);
 
         this.input = this.getContent().querySelector("input");
+
+        Block._instances.push(this);
     }
 
     showError = (...inputs: any) => {

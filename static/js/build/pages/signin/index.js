@@ -16,51 +16,17 @@ import { template } from "./template.js";
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
-import { addInputEvents } from "../../utils/addInputEvents.js";
+import { addInputEvents } from "../../utils/add-input-events.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
-var inputsProps = [
-    {
-        name: "login",
-        id: "login",
-        label: "Логин",
-        required: "required",
-        typeName: "text",
-        placeholder: "Введите логин",
-        autofocus: "autofocus",
-        errorMessage: "Обязательное поле"
-    },
-    {
-        name: "password",
-        id: "password",
-        label: "Пароль",
-        required: "password",
-        typeName: "password",
-        placeholder: "Введите пароль",
-        errorMessage: "Обязательное поле"
-    }
-];
+import { inputsProps, buttons } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
-var buttons = [
-    {
-        className: 'button button--blue w-100',
-        tagName: "button",
-        typeName: 'submit',
-        title: 'Авторизоваться'
-    },
-    {
-        className: 'button button--transparent w-100',
-        tagName: "a",
-        href: "/signup.html",
-        title: 'Зарегистрироваться'
-    }
-];
 var form = new Form({
-    className: "form--signin",
+    className: "form form--signin",
     action: "signin",
     title: "Вход",
     inputs: inputs.map(function (props) { return new Input(props); }),
-    buttons: buttons.map(function (props) { return new Button(props); }),
+    buttons: buttons.map(function (props) { return new Button(props.tagName === "button" ? "button" : "a", props); }),
     events: [
         {
             type: "submit",
@@ -78,7 +44,7 @@ var SignInPage = /** @class */ (function (_super) {
     }
     SignInPage.prototype.render = function () {
         return Handlebars.compile(template)({
-            form: this.props.form.forceUpdate(this)
+            form: this.props.form.renderToString()
         });
     };
     return SignInPage;
@@ -88,4 +54,5 @@ var signInPage = new SignInPage({
     form: form
 });
 render(".app", signInPage);
+Block.hydrate();
 //# sourceMappingURL=index.js.map

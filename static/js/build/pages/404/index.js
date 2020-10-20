@@ -21,11 +21,16 @@ var Page404 = /** @class */ (function (_super) {
         return _super.call(this, "div", props) || this;
     }
     Page404.prototype.render = function () {
-        return Handlebars.compile(template)({});
+        return Handlebars.compile(template)(this.props);
     };
     return Page404;
 }(Block));
 export default Page404;
-var page404 = new Page404({});
+var page404 = new Page404({
+    title: "404",
+    description: "Не туда попали",
+    linkTitle: "Назад к чатам",
+    linkHref: "/messenger.html"
+});
 render(".app", page404);
 //# sourceMappingURL=index.js.map

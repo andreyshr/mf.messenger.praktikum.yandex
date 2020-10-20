@@ -1,7 +1,5 @@
-export interface IListener {
-    (...args: any): any
-}
+type Listener =  (...args: any) => any
 
-export interface IListeners {
-    [key: string]: Array<IListener>
+type Listeners =  {
+    [key: string]: Listener[]
 }

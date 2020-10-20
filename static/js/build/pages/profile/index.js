@@ -16,115 +16,18 @@ import { template } from "./template.js";
 import Button from "../../components/button/Button.js";
 import Form from "../../components/form/Form.js";
 import Input from "../../components/input/Input.js";
-import { addInputEvents } from "../../utils/addInputEvents.js";
+import { addInputEvents } from "../../utils/add-input-events.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
-var inputsProps = [
-    {
-        template: "profile",
-        name: "first_name",
-        id: "first_name",
-        label: "Имя",
-        required: "required",
-        typeName: "text",
-        autofocus: "autofocus",
-        value: "Андрей"
-    },
-    {
-        template: "profile",
-        name: "second_name",
-        id: "second_name",
-        label: "Фамилия",
-        required: "required",
-        typeName: "text",
-        value: "Шауров"
-    },
-    {
-        template: "profile",
-        name: "display_name",
-        id: "display_name",
-        label: "Отображаемое имя",
-        required: "required",
-        typeName: "text",
-        value: "__andrew__"
-    },
-    {
-        template: "profile",
-        name: "email",
-        id: "email",
-        label: "Email",
-        required: "email",
-        typeName: "text",
-        value: "andrey.shaurov@gmail.com"
-    },
-    {
-        template: "profile",
-        name: "phone",
-        id: "phone",
-        label: "Телефон",
-        required: "phone",
-        typeName: "phone",
-        value: "+79000000000"
-    },
-    {
-        template: "profile",
-        name: "login",
-        id: "login",
-        label: "Логин",
-        required: "required",
-        typeName: "text",
-        value: "andrew"
-    },
-    {
-        template: "profile",
-        name: "oldPassword",
-        id: "oldPassword",
-        label: "Старый пароль",
-        required: "password",
-        typeName: "password",
-        value: ""
-    },
-    {
-        template: "profile",
-        name: "newPassword",
-        id: "newPassword",
-        label: "Новый пароль",
-        required: "password",
-        typeName: "password",
-        value: ""
-    }
-];
+import { inputsProps, buttons, buttonBack } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
-var buttons = [
-    {
-        className: 'button button--blue button--lg ma-auto',
-        tagName: "button",
-        typeName: 'submit',
-        title: 'Сохранить'
-    },
-    {
-        className: 'button color-red button--lg js-logout-btn ma-auto',
-        tagName: "button",
-        typeName: 'button',
-        title: 'Выйти',
-        events: [
-            {
-                type: "click",
-                el: ".js-logout-btn",
-                handler: function () {
-                    console.log("logout btn");
-                }
-            }
-        ]
-    }
-];
 var form = new Form({
     template: "profile",
     className: "profile__form",
     action: "profile",
     title: "Андрей Шауров",
     inputs: inputs.map(function (props) { return new Input(props); }),
-    buttons: buttons.map(function (props) { return new Button(props); }),
+    buttons: buttons.map(function (props) { return new Button("button", props); }),
     events: [
         {
             type: "submit",
@@ -142,14 +45,17 @@ var Profile = /** @class */ (function (_super) {
     }
     Profile.prototype.render = function () {
         return Handlebars.compile(template)({
-            form: this.props.form.forceUpdate(this)
+            form: this.props.form.renderToString(),
+            buttonBack: this.props.buttonBack.renderToString(),
         });
     };
     return Profile;
 }(Block));
 export default Profile;
 var profile = new Profile({
-    form: form
+    form: form,
+    buttonBack: new Button("div", buttonBack)
 });
 render(".app", profile);
+Block.hydrate();
 //# sourceMappingURL=index.js.map

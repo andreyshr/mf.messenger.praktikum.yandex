@@ -1,16 +1,22 @@
-export interface IEvent {
+type BlockEvent = {
     type: string,
     el: string,
-    handler(): any
+    handler(...args: any): any
 }
 
-export interface IMeta {
+type Attributes = {
+    [key: string]: string,
+}
+
+type Meta = {
     tagName: string,
-    props: IProps
+    props: Props,
+    className?: string,
+    attributes?: Attributes
 }
 
-export interface IProps {
+type Props = {
     [key: string]: any,
-    events?: Array<IEvent>
+    events?: BlockEvent[]
 }
 

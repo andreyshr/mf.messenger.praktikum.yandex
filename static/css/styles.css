@@ -330,12 +330,17 @@ li {
 
 .form {
   display: flex;
-  flex-direction: column;
   min-width: 320px;
   padding: 70px 30px 30px 30px;
   margin: auto;
   box-shadow: var(--shadow);
   border-radius: 12px;
+}
+
+.form__wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .form--signin {
@@ -384,11 +389,6 @@ li {
 
 .menu.menu--bottom::before {
   top: -26px;
-}
-
-.menu--emoji {
-  width: 384px;
-  padding: 8px;
 }
 
 .menu:hover {
@@ -441,16 +441,18 @@ li {
   flex-direction: column;
 }
 
-.menu__list--emoji {
+.menu--emoji {
+  width: 384px;
+  padding: 8px;
+}
+.menu--emoji .menu__list {
   flex-direction: row;
   flex-wrap: wrap;
 }
-
-.menu__list--emoji .menu__item {
+.menu--emoji .menu__item {
   margin-bottom: 0;
 }
-
-.menu__list--emoji .menu__button {
+.menu--emoji .menu__button {
   font-size: 18px;
   line-height: 18px;
 }
@@ -677,6 +679,9 @@ li {
   justify-content: space-between;
   width: 100%;
   padding: 10px 0;
+}
+.profile__form-row > div {
+  width: 100%;
 }
 
 .profile__form-row:not(:first-of-type) {

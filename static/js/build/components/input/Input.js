@@ -41,6 +41,7 @@ var Input = /** @class */ (function (_super) {
         _this.bus = new AppBus();
         _this.bus.on(EVENTS.FORM_INVALID, _this.showError);
         _this.input = _this.getContent().querySelector("input");
+        Block._instances.push(_this);
         return _this;
     }
     Input.prototype.render = function () {

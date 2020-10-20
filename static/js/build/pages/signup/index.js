@@ -16,87 +16,17 @@ import { template } from "./template.js";
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
-import { addInputEvents } from "../../utils/addInputEvents.js";
+import { addInputEvents } from "../../utils/add-input-events.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
-var inputsProps = [
-    {
-        name: "name",
-        id: "name",
-        label: "Имя",
-        required: "required",
-        typeName: "text",
-        placeholder: "Введите имя",
-        autofocus: "autofocus",
-        errorMessage: "Обязательное поле"
-    },
-    {
-        name: "second_name",
-        id: "second_name",
-        label: "Фамилия",
-        required: "required",
-        typeName: "text",
-        placeholder: "Введите фамилию",
-        errorMessage: "Обязательное поле"
-    },
-    {
-        name: "email",
-        id: "email",
-        label: "Email",
-        required: "email",
-        typeName: "text",
-        placeholder: "Введите email",
-        errorMessage: "Электронная почта в формате name@host.com"
-    },
-    {
-        name: "phone",
-        id: "phone",
-        label: "Телефон",
-        required: "phone",
-        typeName: "phone",
-        placeholder: "Введите телефон",
-        errorMessage: "Обязательное поле"
-    },
-    {
-        name: "login",
-        id: "login",
-        label: "Логин",
-        required: "required",
-        typeName: "text",
-        placeholder: "Введите логин",
-        errorMessage: "Обязательное поле"
-    },
-    {
-        name: "password",
-        id: "password",
-        label: "Пароль",
-        required: "password",
-        typeName: "password",
-        placeholder: "Введите пароль",
-        errorMessage: "Символы латинского алфавита и цифры(мин. 6)"
-    }
-];
+import { inputsProps, buttons } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
-var buttons = [
-    {
-        className: 'button button--blue w-100',
-        tagName: "button",
-        typeName: 'submit',
-        title: 'Зарегистрироваться'
-    },
-    {
-        className: 'button button--transparent w-100',
-        tagName: "a",
-        href: "/signin.html",
-        title: 'Войти'
-    }
-];
 var form = new Form({
-    className: "form--signup",
+    className: "form form--signup",
     action: "signup",
     title: "Регистрация",
     inputs: inputs.map(function (props) { return new Input(props); }),
-    buttons: buttons.map(function (props) { return new Button(props); }),
+    buttons: buttons.map(function (props) { return new Button(props.tagName === "button" ? "button" : "a", props); }),
     events: [
         {
             type: "submit",
@@ -114,7 +44,7 @@ var SignUpPage = /** @class */ (function (_super) {
     }
     SignUpPage.prototype.render = function () {
         return Handlebars.compile(template)({
-            form: this.props.form.forceUpdate(this)
+            form: this.props.form.renderToString()
         });
     };
     return SignUpPage;
@@ -124,4 +54,5 @@ var signUpPage = new SignUpPage({
     form: form
 });
 render(".app", signUpPage);
+Block.hydrate();
 //# sourceMappingURL=index.js.map
