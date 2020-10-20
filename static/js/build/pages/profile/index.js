@@ -16,7 +16,7 @@ import { template } from "./template.js";
 import Button from "../../components/button/Button.js";
 import Form from "../../components/form/Form.js";
 import Input from "../../components/input/Input.js";
-import { addInputEvents } from "../../utils/addInputEvents.js";
+import { addInputEvents } from "../../utils/add-input-events.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
 var inputsProps = [

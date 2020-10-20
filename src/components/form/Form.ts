@@ -2,8 +2,6 @@ import Block from "../../modules/block/block.js";
 import { template as templateMain } from "./template.js";
 import { template as templateProfile } from "./template-profile.js";
 
-import { IVerifiableInput } from "../../modules/validator/types.js";
-
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
@@ -42,21 +40,21 @@ export default class Form extends Block {
         this.userService = new UserService();
     }
 
-    createStateInputs(acc: any, input: any) {
+    createStateInputs(acc: any, input: Block) {
         return {
             ...acc,
             [input.props.name]: input.props.value || null
         }
     }
 
-    createStateRequired(acc: any, input: any) {
+    createStateRequired(acc: any, input: Block) {
         return {
             ...acc,
             [input.props.name]: input.props.required
         }
     }
 
-    createVerifiableInput(name: string):IVerifiableInput {
+    createVerifiableInput(name: string):VerifiableInput {
         return {
             name: name,
             value: this.state.inputs[name],
@@ -64,7 +62,7 @@ export default class Form extends Block {
         }
     }
 
-    onSubmit(evt: any) {
+    onSubmit(evt: Event) {
         evt.preventDefault();
         const errors = Object.keys(this.state.inputs)
             .map((name: string) => this.validator.validate(this.createVerifiableInput(name)));

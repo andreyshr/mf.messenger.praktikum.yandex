@@ -1,18 +1,16 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
-import { IProps } from "../../modules/block/types";
-
 import Button from "../../components/button/Button.js";
 import Form from "../../components/form/Form.js";
 import Input from "../../components/input/Input.js";
-import { addInputEvents } from "../../utils/addInputEvents.js";
+import { addInputEvents } from "../../utils/add-input-events.js";
 
 import { render } from "../../utils/renderDOM.js";
 
 import "../../utils/handlebars-helpers.js";
 
-const inputsProps: Array<IProps> = [
+const inputsProps: PropsInput[] = [
     {
         template: "profile",
         name: "first_name",
@@ -90,7 +88,7 @@ const inputsProps: Array<IProps> = [
 
 const inputs = inputsProps.map(addInputEvents);
 
-const buttons: Array<IProps> = [
+const buttons: PropsInput[] = [
     {
         className: 'button button--blue button--lg ma-auto',
         tagName: "button",
@@ -114,7 +112,7 @@ const buttons: Array<IProps> = [
     }
 ]
 
-const form = new Form({
+const form: Form = new Form({
         template: "profile",
         className: "profile__form",
         action: "profile",
@@ -125,7 +123,7 @@ const form = new Form({
             {
                 type: "submit",
                 el: "form",
-                handler: function (evt: any) {
+                handler: function (evt: Event) {
                     form.onSubmit(evt);
                 }
             }
@@ -134,7 +132,7 @@ const form = new Form({
 );
 
 export default class Profile extends Block {
-    constructor(props: any) {
+    constructor(props: Props) {
         super("div", props);
     }
 

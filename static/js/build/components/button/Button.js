@@ -18,6 +18,8 @@ var Button = /** @class */ (function (_super) {
     function Button(props) {
         return _super.call(this, "div", props) || this;
     }
+    Button.prototype.onClick = function () {
+    };
     Button.prototype.render = function () {
         return Handlebars.compile(template)(this.props);
     };

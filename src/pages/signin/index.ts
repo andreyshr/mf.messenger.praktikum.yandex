@@ -1,18 +1,16 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
-import { IProps } from "../../modules/block/types";
-
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
-import { addInputEvents } from "../../utils/addInputEvents.js";
+import { addInputEvents } from "../../utils/add-input-events.js";
 
 import { render } from "../../utils/renderDOM.js";
 
 import "../../utils/handlebars-helpers.js";
 
-const inputsProps: Array<IProps> = [
+const inputsProps: PropsInput[] = [
     {
         name: "login",
         id: "login",
@@ -36,7 +34,7 @@ const inputsProps: Array<IProps> = [
 
 const inputs = inputsProps.map(addInputEvents);
 
-const buttons: Array<IProps> = [
+const buttons: PropsInput[] = [
     {
         className: 'button button--blue w-100',
         tagName: "button",
@@ -51,7 +49,7 @@ const buttons: Array<IProps> = [
     }
 ]
 
-const form = new Form({
+const form: Form = new Form({
         className: "form--signin",
         action: "signin",
         title: "Вход",
@@ -61,7 +59,7 @@ const form = new Form({
             {
                 type: "submit",
                 el: "form",
-                handler: function (evt: any) {
+                handler: function (evt: Event) {
                     form.onSubmit(evt);
                 }
             }
@@ -70,7 +68,7 @@ const form = new Form({
 );
 
 export default class SignInPage extends Block {
-    constructor(props: any) {
+    constructor(props: Props) {
         super("div", props);
     }
 

@@ -1,11 +1,9 @@
-import { IProps } from "../modules/block/types.js";
-
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 
 const bus = new AppBus();
 
-export const addInputEvents = (input: IProps) => ({
+export const addInputEvents = (input: PropsInput) => ({
     ...input,
     events: [
         {

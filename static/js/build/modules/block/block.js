@@ -6,6 +6,8 @@ var Block = /** @class */ (function () {
         if (props === void 0) { props = {}; }
         this._element = null;
         this._meta = null;
+        this._parent = null;
+        this._children = [];
         this.setProps = function (nextProps) {
             if (!nextProps) {
                 return;
@@ -20,8 +22,6 @@ var Block = /** @class */ (function () {
         this.props = this._makePropsProxy(props);
         this.eventBus = function () { return eventBus; };
         this.events = this.props.events || [];
-        this._parent = null;
-        this._children = [];
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
     }
@@ -80,7 +80,8 @@ var Block = /** @class */ (function () {
         }
         this.componentMounted();
     };
-    Block.prototype.componentMounted = function () { };
+    Block.prototype.componentMounted = function () {
+    };
     Block.prototype._attachEvents = function () {
         var _this = this;
         this.events.forEach(function (event) {
@@ -102,8 +103,6 @@ var Block = /** @class */ (function () {
         this.element.innerHTML = block;
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return block;
-    };
-    Block.prototype.render = function () {
     };
     Block.prototype.forceUpdate = function (prev) {
         if (prev)

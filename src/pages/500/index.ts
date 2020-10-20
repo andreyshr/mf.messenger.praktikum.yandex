@@ -6,7 +6,7 @@ import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
 
 export default class Page500 extends Block {
-    constructor(props: any) {
+    constructor(props: Props) {
         super("div", props);
     }
 

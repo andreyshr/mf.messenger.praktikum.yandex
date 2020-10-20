@@ -1,7 +1,6 @@
 import { EventBus } from "../event-bus/event-bus.js";
-import { IProps, IMeta } from "./types";
 
-class Block {
+abstract class Block {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -10,15 +9,15 @@ class Block {
         FLOW_RENDER: "flow:render",
     };
 
-    private _element: Node | null = null;
-    private _meta: IMeta | null = null;
-    private _parent: Block | null;
-    private _children: Array<Block> | null;
-    props: IProps;
+    private _element: Nullable<Node> = null;
+    private _meta: Nullable<Meta> = null;
+    private _parent: Nullable<Block> = null;
+    private _children: Block[] = [];
+    props: Props;
+    events: BlockEvent[];
     eventBus: () => EventBus;
-    events: any;
 
-    protected constructor(tagName: string = "div", props: IProps = {}) {
+    protected constructor(tagName: string = "div", props: Props = {}) {
         const eventBus = new EventBus();
 
         this._meta = {
@@ -31,9 +30,6 @@ class Block {
         this.eventBus = () => eventBus;
 
         this.events = this.props.events || [];
-
-        this._parent = null;
-        this._children = [];
 
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -64,7 +60,7 @@ class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    componentDidMount(oldProps?: any) {
+    componentDidMount(oldProps?: Props) {
         return oldProps;
     }
 
@@ -101,10 +97,12 @@ class Block {
         this.componentMounted();
     }
 
-    componentMounted() {}
+    componentMounted() {
+
+    }
 
     private _attachEvents() {
-        this.events.forEach((event: any) => {
+        this.events.forEach((event: BlockEvent) => {
             if (this.getContent()) {
                 const target = this.getContent().querySelector(event.el);
                 target ? target.addEventListener(event.type, event.handler.bind(this)) : null;
@@ -112,7 +110,7 @@ class Block {
         })
     }
 
-    setProps = (nextProps: IProps) => {
+    setProps = (nextProps: Props) => {
         if (!nextProps) {
             return;
         }
@@ -125,14 +123,13 @@ class Block {
     }
 
     private _render(): string {
-        const block: any = this.render();
+        const block: string = this.render();
         this.element.innerHTML = block;
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return block;
     }
 
-    render() {
-    }
+    abstract render(): string
 
     forceUpdate(prev?: Block): string {
         if (prev) this._parent = prev;
@@ -143,7 +140,7 @@ class Block {
         return this.element as HTMLElement;
     }
 
-    _makePropsProxy(props: IProps) {
+    _makePropsProxy(props: Props) {
         return new Proxy(props, {
             get: (target, prop) => {
                 const value = target[prop];
