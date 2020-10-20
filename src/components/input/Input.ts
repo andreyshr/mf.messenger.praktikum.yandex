@@ -16,6 +16,8 @@ export default class Input extends Block {
         this.bus.on(EVENTS.FORM_INVALID, this.showError);
 
         this.input = this.getContent().querySelector("input");
+
+        Block._instances.push(this);
     }
 
     showError = (...inputs: any) => {

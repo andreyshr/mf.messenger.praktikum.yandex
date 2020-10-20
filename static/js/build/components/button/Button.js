@@ -15,8 +15,10 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
-    function Button(props) {
-        return _super.call(this, "div", props) || this;
+    function Button(tag, props) {
+        var _this = _super.call(this, tag, props) || this;
+        Block._instances.push(_this);
+        return _this;
     }
     Button.prototype.onClick = function () {
     };

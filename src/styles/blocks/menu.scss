@@ -26,11 +26,6 @@
     top: -26px;
 }
 
-.menu--emoji {
-    width: 384px;
-    padding: 8px;
-}
-
 .menu:hover {
     display: block;
 }
@@ -84,16 +79,24 @@
     flex-direction: column;
 }
 
-.menu__list--emoji {
-    flex-direction: row;
-    flex-wrap: wrap;
-}
+//
 
-.menu__list--emoji .menu__item {
-    margin-bottom: 0;
-}
+.menu--emoji {
+    width: 384px;
+    padding: 8px;
 
-.menu__list--emoji .menu__button {
-    font-size: 18px;
-    line-height: 18px;
+    .menu__list {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .menu__item {
+        margin-bottom: 0;
+    }
+
+    .menu__button {
+        font-size: 18px;
+        line-height: 18px;
+    }
+
 }

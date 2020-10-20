@@ -38,16 +38,12 @@ var HTTP = /** @class */ (function () {
     function HTTP() {
     }
     HTTP.post = function (endpoint, data) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, { endpoint: endpoint, data: data }];
-            });
-        });
+        return Promise.resolve({ endpoint: endpoint, data: data });
     };
     HTTP.put = function (endpoint, data) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, { endpoint: endpoint, data: data }];
+                return [2 /*return*/, Promise.resolve({ endpoint: endpoint, data: data })];
             });
         });
     };

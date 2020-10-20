@@ -4,6 +4,6 @@ type ValidationRule = typeof ruleValues[number]
 
 type VerifiableInput = {
     name: string,
-    value: any,
+    value: string,
     rule: ValidationRule
 }

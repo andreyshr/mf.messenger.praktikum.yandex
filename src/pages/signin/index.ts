@@ -10,51 +10,16 @@ import { render } from "../../utils/renderDOM.js";
 
 import "../../utils/handlebars-helpers.js";
 
-const inputsProps: PropsInput[] = [
-    {
-        name: "login",
-        id: "login",
-        label: "Логин",
-        required: "required",
-        typeName: "text",
-        placeholder: "Введите логин",
-        autofocus: "autofocus",
-        errorMessage: "Обязательное поле"
-    },
-    {
-        name: "password",
-        id: "password",
-        label: "Пароль",
-        required: "password",
-        typeName: "password",
-        placeholder: "Введите пароль",
-        errorMessage: "Обязательное поле"
-    }
-];
+import { inputsProps, buttons } from "./data.js";
 
 const inputs = inputsProps.map(addInputEvents);
 
-const buttons: PropsInput[] = [
-    {
-        className: 'button button--blue w-100',
-        tagName: "button",
-        typeName: 'submit',
-        title: 'Авторизоваться'
-    },
-    {
-        className: 'button button--transparent w-100',
-        tagName: "a",
-        href: "/signup.html",
-        title: 'Зарегистрироваться'
-    }
-]
-
 const form: Form = new Form({
-        className: "form--signin",
+        className: "form form--signin",
         action: "signin",
         title: "Вход",
         inputs: inputs.map(props => new Input(props)),
-        buttons: buttons.map(props => new Button(props)),
+        buttons: buttons.map(props => new Button(props.tagName === "button"? "button" : "a", props)),
         events: [
             {
                 type: "submit",
@@ -74,7 +39,7 @@ export default class SignInPage extends Block {
 
     render() {
         return Handlebars.compile(template)({
-            form: this.props.form.forceUpdate(this)
+            form: this.props.form.renderToString()
         });
     }
 }
@@ -84,6 +49,8 @@ const signInPage = new SignInPage({
 })
 
 render(".app", signInPage);
+
+Block.hydrate();
 
 
 

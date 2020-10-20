@@ -1,4 +1,4 @@
-var data = [
+export var inputsProps = [
     {
         name: "name",
         id: "name",
@@ -55,5 +55,22 @@ var data = [
         errorMessage: "Символы латинского алфавита и цифры(мин. 6)"
     }
 ];
-export default data;
+export var buttons = [
+    {
+        className: 'button button--blue w-100',
+        tagName: "button",
+        attributes: {
+            type: "submit",
+        },
+        title: 'Зарегистрироваться'
+    },
+    {
+        className: 'button button--transparent w-100',
+        tagName: "a",
+        attributes: {
+            href: "/signin.html",
+        },
+        title: 'Войти'
+    }
+];
 //# sourceMappingURL=data.js.map

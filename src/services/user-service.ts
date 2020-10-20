@@ -1,24 +1,20 @@
 import {HTTP} from "./HTTP.js";
 
 export class UserService {
-    auth(login: any, password: any) {
+    auth(login: string, password: string) {
         return HTTP.post('/api/signin', {login, password})
-            .then(function (data: any) {
-                console.log(data);
-            }.bind(this));
+            .then((data: any) => console.log(data));
     }
 
-    signup(name: any, second_name: any, email: any, password: any, login: any, phone: any) {
+    signup(data: { name: string, second_name: string, email: string, password: string, login: string, phone: string }) {
+        const { name, second_name, email, password, login, phone } = data;
         return HTTP.post('/api/signup', {name, second_name, email, login, password, phone})
-            .then(function (data: any) {
-                console.log(data);
-            }.bind(this));
+            .then((data: any) => console.log(data));
     }
 
-    profile(first_name: any, second_name: any, display_name: any, login: any, newPassword:any, oldPassword:any, email: any, phone: any) {
+    profile(data: { first_name: string, second_name: string, display_name: string, login: string, newPassword: string, oldPassword: string, email: string, phone: string }) {
+        const { first_name, second_name, display_name, login, newPassword, oldPassword, email, phone } = data;
         return HTTP.put('/user/profile', {first_name, second_name, display_name, login, newPassword, oldPassword, email, phone})
-            .then(function (data: any) {
-                console.log(data);
-            }.bind(this));
+            .then((data: any) => console.log(data));
     }
 }

@@ -11,12 +11,15 @@ export default class Page404 extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({});
+        return Handlebars.compile(template)(this.props);
     }
 }
 
 const page404 = new Page404({
-
+    title: "404",
+    description: "Не туда попали",
+    linkTitle: "Назад к чатам",
+    linkHref: "/messenger.html"
 })
 
 render(".app", page404);

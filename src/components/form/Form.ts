@@ -15,7 +15,7 @@ export default class Form extends Block {
     userService: UserService;
 
     constructor(props: any) {
-        super("div", props);
+        super("form", props);
 
         this.state = {
             inputs: this.props.inputs.reduce(this.createStateInputs, {}),
@@ -38,6 +38,8 @@ export default class Form extends Block {
 
         this.validator = new Validator();
         this.userService = new UserService();
+
+        Block._instances.push(this);
     }
 
     createStateInputs(acc: any, input: Block) {
@@ -76,13 +78,11 @@ export default class Form extends Block {
                     .catch(e => console.log(e));
             }
             if (this.props.action === "signup") {
-                const { name, second_name, email, password, login, phone } = this.state.inputs;
-                this.userService.signup(name, second_name, email, password, login, phone)
+                this.userService.signup(this.state.inputs)
                     .catch(e => console.log(e));
             }
             if (this.props.action === "profile") {
-                const { first_name, second_name, display_name, login, newPassword, oldPassword, email, phone } = this.state.inputs;
-                this.userService.profile(first_name, second_name, display_name, login, newPassword, oldPassword, email, phone)
+                this.userService.profile(this.state.inputs)
                     .catch(e => console.log(e));
             }
         }
@@ -92,8 +92,8 @@ export default class Form extends Block {
         return Handlebars.compile(this.props.template === "profile" ? templateProfile : templateMain)({
             className: this.props.className,
             title: this.props.title,
-            inputs: this.props.inputs.map((input: any) => input.forceUpdate(this)),
-            buttons: this.props.buttons.map((button: any) => button.forceUpdate(this))
+            inputs: this.props.inputs.map((input: Block) => input.renderToString()),
+            buttons: this.props.buttons.map((button: Block) => button.renderToString())
         });
     }
 }

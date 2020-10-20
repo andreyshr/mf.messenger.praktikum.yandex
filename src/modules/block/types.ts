@@ -1,12 +1,18 @@
 type BlockEvent = {
     type: string,
     el: string,
-    handler(): any
+    handler(...args: any): any
+}
+
+type Attributes = {
+    [key: string]: string,
 }
 
 type Meta = {
     tagName: string,
-    props: Props
+    props: Props,
+    className?: string,
+    attributes?: Attributes
 }
 
 type Props = {

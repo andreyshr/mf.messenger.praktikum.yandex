@@ -1,4 +1,4 @@
-import { EventBus } from "../event-bus/event-bus.js";
+import {EventBus} from "../event-bus/event-bus.js";
 
 abstract class Block {
     static EVENTS = {
@@ -9,10 +9,22 @@ abstract class Block {
         FLOW_RENDER: "flow:render",
     };
 
-    private _element: Nullable<Node> = null;
+    static _instances: Block[] = [];
+
+    static hydrate() {
+        for (const i of this._instances) {
+            const el = document.querySelector(`[_key=${i.id}`);
+            if (el) {
+                i.setElement(el as HTMLElement);
+                i._attachEvents();
+            }
+        }
+    }
+
+    private _element: Nullable<HTMLElement> = null;
     private _meta: Nullable<Meta> = null;
-    private _parent: Nullable<Block> = null;
-    private _children: Block[] = [];
+    private readonly _id: string;
+    private _mounted: boolean = false;
     props: Props;
     events: BlockEvent[];
     eventBus: () => EventBus;
@@ -20,9 +32,13 @@ abstract class Block {
     protected constructor(tagName: string = "div", props: Props = {}) {
         const eventBus = new EventBus();
 
+        this._id = 'uniq' + parseInt(String(Math.random() * 1000000));
+
         this._meta = {
             tagName,
-            props
+            props,
+            className: props.className,
+            attributes: props.attributes
         };
 
         this.props = this._makePropsProxy(props);
@@ -45,9 +61,34 @@ abstract class Block {
 
     private _createResources() {
         const tagName = this._meta?.tagName;
+
         if (tagName) {
-            this._element = this._createDocumentElement(tagName);
+            (this._element as Node) = this._createDocumentElement(tagName);
         }
+
+        if (this._element) {
+            if (this._meta?.className) this._element.className = this.props.className;
+            if (this._meta?.attributes) {
+                Object.keys(this._meta.attributes).forEach((attr: string) => {
+                    // @ts-ignore
+                    this._element?.setAttribute(attr, this._meta?.attributes[attr] as string);
+                })
+            }
+        }
+
+        this._element?.setAttribute('_key', this.id);
+    }
+
+    setElement(element: HTMLElement) {
+        this._element = element;
+    }
+
+    get element(): HTMLElement {
+        return this._element as HTMLElement;
+    }
+
+    get id(): string {
+        return this._id;
     }
 
     init() {
@@ -64,35 +105,24 @@ abstract class Block {
         return oldProps;
     }
 
-    private _componentDidUpdate(oldProp: any, newProp: any): boolean {
+    private _componentDidUpdate(oldProp: string, newProp: string): boolean {
         if (oldProp === newProp) return false;
 
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-
-        if (this._parent) {
-            let el = this._parent;
-            while (el?._parent) {
-                el = el._parent
-            }
-            el?.forceUpdate();
-        }
 
         this.componentDidUpdate(oldProp, newProp);
 
         return true;
     }
 
-    componentDidUpdate(oldProp: any, newProp: any): boolean {
+    componentDidUpdate(oldProp: string, newProp: string): boolean {
         return oldProp === newProp;
     }
 
     private _componentMounted() {
-        if (!this._parent) this._attachEvents();
-        else {
-            this.events.forEach((event: any) => {
-                if (!this._parent?.events.includes(event)) this._parent?.events.push(event);
-            })
-        }
+        if (!this._mounted) this._attachEvents();
+
+        this._mounted = true;
 
         this.componentMounted();
     }
@@ -102,12 +132,17 @@ abstract class Block {
     }
 
     private _attachEvents() {
-        this.events.forEach((event: BlockEvent) => {
-            if (this.getContent()) {
-                const target = this.getContent().querySelector(event.el);
-                target ? target.addEventListener(event.type, event.handler.bind(this)) : null;
-            }
-        })
+        const element = this.getContent();
+        if (element) {
+            this.events.forEach((event: BlockEvent) => {
+                const targetElement = element.querySelector(event.el);
+                if (targetElement) {
+                    targetElement.addEventListener(event.type, event.handler.bind(this));
+                } else {
+                    element.addEventListener(event.type, event.handler.bind(this));
+                }
+            });
+        }
     }
 
     setProps = (nextProps: Props) => {
@@ -118,23 +153,22 @@ abstract class Block {
         Object.assign(this.props, nextProps);
     };
 
-    get element(): HTMLElement {
-        return this._element as HTMLElement;
-    }
-
     private _render(): string {
         const block: string = this.render();
-        this.element.innerHTML = block;
+        if (this._element) this._element.innerHTML = block;
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return block;
     }
 
-    abstract render(): string
-
-    forceUpdate(prev?: Block): string {
-        if (prev) this._parent = prev;
-        return this._render();
+    renderToString(): string {
+        const wrapper = document.createElement('div');
+        if (this._element) this._element.innerHTML = this.render();
+        wrapper.appendChild(this._element as HTMLElement);
+        this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
+        return wrapper.innerHTML;
     }
+
+    abstract render(): string
 
     getContent(): HTMLElement {
         return this.element as HTMLElement;
@@ -144,9 +178,6 @@ abstract class Block {
         return new Proxy(props, {
             get: (target, prop) => {
                 const value = target[prop];
-                if (value instanceof Block && Array.isArray(this._children)) {
-                    this._children.push(value);
-                }
                 return typeof value === "function" ? value.bind(this) : value;
             },
             set: (target: any, prop: string, nextVal: any): boolean => {

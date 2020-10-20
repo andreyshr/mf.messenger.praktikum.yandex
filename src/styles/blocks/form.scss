@@ -1,11 +1,16 @@
 .form {
     display: flex;
-    flex-direction: column;
     min-width: 320px;
     padding: 70px 30px 30px 30px;
     margin: auto;
     box-shadow: var(--shadow);
     border-radius: 12px;
+}
+
+.form__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .form--signin {

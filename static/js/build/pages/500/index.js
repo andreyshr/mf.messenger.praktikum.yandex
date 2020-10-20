@@ -21,11 +21,16 @@ var Page500 = /** @class */ (function (_super) {
         return _super.call(this, "div", props) || this;
     }
     Page500.prototype.render = function () {
-        return Handlebars.compile(template)({});
+        return Handlebars.compile(template)(this.props);
     };
     return Page500;
 }(Block));
 export default Page500;
-var page500 = new Page500({});
+var page500 = new Page500({
+    title: "500",
+    description: "Мы уже фиксим",
+    linkTitle: "Назад к чатам",
+    linkHref: "/messenger.html"
+});
 render(".app", page500);
 //# sourceMappingURL=index.js.map

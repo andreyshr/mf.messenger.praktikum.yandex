@@ -1,2 +1,2 @@
-export var template = "\n    {{#if_eq tagName \"a\"}}\n        <a href={{ href }} class=\"{{ className }}\">\n            {{ title }}\n        </a>\n    {{else}}\n        <button class=\"{{ className }}\" type=\"{{ typeName }}\">\n            {{ title }}\n        </button>\n    {{/if_eq}}\n";
+export var template = "\n        <span>{{{ icon }}} {{ title }}</span>\n";
 //# sourceMappingURL=template.js.map

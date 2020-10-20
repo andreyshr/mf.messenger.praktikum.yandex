@@ -13,19 +13,29 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
+import Room from "../../components/room/Room.js";
+import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
-var Messenger = /** @class */ (function (_super) {
-    __extends(Messenger, _super);
-    function Messenger(props) {
+import { rooms } from "../messenger-chat/data.js";
+var MessengerChat = /** @class */ (function (_super) {
+    __extends(MessengerChat, _super);
+    function MessengerChat(props) {
         return _super.call(this, "div", props) || this;
     }
-    Messenger.prototype.render = function () {
-        return Handlebars.compile(template)({});
+    MessengerChat.prototype.render = function () {
+        return Handlebars.compile(template)({
+            rooms: this.props.rooms.map(function (room) { return room.renderToString(); }),
+            sidebarHeader: this.props.sidebarHeader.renderToString(),
+        });
     };
-    return Messenger;
+    return MessengerChat;
 }(Block));
-export default Messenger;
-var messenger = new Messenger({});
-render(".app", messenger);
+export default MessengerChat;
+var messengerChat = new MessengerChat({
+    rooms: rooms.map(function (props) { return new Room(props); }),
+    sidebarHeader: new SidebarHeader({}),
+});
+render(".app", messengerChat);
+Block.hydrate();
 //# sourceMappingURL=index.js.map
