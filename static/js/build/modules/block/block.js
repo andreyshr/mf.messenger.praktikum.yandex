@@ -56,9 +56,9 @@ var Block = /** @class */ (function () {
                 this._element.className = this.props.className;
             if ((_c = this._meta) === null || _c === void 0 ? void 0 : _c.attributes) {
                 Object.keys(this._meta.attributes).forEach(function (attr) {
-                    var _a, _b;
-                    // @ts-ignore
-                    (_a = _this._element) === null || _a === void 0 ? void 0 : _a.setAttribute(attr, (_b = _this._meta) === null || _b === void 0 ? void 0 : _b.attributes[attr]);
+                    var _a, _b, _c;
+                    if ((_a = _this._meta) === null || _a === void 0 ? void 0 : _a.attributes)
+                        (_b = _this._element) === null || _b === void 0 ? void 0 : _b.setAttribute(attr, (_c = _this._meta) === null || _c === void 0 ? void 0 : _c.attributes[attr]);
                 });
             }
         }
