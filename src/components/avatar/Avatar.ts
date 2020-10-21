@@ -1,10 +1,10 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
-export default class Button extends Block {
-    constructor(tag: string, props: Props) {
-        super(tag, props);
-
+export default class Avatar extends Block {
+    avatar: Block;
+    constructor(props: Props) {
+        super("div", props);
         Block._instances.push(this);
     }
 

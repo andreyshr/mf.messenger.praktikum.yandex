@@ -1,6 +1,8 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
+import Button from "../button/Button.js";
+
 export default class Dialog extends Block {
     constructor(props: Props) {
         super("div", props);
@@ -9,7 +11,10 @@ export default class Dialog extends Block {
     }
 
     render() {
-        console.log(this.props)
-        return Handlebars.compile(template)(this.props);
+        return Handlebars.compile(template)({
+            ...this.props,
+            removeButton: new Button("button", this.props.removeButton).renderToString(),
+            cancelButton: new Button("button", this.props.cancelButton).renderToString(),
+        });
     }
 }

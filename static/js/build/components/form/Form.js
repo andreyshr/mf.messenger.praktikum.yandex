@@ -105,7 +105,9 @@ var Form = /** @class */ (function (_super) {
             className: this.props.className,
             title: this.props.title,
             inputs: this.props.inputs.map(function (input) { return input.renderToString(); }),
-            buttons: this.props.buttons.map(function (button) { return button.renderToString(); })
+            buttons: this.props.buttons.map(function (button) { return button.renderToString(); }),
+            avatar: this.props.template === "profile" ? this.props.avatar.renderToString() : "",
+            avatarLoadButton: this.props.template === "profile" ? this.props.avatarLoadButton.renderToString() : "",
         });
     };
     return Form;

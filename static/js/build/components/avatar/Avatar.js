@@ -13,17 +13,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
-var Button = /** @class */ (function (_super) {
-    __extends(Button, _super);
-    function Button(tag, props) {
-        var _this = _super.call(this, tag, props) || this;
+var Avatar = /** @class */ (function (_super) {
+    __extends(Avatar, _super);
+    function Avatar(props) {
+        var _this = _super.call(this, "div", props) || this;
         Block._instances.push(_this);
         return _this;
     }
-    Button.prototype.render = function () {
+    Avatar.prototype.render = function () {
         return Handlebars.compile(template)(this.props);
     };
-    return Button;
+    return Avatar;
 }(Block));
-export default Button;
-//# sourceMappingURL=Button.js.map
+export default Avatar;
+//# sourceMappingURL=Avatar.js.map

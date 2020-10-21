@@ -1,12 +1,12 @@
 export const template = `
     <form class="{{ className }}" method="post" action="#">
-                <div class="avatar avatar--lg">
-                    <div class="avatar__wrapper">
-                        <span class="avatar__stub">АШ</span>
-                    </div>
-                </div>
+                
+                {{{ avatar }}}
+                
                 <div class="profile__form-row profile__form-row--borderless">
-                    <label for="avatar" class="button button--transparent ml-auto mr-auto">Загрузить аватар</label>
+                    
+                    {{{ avatarLoadButton }}}
+                    
                     <input id="avatar" type="file" name="avatar"/>
                 </div>
                 <h1 class="profile__form-title">{{ title }}</h1>

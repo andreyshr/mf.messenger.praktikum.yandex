@@ -123,12 +123,6 @@ abstract class Block {
         if (!this._mounted) this._attachEvents();
 
         this._mounted = true;
-
-        this.componentMounted();
-    }
-
-    componentMounted() {
-
     }
 
     private _attachEvents() {
@@ -176,11 +170,11 @@ abstract class Block {
 
     _makePropsProxy(props: Props) {
         return new Proxy(props, {
-            get: (target, prop) => {
+            get: (target: Props, prop: string) => {
                 const value = target[prop];
                 return typeof value === "function" ? value.bind(this) : value;
             },
-            set: (target: any, prop: string, nextVal: any): boolean => {
+            set: (target: Props, prop: string, nextVal: any): boolean => {
                 const oldVal = target[prop];
                 target[prop] = nextVal;
                 this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldVal, nextVal);

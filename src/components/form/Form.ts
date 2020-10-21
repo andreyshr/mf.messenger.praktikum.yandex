@@ -14,7 +14,7 @@ export default class Form extends Block {
     validator: Validator;
     userService: UserService;
 
-    constructor(props: any) {
+    constructor(props: Props) {
         super("form", props);
 
         this.state = {
@@ -93,7 +93,9 @@ export default class Form extends Block {
             className: this.props.className,
             title: this.props.title,
             inputs: this.props.inputs.map((input: Block) => input.renderToString()),
-            buttons: this.props.buttons.map((button: Block) => button.renderToString())
+            buttons: this.props.buttons.map((button: Block) => button.renderToString()),
+            avatar: this.props.template === "profile" ? this.props.avatar.renderToString() : "",
+            avatarLoadButton: this.props.template === "profile" ? this.props.avatarLoadButton.renderToString() : "",
         });
     }
 }

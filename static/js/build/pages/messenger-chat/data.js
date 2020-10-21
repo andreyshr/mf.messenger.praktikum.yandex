@@ -26,27 +26,16 @@ export var rooms = [
         stubLetters: "Т",
         message: "И Human Interface Guidelines и Material Design рекомендуют...",
         link: "/messenger-chat.html",
-        time: "Ср",
-        events: [
-            {
-                el: "[data-room-id='3']",
-                type: "click",
-                handler: function (evt) {
-                    evt.preventDefault();
-                    console.log(evt);
-                }
-            }
-        ]
+        time: "Ср"
     },
     {
         id: "4",
         className: "sidebar__list-item",
-        name: "",
-        avatarImg: "",
-        newMessagesCount: "",
-        message: "",
+        name: "Илья",
+        stubLetters: "И",
+        message: "Привет",
         link: "/messenger-chat.html",
-        time: ""
+        time: "Вчера"
     },
     {
         id: "5",
@@ -162,6 +151,7 @@ export var workspaceHeader = {
     chatName: "Вадим",
     userLastActiveTime: "Был 5 минут назад",
     historyTime: "19 июня",
+    avatarImg: "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png",
     menuChat: menuChat
 };
 export var messageInputForm = {
@@ -170,6 +160,17 @@ export var messageInputForm = {
         className: "button button--icon button--round button--blue",
         type: "submit",
         icon: "<svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <circle cx=\"14\" cy=\"14\" r=\"14\" fill=\"#3369F3\"/> <rect x=\"8\" y=\"13.2002\" width=\"11\" height=\"1.6\" fill=\"white\"/> <path d=\"M15 9L19 14L15 19\" stroke=\"white\" stroke-width=\"1.6\"/> </svg>"
+    }
+};
+export var dialog = {
+    title: "Вы хотите удалить чат?",
+    removeButton: {
+        className: "button button--md button--red",
+        title: "Удалить"
+    },
+    cancelButton: {
+        className: "button button--md button--gray js-close-dialog-button",
+        title: "Отменить"
     }
 };
 //# sourceMappingURL=data.js.map

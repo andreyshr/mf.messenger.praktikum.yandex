@@ -33,7 +33,6 @@ var Menu = /** @class */ (function (_super) {
         return _this;
     }
     Menu.prototype.render = function () {
-        console.log(this.props);
         return Handlebars.compile(template)(__assign(__assign({}, this.props), { buttonMenuOpener: new Button("button", this.props.buttonMenuOpener).renderToString() }));
     };
     return Menu;
