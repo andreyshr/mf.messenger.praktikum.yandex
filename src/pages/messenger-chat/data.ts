@@ -160,6 +160,11 @@ export const workspaceHeader: Props = {
     menuChat
 }
 
+export const workspaceEmpty: Props = {
+    className: "workspace__empty w-100 h-100",
+    title: "Выберите чат чтобы отправить сообщение"
+}
+
 export const messageInputForm: Props = {
     className: "workspace__user-form",
     buttonSendMessage: {
