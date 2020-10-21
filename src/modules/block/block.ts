@@ -70,8 +70,7 @@ abstract class Block {
             if (this._meta?.className) this._element.className = this.props.className;
             if (this._meta?.attributes) {
                 Object.keys(this._meta.attributes).forEach((attr: string) => {
-                    // @ts-ignore
-                    this._element?.setAttribute(attr, this._meta?.attributes[attr] as string);
+                    if (this._meta?.attributes) this._element?.setAttribute(attr, this._meta?.attributes[attr] as string);
                 })
             }
         }
