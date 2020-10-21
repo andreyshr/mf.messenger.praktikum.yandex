@@ -12,9 +12,9 @@ export const template = `
             </div>
         </aside>
         <main class="messenger__workspace workspace">
-            <div class="workspace__empty w-100 h-100">
-                <span>Выберите чат чтобы отправить сообщение</span>
-            </div>
+        
+            {{{ workspaceEmpty }}}
+        
         </main>
     </div>
 </div>

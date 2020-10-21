@@ -6,12 +6,12 @@
     width: 47px;
     height: 47px;
     border-radius: 50%;
-    overflow: hidden;
     background: var(--color-gray-2);
 }
 
 .avatar__wrapper {
-
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .avatar__stub {

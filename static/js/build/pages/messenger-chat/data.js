@@ -154,6 +154,10 @@ export var workspaceHeader = {
     avatarImg: "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png",
     menuChat: menuChat
 };
+export var workspaceEmpty = {
+    className: "workspace__empty w-100 h-100",
+    title: "Выберите чат чтобы отправить сообщение"
+};
 export var messageInputForm = {
     className: "workspace__user-form",
     buttonSendMessage: {
