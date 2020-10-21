@@ -148,11 +148,8 @@ li {
   width: 47px;
   height: 47px;
   border-radius: 50%;
-  background: var(--color-gray-2);
-}
-
-.avatar__wrapper {
   overflow: hidden;
+  background: var(--color-gray-2);
 }
 
 .avatar__stub {

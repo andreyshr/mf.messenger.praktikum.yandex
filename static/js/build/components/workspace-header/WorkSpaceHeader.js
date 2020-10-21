@@ -25,6 +25,7 @@ var __assign = (this && this.__assign) || function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Menu from "../menu/Menu.js";
+import Avatar from "../avatar/Avatar.js";
 var WorkSpaceHeader = /** @class */ (function (_super) {
     __extends(WorkSpaceHeader, _super);
     function WorkSpaceHeader(props) {
@@ -33,7 +34,11 @@ var WorkSpaceHeader = /** @class */ (function (_super) {
         return _this;
     }
     WorkSpaceHeader.prototype.render = function () {
-        return Handlebars.compile(template)(__assign(__assign({}, this.props), { menuChat: new Menu(this.props.menuChat).renderToString() }));
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { menuChat: new Menu(this.props.menuChat).renderToString(), avatar: new Avatar({
+                className: "room__avatar avatar avatar--sm",
+                avatarImg: this.props.avatarImg,
+                stubLetters: this.props.stubLetters
+            }).renderToString() }));
     };
     return WorkSpaceHeader;
 }(Block));

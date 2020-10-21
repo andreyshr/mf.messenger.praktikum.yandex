@@ -4,6 +4,7 @@ import { template } from "./template.js";
 import Button from "../../components/button/Button.js";
 import Form from "../../components/form/Form.js";
 import Input from "../../components/input/Input.js";
+import Avatar from "../../components/avatar/Avatar.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
 
 import { render } from "../../utils/renderDOM.js";
@@ -21,6 +22,8 @@ const form: Form = new Form({
         title: "Андрей Шауров",
         inputs: inputs.map(props => new Input(props)),
         buttons: buttons.map(props => new Button("button", props)),
+        avatar: new Avatar({ className: "avatar avatar--lg", stubLetters: "АШ" }),
+        avatarLoadButton: new Button("label", { title: "Загрузить аватар", className: "button button--transparent ml-auto mr-auto", attributes: { for: "avatar" } }),
         events: [
             {
                 type: "submit",

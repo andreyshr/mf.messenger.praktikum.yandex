@@ -7,20 +7,17 @@ import EVENTS from "../../modules/event-bus/events.js";
 
 export default class Input extends Block {
     bus: AppBus;
-    input: HTMLInputElement | null;
 
-    constructor(props: any) {
+    constructor(props: Props) {
         super("div", props);
 
         this.bus = new AppBus();
         this.bus.on(EVENTS.FORM_INVALID, this.showError);
 
-        this.input = this.getContent().querySelector("input");
-
         Block._instances.push(this);
     }
 
-    showError = (...inputs: any) => {
+    showError = (...inputs: Props[]) => {
         const input = inputs.find((input: any) => input.name === this.props.name);
         if (!input) return;
         const node = document.querySelector(`.error-message[data-name=${input.name}]`);

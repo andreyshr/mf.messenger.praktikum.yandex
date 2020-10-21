@@ -22,7 +22,7 @@ import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 import { render } from "../../utils/renderDOM.js";
 import "../../utils/handlebars-helpers.js";
-import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm } from "./data.js";
+import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm, dialog } from "./data.js";
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);
     function MessengerChat(props) {
@@ -48,7 +48,7 @@ var messengerChat = new MessengerChat({
     messages: messages.map(function (props) { return new Message(props); }),
     menuEmoji: new Menu(menuEmoji),
     menuMessage: new Menu(menuMessage),
-    dialogRemoveChat: new Dialog({}),
+    dialogRemoveChat: new Dialog(dialog),
     workspaceHeader: new WorkSpaceHeader(workspaceHeader),
     messageInputForm: new MessageInputForm(messageInputForm),
     sidebarHeader: new SidebarHeader({}),

@@ -106,9 +106,6 @@ var Block = /** @class */ (function () {
         if (!this._mounted)
             this._attachEvents();
         this._mounted = true;
-        this.componentMounted();
-    };
-    Block.prototype.componentMounted = function () {
     };
     Block.prototype._attachEvents = function () {
         var _this = this;

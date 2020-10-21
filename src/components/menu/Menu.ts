@@ -10,7 +10,6 @@ export default class Menu extends Block {
     }
 
     render() {
-        console.log(this.props)
         return Handlebars.compile(template)({
             ...this.props,
             buttonMenuOpener: new Button("button", this.props.buttonMenuOpener).renderToString()
