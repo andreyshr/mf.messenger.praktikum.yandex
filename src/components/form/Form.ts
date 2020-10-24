@@ -28,13 +28,13 @@ export default class Form extends Block {
         }
 
         this.bus = new AppBus();
-        this.bus.on(EVENTS.FORM_INPUT, (name: string, value: string) => {
+        this.bus.on(EVENTS.FORM_INPUT, (name: string, value: string): void => {
             this.state.inputs[name] = value;
             const errors: ValidatedInput[] = [this.validator.validate(this.createVerifiableInput(name))];
 
             this.bus.emit(EVENTS.FORM_INVALID, ...errors);
         })
-        this.bus.on(EVENTS.FORM_VALIDATE, (name: string) => {
+        this.bus.on(EVENTS.FORM_VALIDATE, (name: string): void => {
             const errors: ValidatedInput[] = [this.validator.validate(this.createVerifiableInput(name))];
 
             this.bus.emit(EVENTS.FORM_INVALID, ...errors);
