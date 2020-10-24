@@ -1,3 +1,4 @@
+// особенность расширений импортов описана в README.md
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import {PropsInput} from "../components/input/types";
