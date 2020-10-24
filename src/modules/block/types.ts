@@ -1,7 +1,7 @@
 export type BlockEvent = {
     type: string,
     el: string,
-    handler(...args: any): any
+    handler(...args: any[]): any
 }
 
 export type Attributes = {
