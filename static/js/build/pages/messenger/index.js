@@ -17,7 +17,6 @@ import Room from "../../components/room/Room.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
 import { render } from "../../utils/renderDOM.js";
-import "../../utils/handlebars-helpers.js";
 import { rooms, workspaceEmpty } from "../messenger-chat/data.js";
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);

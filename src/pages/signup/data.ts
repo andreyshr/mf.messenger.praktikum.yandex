@@ -1,3 +1,6 @@
+import {PropsInput} from "../../components/input/types";
+import {Props} from "../../modules/block/types";
+
 export const inputsProps: PropsInput[] = [
     {
         name: "name",

@@ -9,9 +9,9 @@ import { addInputEvents } from "../../utils/add-input-events.js";
 
 import { render } from "../../utils/renderDOM.js";
 
-import "../../utils/handlebars-helpers.js";
-
 import { inputsProps, buttons, buttonBack } from "./data.js";
+
+import {Props} from "../../modules/block/types";
 
 const inputs = inputsProps.map(addInputEvents);
 

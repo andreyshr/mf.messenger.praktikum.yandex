@@ -11,7 +11,7 @@ import MessageInputForm from "../../components/message-input-form/MessageInputFo
 
 import { render } from "../../utils/renderDOM.js";
 
-import "../../utils/handlebars-helpers.js";
+import {Props} from "../../modules/block/types";
 
 import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm, dialog } from "./data.js";
 

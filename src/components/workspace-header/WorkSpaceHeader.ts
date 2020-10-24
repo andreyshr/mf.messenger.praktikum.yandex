@@ -4,6 +4,8 @@ import { template } from "./template.js";
 import Menu from "../menu/Menu.js";
 import Avatar from "../avatar/Avatar.js";
 
+import {Props} from "../../modules/block/types";
+
 export default class WorkSpaceHeader extends Block {
     constructor(props: Props) {
         super("header", props);

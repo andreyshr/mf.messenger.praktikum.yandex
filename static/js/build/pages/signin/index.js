@@ -18,7 +18,6 @@ import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
 import { render } from "../../utils/renderDOM.js";
-import "../../utils/handlebars-helpers.js";
 import { inputsProps, buttons } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
 var form = new Form({

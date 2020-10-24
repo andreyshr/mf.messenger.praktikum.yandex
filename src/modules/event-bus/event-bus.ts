@@ -1,3 +1,5 @@
+import {Listeners, Listener} from "./types";
+
 export class EventBus {
     listeners: Listeners;
 

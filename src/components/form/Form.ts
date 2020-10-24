@@ -8,6 +8,10 @@ import EVENTS from "../../modules/event-bus/events.js";
 import { Validator } from "../../modules/validator/validator.js";
 import { UserService } from "../../services/user-service.js";
 
+import {Props} from "../../modules/block/types";
+import {PropsInput} from "../input/types";
+import {VerifiableInput, ValidatedInput} from "../../modules/validator/types";
+
 export default class Form extends Block {
     state: any;
     bus: AppBus;
@@ -24,14 +28,14 @@ export default class Form extends Block {
         }
 
         this.bus = new AppBus();
-        this.bus.on(EVENTS.FORM_INPUT, (name, value) => {
+        this.bus.on(EVENTS.FORM_INPUT, (name: string, value: string) => {
             this.state.inputs[name] = value;
-            const errors = [this.validator.validate(this.createVerifiableInput(name))];
+            const errors: ValidatedInput[] = [this.validator.validate(this.createVerifiableInput(name))];
 
             this.bus.emit(EVENTS.FORM_INVALID, ...errors);
         })
-        this.bus.on(EVENTS.FORM_VALIDATE, (name) => {
-            const errors = [this.validator.validate(this.createVerifiableInput(name))];
+        this.bus.on(EVENTS.FORM_VALIDATE, (name: string) => {
+            const errors: ValidatedInput[] = [this.validator.validate(this.createVerifiableInput(name))];
 
             this.bus.emit(EVENTS.FORM_INVALID, ...errors);
         })
@@ -42,14 +46,14 @@ export default class Form extends Block {
         Block._instances.push(this);
     }
 
-    createStateInputs(acc: any, input: Block) {
+    createStateInputs(acc: PropsInput, input: Block) {
         return {
             ...acc,
             [input.props.name]: input.props.value || null
         }
     }
 
-    createStateRequired(acc: any, input: Block) {
+    createStateRequired(acc: PropsInput, input: Block) {
         return {
             ...acc,
             [input.props.name]: input.props.required
@@ -67,7 +71,7 @@ export default class Form extends Block {
     onSubmit(evt: Event) {
         evt.preventDefault();
         const errors = Object.keys(this.state.inputs)
-            .map((name: string) => this.validator.validate(this.createVerifiableInput(name)));
+            .map((name: string): ValidatedInput => this.validator.validate(this.createVerifiableInput(name)));
 
         this.bus.emit(EVENTS.FORM_INVALID, ...errors);
 

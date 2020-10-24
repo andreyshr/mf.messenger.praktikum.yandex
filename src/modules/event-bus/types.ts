@@ -1,5 +1,5 @@
-type Listener =  (...args: any) => any
+export type Listener =  (...args: any) => any
 
-type Listeners =  {
+export type Listeners =  {
     [key: string]: Listener[]
 }

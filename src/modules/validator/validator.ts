@@ -1,3 +1,5 @@
+import {VerifiableInput, ValidatedInput} from "./types";
+
 export class Validator {
     input: VerifiableInput
 
@@ -21,7 +23,7 @@ export class Validator {
         return regExp.test(value);
     }
 
-    validate(input: VerifiableInput) {
+    validate(input: VerifiableInput): ValidatedInput {
         const {name, value, rule} = input;
         const validateFn = this[rule];
         return {

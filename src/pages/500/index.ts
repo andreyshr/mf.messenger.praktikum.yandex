@@ -3,7 +3,7 @@ import { template } from "./template.js";
 
 import { render } from "../../utils/renderDOM.js";
 
-import "../../utils/handlebars-helpers.js";
+import {Props} from "../../modules/block/types";
 
 export default class Page500 extends Block {
     constructor(props: Props) {
