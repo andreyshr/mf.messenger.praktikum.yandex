@@ -1,21 +1,21 @@
-type BlockEvent = {
+export type BlockEvent = {
     type: string,
     el: string,
     handler(...args: any): any
 }
 
-type Attributes = {
+export type Attributes = {
     [key: string]: string,
 }
 
-type Meta = {
+export type Meta = {
     tagName: string,
     props: Props,
     className?: string,
     attributes?: Attributes
 }
 
-type Props = {
+export type Props = {
     [key: string]: any,
     events?: BlockEvent[]
 }

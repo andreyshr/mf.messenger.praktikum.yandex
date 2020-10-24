@@ -14,7 +14,7 @@ var Block = /** @class */ (function () {
             Object.assign(_this.props, nextProps);
         };
         var eventBus = new EventBus();
-        this._id = 'uniq' + parseInt(String(Math.random() * 1000000));
+        this._id = 'uniq' + String(Date.now());
         this._meta = {
             tagName: tagName,
             props: props,

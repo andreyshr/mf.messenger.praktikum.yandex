@@ -1,4 +1,6 @@
 import {EventBus} from "../event-bus/event-bus.js";
+import {Nullable} from "../../utils/utility-type";
+import {BlockEvent, Meta, Props} from "./types";
 
 abstract class Block {
     static EVENTS = {
@@ -32,7 +34,7 @@ abstract class Block {
     protected constructor(tagName: string = "div", props: Props = {}) {
         const eventBus = new EventBus();
 
-        this._id = 'uniq' + parseInt(String(Math.random() * 1000000));
+        this._id = 'uniq' + String(Date.now());
 
         this._meta = {
             tagName,

@@ -2,6 +2,7 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
 import Avatar from "../avatar/Avatar.js";
+import {Props} from "../../modules/block/types";
 
 export default class Room extends Block {
     avatar: Block;

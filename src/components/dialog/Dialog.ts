@@ -3,6 +3,8 @@ import { template } from "./template.js";
 
 import Button from "../button/Button.js";
 
+import {Props} from "../../modules/block/types";
+
 export default class Dialog extends Block {
     constructor(props: Props) {
         super("div", props);

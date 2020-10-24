@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import { render } from "../../utils/renderDOM.js";
-import "../../utils/handlebars-helpers.js";
 var Page500 = /** @class */ (function (_super) {
     __extends(Page500, _super);
     function Page500(props) {

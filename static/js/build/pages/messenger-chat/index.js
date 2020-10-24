@@ -21,7 +21,6 @@ import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.j
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 import { render } from "../../utils/renderDOM.js";
-import "../../utils/handlebars-helpers.js";
 import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm, dialog } from "./data.js";
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);

@@ -19,7 +19,6 @@ import Input from "../../components/input/Input.js";
 import Avatar from "../../components/avatar/Avatar.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
 import { render } from "../../utils/renderDOM.js";
-import "../../utils/handlebars-helpers.js";
 import { inputsProps, buttons, buttonBack } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
 var form = new Form({

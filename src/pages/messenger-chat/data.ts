@@ -1,3 +1,5 @@
+import {Props} from "../../modules/block/types";
+
 export const rooms: Props[] = [
     {
         id: "1",
