@@ -1,4 +1,3 @@
-// особенность расширений импортов описана в README.md
 import { EventBus } from "./event-bus.js";
 import { Nullable } from "../../utils/utility-type";
 
