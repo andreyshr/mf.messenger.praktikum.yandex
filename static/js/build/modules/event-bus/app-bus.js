@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+// особенность расширений импортов описана в README.md
 import { EventBus } from "./event-bus.js";
 var AppBus = /** @class */ (function (_super) {
     __extends(AppBus, _super);
