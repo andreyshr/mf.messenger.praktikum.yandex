@@ -6,7 +6,8 @@ import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 import { Validator } from "../../modules/validator/validator.js";
-import { UserService } from "../../services/user-service.js";
+import { AuthService } from "../../services/auth-service.js";
+import { ProfileService } from "../../services/profile-service.js";
 
 import {Props} from "../../modules/block/types";
 import {PropsInput} from "../input/types";
@@ -16,7 +17,8 @@ export default class Form extends Block {
     state: any;
     bus: AppBus;
     validator: Validator;
-    userService: UserService;
+    authService: AuthService;
+    profileService: ProfileService
 
     constructor(props: Props) {
         super("form", props);
@@ -41,7 +43,8 @@ export default class Form extends Block {
         })
 
         this.validator = new Validator();
-        this.userService = new UserService();
+        this.authService = new AuthService();
+        this.profileService = new ProfileService();
 
         Block._instances.push(this);
     }
@@ -78,15 +81,15 @@ export default class Form extends Block {
         if (errors.every(e => e.status)) {
             if (this.props.action === "signin") {
                 const { login, password } = this.state.inputs;
-                this.userService.auth(login, password)
+                this.authService.signin(login, password)
                     .catch(e => console.log(e));
             }
             if (this.props.action === "signup") {
-                this.userService.signup(this.state.inputs)
+                this.authService.signup(this.state.inputs)
                     .catch(e => console.log(e));
             }
             if (this.props.action === "profile") {
-                this.userService.profile(this.state.inputs)
+                this.profileService.updateProfile(this.state.inputs)
                     .catch(e => console.log(e));
             }
         }

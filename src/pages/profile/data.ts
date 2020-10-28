@@ -1,5 +1,9 @@
 import {PropsInput} from "../../components/input/types";
 import {Props} from "../../modules/block/types";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import EVENTS from "../../modules/event-bus/events.js";
+
+const bus = new AppBus();
 
 export const inputsProps: PropsInput[] = [
     {
@@ -90,7 +94,16 @@ export const buttons: Props[] = [
         attributes: {
             type: "button"
         },
-        title: 'Выйти'
+        title: 'Выйти',
+        events: [
+            {
+                type: "click",
+                el: ".js-logout-btn",
+                handler: function () {
+                    bus.emit(EVENTS.LOGOUT);
+                }
+            }
+        ]
     }
 ]
 

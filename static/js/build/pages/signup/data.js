@@ -1,6 +1,6 @@
 export var inputsProps = [
     {
-        name: "name",
+        name: "first_name",
         id: "name",
         label: "Имя",
         required: "required",

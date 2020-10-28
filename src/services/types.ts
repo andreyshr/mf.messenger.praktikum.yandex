@@ -1,5 +1,10 @@
+export type SigninData = {
+    login: string,
+    password: string,
+}
+
 export type SignupData = {
-    name: string,
+    first_name: string,
     second_name: string,
     email: string,
     password: string,
@@ -16,4 +21,8 @@ export type ProfileData = {
     oldPassword: string,
     email: string,
     phone: string
+}
+
+export type AvatarData = {
+    avatar: FormData
 }

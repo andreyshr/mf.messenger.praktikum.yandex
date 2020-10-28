@@ -3,7 +3,7 @@ import {Props} from "../../modules/block/types";
 
 export const inputsProps: PropsInput[] = [
     {
-        name: "name",
+        name: "first_name",
         id: "name",
         label: "Имя",
         required: "required",
