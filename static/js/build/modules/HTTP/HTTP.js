@@ -45,7 +45,7 @@ var HTTP = /** @class */ (function () {
                 };
                 xhr.onload = function () {
                     if (xhr.status === HTTP_STATUSES['200']) {
-                        resolve(xhr);
+                        resolve(xhr.response);
                     }
                     else {
                         reject(JSON.parse(xhr.response));

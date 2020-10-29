@@ -1,4 +1,3 @@
-// особенность расширений импортов описана в README.md
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import {PropsInput} from "../components/input/types";
@@ -10,23 +9,23 @@ export const addInputEvents = (input: PropsInput): PropsInput => ({
     events: [
         {
             type: "input",
-            el: `input[name=${input.name}]`,
+            el: `input[id=${input.id}]`,
             handler: function (evt: Event) {
-                bus.emit(EVENTS.FORM_INPUT, (evt.target as HTMLInputElement).name, (evt.target as HTMLInputElement).value);
+                bus.emit(EVENTS.FORM_INPUT, (evt.target as HTMLInputElement).name, (evt.target as HTMLInputElement).value, input.action);
             }
         },
         {
             type: "focus",
-            el: `input[name=${input.name}]`,
+            el: `input[id=${input.id}]`,
             handler: function (evt: Event) {
-                bus.emit(EVENTS.FORM_VALIDATE, (evt.target as HTMLInputElement).name);
+                bus.emit(EVENTS.FORM_VALIDATE, (evt.target as HTMLInputElement).name, input.action);
             }
         },
         {
             type: "blur",
-            el: `input[name=${input.name}]`,
+            el: `input[id=${input.id}]`,
             handler: function (evt: Event) {
-                bus.emit(EVENTS.FORM_VALIDATE, (evt.target as HTMLInputElement).name);
+                bus.emit(EVENTS.FORM_VALIDATE, (evt.target as HTMLInputElement).name, input.action);
             }
         }
     ]

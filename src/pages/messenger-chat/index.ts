@@ -9,7 +9,7 @@ import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.j
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 
-import { render } from "../../utils/renderDOM.js";
+//import { render } from "../../utils/renderDOM.js";
 
 import {Props} from "../../modules/block/types";
 
@@ -34,7 +34,7 @@ export default class MessengerChat extends Block {
     }
 }
 
-const messengerChat = new MessengerChat({
+export const messengerChat = new MessengerChat({
     rooms: rooms.map(props => new Room(props)),
     messages: messages.map(props => new Message(props)),
     menuEmoji: new Menu(menuEmoji),
@@ -45,9 +45,9 @@ const messengerChat = new MessengerChat({
     sidebarHeader: new SidebarHeader({}),
 })
 
-render(".app", messengerChat);
-
-Block.hydrate();
+// render(".app", messengerChat);
+//
+// Block.hydrate();
 
 
 

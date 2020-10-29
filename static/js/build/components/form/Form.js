@@ -47,14 +47,18 @@ var Form = /** @class */ (function (_super) {
             action: _this.props.action
         };
         _this.bus = new AppBus();
-        _this.bus.on(EVENTS.FORM_INPUT, function (name, value) {
+        _this.bus.on(EVENTS.FORM_INPUT, function (name, value, action) {
             var _a;
+            if (_this.state.action !== action)
+                return;
             _this.state.inputs[name] = value;
             var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
-        _this.bus.on(EVENTS.FORM_VALIDATE, function (name) {
+        _this.bus.on(EVENTS.FORM_VALIDATE, function (name, action) {
             var _a;
+            if (_this.state.action !== action)
+                return;
             var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });

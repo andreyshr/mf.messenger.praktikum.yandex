@@ -18,7 +18,7 @@ import Form from "../../components/form/Form.js";
 import Input from "../../components/input/Input.js";
 import Avatar from "../../components/avatar/Avatar.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
-import { render } from "../../utils/renderDOM.js";
+//import { render } from "../../utils/renderDOM.js";
 import { inputsProps, buttons, buttonBack } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
 var form = new Form({
@@ -54,10 +54,11 @@ var Profile = /** @class */ (function (_super) {
     return Profile;
 }(Block));
 export default Profile;
-var profile = new Profile({
+export var profile = new Profile({
     form: form,
     buttonBack: new Button("div", buttonBack)
 });
-render(".app", profile);
-Block.hydrate();
+// render(".app", profile);
+//
+// Block.hydrate();
 //# sourceMappingURL=index.js.map

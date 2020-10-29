@@ -1,4 +1,5 @@
 import { EventBus } from "../event-bus/event-bus.js";
+import { createUniqID } from "../../utils/create-uniq-id.js";
 var Block = /** @class */ (function () {
     function Block(tagName, props) {
         var _this = this;
@@ -14,7 +15,7 @@ var Block = /** @class */ (function () {
             Object.assign(_this.props, nextProps);
         };
         var eventBus = new EventBus();
-        this._id = 'uniq' + String(Date.now());
+        this._id = 'uniq' + createUniqID();
         this._meta = {
             tagName: tagName,
             props: props,
@@ -24,6 +25,7 @@ var Block = /** @class */ (function () {
         this.props = this._makePropsProxy(props);
         this.eventBus = function () { return eventBus; };
         this.events = this.props.events || [];
+        this._mounted = false;
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
     }
@@ -31,9 +33,10 @@ var Block = /** @class */ (function () {
         for (var _i = 0, _a = this._instances; _i < _a.length; _i++) {
             var i = _a[_i];
             var el = document.querySelector("[_key=" + i.id);
-            if (el) {
+            if (el && !i._mounted) {
                 i.setElement(el);
                 i._attachEvents();
+                i._mounted = true;
             }
         }
     };
@@ -103,24 +106,30 @@ var Block = /** @class */ (function () {
         return oldProp === newProp;
     };
     Block.prototype._componentMounted = function () {
-        if (!this._mounted)
-            this._attachEvents();
-        this._mounted = true;
+        // if (!this._mounted) this._attachEvents();
+        //
+        // this._mounted = true;
     };
     Block.prototype._attachEvents = function () {
         var _this = this;
         var element = this.getContent();
         if (element) {
             this.events.forEach(function (event) {
-                var targetElement = element.querySelector(event.el);
-                if (targetElement) {
-                    targetElement.addEventListener(event.type, event.handler.bind(_this));
-                }
-                else {
-                    element.addEventListener(event.type, event.handler.bind(_this));
-                }
+                _this._delegate(event.type, document.documentElement, event.el, event.handler);
             });
         }
+    };
+    Block.prototype._delegate = function (eventName, element, cssSelector, callback) {
+        var fn = function (event) {
+            var _a;
+            if (!((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest(cssSelector))) {
+                return;
+            }
+            callback(event);
+        };
+        element.addEventListener(eventName, fn);
+        //this.listeners.push({ fn, element, eventName });
+        return this;
     };
     Block.prototype._render = function () {
         var block = this.render();
@@ -136,6 +145,9 @@ var Block = /** @class */ (function () {
         wrapper.appendChild(this._element);
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return wrapper.innerHTML;
+    };
+    Block.prototype.forceUpdate = function () {
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     };
     Block.prototype.getContent = function () {
         return this.element;

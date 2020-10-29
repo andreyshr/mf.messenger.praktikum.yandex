@@ -6,7 +6,7 @@ import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
 
-import { render } from "../../utils/renderDOM.js";
+//import { render } from "../../utils/renderDOM.js";
 
 import { inputsProps, buttons } from "./data.js";
 
@@ -23,7 +23,7 @@ const form: Form = new Form({
         events: [
             {
                 type: "submit",
-                el: "form",
+                el: ".form--signin",
                 handler: function (evt: Event) {
                     form.onSubmit(evt);
                 }
@@ -44,13 +44,13 @@ export default class SignInPage extends Block {
     }
 }
 
-const signInPage = new SignInPage({
+export const signInPage = new SignInPage({
     form
-})
+});
 
-render(".app", signInPage);
-
-Block.hydrate();
+// render(".app", signInPage);
+//
+// Block.hydrate();
 
 
 

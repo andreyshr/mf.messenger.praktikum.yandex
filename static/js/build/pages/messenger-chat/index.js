@@ -20,7 +20,6 @@ import Dialog from "../../components/dialog/Dialog.js";
 import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
-import { render } from "../../utils/renderDOM.js";
 import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm, dialog } from "./data.js";
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);
@@ -42,7 +41,7 @@ var MessengerChat = /** @class */ (function (_super) {
     return MessengerChat;
 }(Block));
 export default MessengerChat;
-var messengerChat = new MessengerChat({
+export var messengerChat = new MessengerChat({
     rooms: rooms.map(function (props) { return new Room(props); }),
     messages: messages.map(function (props) { return new Message(props); }),
     menuEmoji: new Menu(menuEmoji),
@@ -52,6 +51,7 @@ var messengerChat = new MessengerChat({
     messageInputForm: new MessageInputForm(messageInputForm),
     sidebarHeader: new SidebarHeader({}),
 });
-render(".app", messengerChat);
-Block.hydrate();
+// render(".app", messengerChat);
+//
+// Block.hydrate();
 //# sourceMappingURL=index.js.map

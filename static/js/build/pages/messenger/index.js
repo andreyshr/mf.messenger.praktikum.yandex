@@ -16,7 +16,10 @@ import { template } from "./template.js";
 import Room from "../../components/room/Room.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
-import { render } from "../../utils/renderDOM.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import EVENTS from "../../modules/event-bus/events.js";
+var bus = new AppBus();
+//import { render } from "../../utils/renderDOM.js";
 import { rooms, workspaceEmpty } from "../messenger-chat/data.js";
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);
@@ -33,11 +36,31 @@ var MessengerChat = /** @class */ (function (_super) {
     return MessengerChat;
 }(Block));
 export default MessengerChat;
-var messengerChat = new MessengerChat({
+export var messengerChat = new MessengerChat({
     rooms: rooms.map(function (props) { return new Room(props); }),
-    sidebarHeader: new SidebarHeader({}),
+    sidebarHeader: new SidebarHeader({
+        profileLink: {
+            className: "sidebar__profile-link js-profile-link",
+            title: "Профиль",
+            attributes: {
+                href: "/profile",
+            },
+            icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
+            events: [
+                {
+                    type: "click",
+                    el: ".js-profile-link",
+                    handler: function (evt) {
+                        evt.preventDefault();
+                        bus.emit(EVENTS.GO, "/profile");
+                    }
+                }
+            ]
+        }
+    }),
     workspaceEmpty: new WorkSpaceEmpty(workspaceEmpty)
 });
-render(".app", messengerChat);
-Block.hydrate();
+// render(".app", messengerChat);
+//
+// Block.hydrate();
 //# sourceMappingURL=index.js.map

@@ -13,6 +13,16 @@ export class AuthApi {
             });
     }
 
+    getUser() {
+        const options: Options<unknown> = {data: {}, headers: {"Content-Type": "application/json"}};
+
+        return authAPIInstance.get('/user', options)
+            .then(data => data)
+            .catch(err => {
+                throw err
+            });
+    }
+
     signup(data: SignupData) {
         const options: Options<SignupData> = {data, headers: {"Content-Type": "application/json"}};
 
@@ -27,7 +37,9 @@ export class AuthApi {
         const options: Options<unknown> = {headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.post('/logout', options)
-            .then(data => data)
+            .then(() => {
+                document.location.reload();
+            })
             .catch(err => {
                 throw err
             });

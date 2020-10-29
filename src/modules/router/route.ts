@@ -6,15 +6,19 @@ import {Nullable} from "../../utils/utility-type";
 
 export class Route {
     _pathname: string;
-    _blockClass: Block;
+    _blockView: Block;
     _block: Nullable<Block>;
     _props: any;
 
     constructor(pathname: string, view: Block, props: any) {
         this._pathname = pathname;
-        this._blockClass = view;
+        this._blockView = view;
         this._block = null;
         this._props = props;
+    }
+
+    get meta(): Record<string, unknown> {
+        return this._props.meta;
     }
 
     navigate(pathname: string) {
@@ -36,9 +40,12 @@ export class Route {
 
     render() {
         if (!this._block) {
-            // @ts-ignore
-            this._block = new this._blockClass();
-            render(this._props.rootQuery, this._block as Block);
+            this._block = this._blockView;
+
+            render(this._props.rootQuery, this._block);
+
+            Block.hydrate();
+
             return;
         }
 

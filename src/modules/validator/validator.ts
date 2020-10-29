@@ -26,6 +26,7 @@ export class Validator {
     validate(input: VerifiableInput): ValidatedInput {
         const {name, value, rule} = input;
         const validateFn = this[rule];
+
         return {
             name,
             status: validateFn(value)

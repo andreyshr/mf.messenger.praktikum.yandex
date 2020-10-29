@@ -10,6 +10,14 @@ var AuthApi = /** @class */ (function () {
             throw err;
         });
     };
+    AuthApi.prototype.getUser = function () {
+        var options = { data: {}, headers: { "Content-Type": "application/json" } };
+        return authAPIInstance.get('/user', options)
+            .then(function (data) { return data; })
+            .catch(function (err) {
+            throw err;
+        });
+    };
     AuthApi.prototype.signup = function (data) {
         var options = { data: data, headers: { "Content-Type": "application/json" } };
         return authAPIInstance.post('/signup', options)
@@ -21,7 +29,9 @@ var AuthApi = /** @class */ (function () {
     AuthApi.prototype.logout = function () {
         var options = { headers: { "Content-Type": "application/json" } };
         return authAPIInstance.post('/logout', options)
-            .then(function (data) { return data; })
+            .then(function () {
+            document.location.reload();
+        })
             .catch(function (err) {
             throw err;
         });

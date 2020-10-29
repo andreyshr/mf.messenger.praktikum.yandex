@@ -1,7 +1,7 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
-import { render } from "../../utils/renderDOM.js";
+//import { render } from "../../utils/renderDOM.js";
 
 import {Props} from "../../modules/block/types";
 
@@ -15,14 +15,14 @@ export default class Page404 extends Block {
     }
 }
 
-const page404 = new Page404({
+export const page404 = new Page404({
     title: "404",
     description: "Не туда попали",
     linkTitle: "Назад к чатам",
     linkHref: "/messenger.html"
 })
 
-render(".app", page404);
+// render(".app", page404);
 
 
 
