@@ -7,7 +7,12 @@ import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
 
 import {Props} from "../../modules/block/types";
 
-import { render } from "../../utils/renderDOM.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import EVENTS from "../../modules/event-bus/events.js";
+
+const bus = new AppBus();
+
+//import { render } from "../../utils/renderDOM.js";
 
 import { rooms, workspaceEmpty } from "../messenger-chat/data.js";
 
@@ -25,15 +30,34 @@ export default class MessengerChat extends Block {
     }
 }
 
-const messengerChat = new MessengerChat({
+export const messengerChat = new MessengerChat({
     rooms: rooms.map(props => new Room(props)),
-    sidebarHeader: new SidebarHeader({}),
+    sidebarHeader: new SidebarHeader({
+        profileLink: {
+            className: "sidebar__profile-link js-profile-link",
+            title: "Профиль",
+            attributes: {
+                href: "/profile",
+            },
+            icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
+            events: [
+                {
+                    type: "click",
+                    el: ".js-profile-link",
+                    handler: function(evt: any) {
+                        evt.preventDefault();
+                        bus.emit(EVENTS.GO, "/profile");
+                    }
+                }
+            ]
+        }
+    }),
     workspaceEmpty: new WorkSpaceEmpty(workspaceEmpty)
 })
 
-render(".app", messengerChat);
-
-Block.hydrate();
+// render(".app", messengerChat);
+//
+// Block.hydrate();
 
 
 

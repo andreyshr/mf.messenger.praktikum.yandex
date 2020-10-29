@@ -1,6 +1,7 @@
 import {EventBus} from "../event-bus/event-bus.js";
 import {Nullable} from "../../utils/utility-type";
 import {BlockEvent, Meta, Props} from "./types";
+import {createUniqID} from "../../utils/create-uniq-id.js";
 
 abstract class Block {
     static EVENTS = {
@@ -16,9 +17,10 @@ abstract class Block {
     static hydrate() {
         for (const i of this._instances) {
             const el = document.querySelector(`[_key=${i.id}`);
-            if (el) {
+            if (el && !i._mounted) {
                 i.setElement(el as HTMLElement);
                 i._attachEvents();
+                i._mounted = true;
             }
         }
     }
@@ -26,7 +28,7 @@ abstract class Block {
     private _element: Nullable<HTMLElement> = null;
     private _meta: Nullable<Meta> = null;
     private readonly _id: string;
-    private _mounted: boolean = false;
+    _mounted: boolean = false;
     props: Props;
     events: BlockEvent[];
     eventBus: () => EventBus;
@@ -34,7 +36,7 @@ abstract class Block {
     protected constructor(tagName: string = "div", props: Props = {}) {
         const eventBus = new EventBus();
 
-        this._id = 'uniq' + String(Date.now());
+        this._id = 'uniq' + createUniqID();
 
         this._meta = {
             tagName,
@@ -48,6 +50,8 @@ abstract class Block {
         this.eventBus = () => eventBus;
 
         this.events = this.props.events || [];
+
+        this._mounted = false;
 
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -121,23 +125,33 @@ abstract class Block {
     }
 
     private _componentMounted() {
-        if (!this._mounted) this._attachEvents();
-
-        this._mounted = true;
+        // if (!this._mounted) this._attachEvents();
+        //
+        // this._mounted = true;
     }
 
     private _attachEvents() {
         const element = this.getContent();
         if (element) {
             this.events.forEach((event: BlockEvent) => {
-                const targetElement = element.querySelector(event.el);
-                if (targetElement) {
-                    targetElement.addEventListener(event.type, event.handler.bind(this));
-                } else {
-                    element.addEventListener(event.type, event.handler.bind(this));
-                }
+                this._delegate(event.type, document.documentElement, event.el, event.handler);
             });
         }
+    }
+
+    private _delegate(eventName: string, element: HTMLElement, cssSelector: string, callback: (event?: Event) => {}) {
+        const fn = (event: any) => {
+            if (!event?.target?.closest(cssSelector)) {
+                return;
+            }
+
+            callback(event);
+        };
+
+        element.addEventListener(eventName, fn);
+        //this.listeners.push({ fn, element, eventName });
+
+        return this;
     }
 
     setProps = (nextProps: Props) => {
@@ -164,6 +178,10 @@ abstract class Block {
     }
 
     abstract render(): string
+
+    forceUpdate() {
+        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    }
 
     getContent(): HTMLElement {
         return this.element as HTMLElement;

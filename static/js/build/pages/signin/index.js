@@ -17,7 +17,7 @@ import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
-import { render } from "../../utils/renderDOM.js";
+//import { render } from "../../utils/renderDOM.js";
 import { inputsProps, buttons } from "./data.js";
 var inputs = inputsProps.map(addInputEvents);
 var form = new Form({
@@ -29,7 +29,7 @@ var form = new Form({
     events: [
         {
             type: "submit",
-            el: "form",
+            el: ".form--signin",
             handler: function (evt) {
                 form.onSubmit(evt);
             }
@@ -49,9 +49,10 @@ var SignInPage = /** @class */ (function (_super) {
     return SignInPage;
 }(Block));
 export default SignInPage;
-var signInPage = new SignInPage({
+export var signInPage = new SignInPage({
     form: form
 });
-render(".app", signInPage);
-Block.hydrate();
+// render(".app", signInPage);
+//
+// Block.hydrate();
 //# sourceMappingURL=index.js.map

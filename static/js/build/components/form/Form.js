@@ -35,7 +35,8 @@ import { template as templateProfile } from "./template-profile.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 import { Validator } from "../../modules/validator/validator.js";
-import { UserService } from "../../services/user-service.js";
+import { AuthService } from "../../services/auth-service.js";
+import { ProfileService } from "../../services/profile-service.js";
 var Form = /** @class */ (function (_super) {
     __extends(Form, _super);
     function Form(props) {
@@ -46,19 +47,24 @@ var Form = /** @class */ (function (_super) {
             action: _this.props.action
         };
         _this.bus = new AppBus();
-        _this.bus.on(EVENTS.FORM_INPUT, function (name, value) {
+        _this.bus.on(EVENTS.FORM_INPUT, function (name, value, action) {
             var _a;
+            if (_this.state.action !== action)
+                return;
             _this.state.inputs[name] = value;
             var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
-        _this.bus.on(EVENTS.FORM_VALIDATE, function (name) {
+        _this.bus.on(EVENTS.FORM_VALIDATE, function (name, action) {
             var _a;
+            if (_this.state.action !== action)
+                return;
             var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
         _this.validator = new Validator();
-        _this.userService = new UserService();
+        _this.authService = new AuthService();
+        _this.profileService = new ProfileService();
         Block._instances.push(_this);
         return _this;
     }
@@ -87,15 +93,15 @@ var Form = /** @class */ (function (_super) {
         if (errors.every(function (e) { return e.status; })) {
             if (this.props.action === "signin") {
                 var _b = this.state.inputs, login = _b.login, password = _b.password;
-                this.userService.auth(login, password)
+                this.authService.signin(login, password)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "signup") {
-                this.userService.signup(this.state.inputs)
+                this.authService.signup(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "profile") {
-                this.userService.profile(this.state.inputs)
+                this.profileService.updateProfile(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
         }
