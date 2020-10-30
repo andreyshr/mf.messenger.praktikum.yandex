@@ -13,12 +13,15 @@ import {Props} from "../../modules/block/types";
 import {PropsInput} from "../input/types";
 import {VerifiableInput, ValidatedInput} from "../../modules/validator/types";
 
+import Store from "../../modules/store/store.js";
+
 export default class Form extends Block {
     state: any;
     bus: AppBus;
     validator: Validator;
     authService: AuthService;
-    profileService: ProfileService
+    profileService: ProfileService;
+    store: Store
 
     constructor(props: Props) {
         super("form", props);
@@ -28,6 +31,8 @@ export default class Form extends Block {
             required: this.props.inputs.reduce(this.createStateRequired, {}),
             action: this.props.action
         }
+
+        this.store = new Store();
 
         this.bus = new AppBus();
         this.bus.on(EVENTS.FORM_INPUT, (name: string, value: string, action: string): void => {

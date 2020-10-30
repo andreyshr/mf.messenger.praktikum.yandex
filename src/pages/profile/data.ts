@@ -14,7 +14,8 @@ export const inputsProps: PropsInput[] = [
         required: "required",
         typeName: "text",
         autofocus: "autofocus",
-        value: "Андрей"
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -23,7 +24,8 @@ export const inputsProps: PropsInput[] = [
         label: "Фамилия",
         required: "required",
         typeName: "text",
-        value: "Шауров"
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -32,7 +34,8 @@ export const inputsProps: PropsInput[] = [
         label: "Отображаемое имя",
         required: "required",
         typeName: "text",
-        value: "__andrew__"
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -41,7 +44,8 @@ export const inputsProps: PropsInput[] = [
         label: "Email",
         required: "email",
         typeName: "text",
-        value: "andrey.shaurov@gmail.com"
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -50,7 +54,8 @@ export const inputsProps: PropsInput[] = [
         label: "Телефон",
         required: "phone",
         typeName: "phone",
-        value: "+79000000000"
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -59,7 +64,8 @@ export const inputsProps: PropsInput[] = [
         label: "Логин",
         required: "required",
         typeName: "text",
-        value: "andrew"
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -68,7 +74,8 @@ export const inputsProps: PropsInput[] = [
         label: "Старый пароль",
         required: "password",
         typeName: "password",
-        value: ""
+        value: "",
+        action: "profile",
     },
     {
         template: "profile",
@@ -77,7 +84,8 @@ export const inputsProps: PropsInput[] = [
         label: "Новый пароль",
         required: "password",
         typeName: "password",
-        value: ""
+        value: "",
+        action: "profile",
     }
 ];
 

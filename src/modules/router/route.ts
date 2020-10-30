@@ -46,6 +46,8 @@ export class Route {
 
             Block.hydrate();
 
+            this._block.show();
+
             return;
         }
 

@@ -7,11 +7,13 @@ import Input from "../../components/input/Input.js";
 import Avatar from "../../components/avatar/Avatar.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
 
-//import { render } from "../../utils/renderDOM.js";
+import Store from "../../modules/store/store.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
 
 import { inputsProps, buttons, buttonBack } from "./data.js";
 
 import {Props} from "../../modules/block/types";
+import EVENTS from "../../modules/event-bus/events.js";
 
 const inputs = inputsProps.map(addInputEvents);
 
@@ -37,8 +39,19 @@ const form: Form = new Form({
 );
 
 export default class Profile extends Block {
+    store: Store;
+    bus: AppBus;
+
     constructor(props: Props) {
         super("div", props);
+
+        this.store = new Store();
+        this.bus = new AppBus();
+    }
+
+    onShow = () => {
+        console.log("profile show")
+        this.bus.emit(EVENTS.SET_PROFILE, this.store.get("user"));
     }
 
     render() {
@@ -53,11 +66,3 @@ export const profile = new Profile({
     form,
     buttonBack: new Button("div", buttonBack)
 })
-
-// render(".app", profile);
-//
-// Block.hydrate();
-
-
-
-

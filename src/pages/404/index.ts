@@ -1,8 +1,6 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
-//import { render } from "../../utils/renderDOM.js";
-
 import {Props} from "../../modules/block/types";
 
 export default class Page404 extends Block {
@@ -21,8 +19,6 @@ export const page404 = new Page404({
     linkTitle: "Назад к чатам",
     linkHref: "/messenger.html"
 })
-
-// render(".app", page404);
 
 
 

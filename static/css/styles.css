@@ -702,6 +702,8 @@ li {
 }
 
 .profile__form input {
+  flex-grow: 1;
+  padding-left: 16px;
   border: none;
   background: transparent;
   text-align: end;

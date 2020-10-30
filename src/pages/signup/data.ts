@@ -91,7 +91,7 @@ export const buttons: Props[] = [
                 el: ".js-link-signin",
                 handler: function(evt) {
                     evt.preventDefault();
-                    bus.emit(EVENTS.GO, "/signin");
+                    bus.emit(EVENTS.ROUTER_GO, "/signin");
                 }
             }
         ]

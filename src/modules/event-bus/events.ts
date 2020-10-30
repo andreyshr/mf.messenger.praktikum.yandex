@@ -3,5 +3,7 @@ export default {
     FORM_INPUT: 'sign_in_input',
     FORM_VALIDATE: 'sign_in_validate',
     LOGOUT: 'logout',
-    GO: 'go',
+    ROUTER_GO: 'go',
+    ROUTER_REPLACE: 'replace',
+    SET_PROFILE: 'set_profile'
 }

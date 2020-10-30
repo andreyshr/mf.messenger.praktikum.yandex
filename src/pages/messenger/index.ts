@@ -4,6 +4,7 @@ import { template } from "./template.js";
 import Room from "../../components/room/Room.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
+import {addRoomEvents} from "../../utils/add-room-events.js";
 
 import {Props} from "../../modules/block/types";
 
@@ -12,9 +13,9 @@ import EVENTS from "../../modules/event-bus/events.js";
 
 const bus = new AppBus();
 
-//import { render } from "../../utils/renderDOM.js";
-
 import { rooms, workspaceEmpty } from "../messenger-chat/data.js";
+
+const roomsEv: Props = rooms.map(addRoomEvents);
 
 export default class MessengerChat extends Block {
     constructor(props: Props) {
@@ -31,10 +32,11 @@ export default class MessengerChat extends Block {
 }
 
 export const messengerChat = new MessengerChat({
-    rooms: rooms.map(props => new Room(props)),
+    rooms: roomsEv.map((props: Props) => new Room(props)),
     sidebarHeader: new SidebarHeader({
         profileLink: {
             className: "sidebar__profile-link js-profile-link",
+            appendIcon: true,
             title: "Профиль",
             attributes: {
                 href: "/profile",
@@ -46,18 +48,11 @@ export const messengerChat = new MessengerChat({
                     el: ".js-profile-link",
                     handler: function(evt: any) {
                         evt.preventDefault();
-                        bus.emit(EVENTS.GO, "/profile");
+                        bus.emit(EVENTS.ROUTER_GO, "/profile");
                     }
                 }
             ]
         }
     }),
     workspaceEmpty: new WorkSpaceEmpty(workspaceEmpty)
-})
-
-// render(".app", messengerChat);
-//
-// Block.hydrate();
-
-
-
+});

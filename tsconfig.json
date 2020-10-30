@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES5",
     "lib": ["esnext", "dom"],
-    "outDir": "./static/js/build",
+    "outDir": "./static/js",
     "declaration": false,
     "module": "ES6",
     "noImplicitAny": true,

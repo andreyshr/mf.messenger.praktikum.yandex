@@ -29,7 +29,7 @@ export class AuthService {
             .then(() => this.getUser())
             .then(data => {
                 store.set("user", data);
-                this.bus.emit(EVENTS.GO, "/messenger");
+                this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
             })
             .catch(err => {
                 throw err
@@ -49,7 +49,7 @@ export class AuthService {
             .then(() => this.getUser())
             .then(data => {
                 store.set("user", data);
-                this.bus.emit(EVENTS.GO, "/messenger");
+                this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
             })
             .catch(err => {
                 throw err

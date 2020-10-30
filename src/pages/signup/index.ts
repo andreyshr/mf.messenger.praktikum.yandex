@@ -45,11 +45,4 @@ export default class SignUpPage extends Block {
 
 export const signUpPage = new SignUpPage({
     form
-})
-
-// render(".app", signUpPage);
-//
-// Block.hydrate();
-
-
-
+});

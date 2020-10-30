@@ -1,6 +1,7 @@
 import {Route} from "./route.js";
 import Block from "../block/block";
 import {Nullable} from "../../utils/utility-type";
+import {createUniqID} from "../../utils/create-uniq-id.js";
 
 export class Router {
     static __instance: Router;
@@ -34,12 +35,14 @@ export class Router {
     }
 
     start() {
+        window.onpopstate = ((event: any) => {
+            if (!this._beforeEach(event.currentTarget?.location?.pathname)) return;
+
+            this._onRoute(event.currentTarget?.location?.pathname);
+        }).bind(this);
+
         this.beforeStart()
             .finally(() => {
-                window.onpopstate = ((event: any) => {
-                    this._onRoute(event.currentTarget?.location?.pathname);
-                }).bind(this);
-
                 if (!this._beforeEach(window.location.pathname)) return;
 
                 this._onRoute(window.location.pathname);
@@ -62,7 +65,16 @@ export class Router {
     go(pathname: string) {
         if (!this._beforeEach(pathname)) return;
 
-        this.history.pushState({}, "", pathname);
+        this.history.pushState({id: createUniqID()}, "", pathname);
+
+        this._onRoute(pathname);
+    }
+
+    replace(pathname: string) {
+        if (!this._beforeEach(pathname)) return;
+
+        this.history.replaceState({id: createUniqID()}, "", pathname);
+
         this._onRoute(pathname);
     }
 

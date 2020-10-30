@@ -47,11 +47,3 @@ export default class SignInPage extends Block {
 export const signInPage = new SignInPage({
     form
 });
-
-// render(".app", signInPage);
-//
-// Block.hydrate();
-
-
-
-
