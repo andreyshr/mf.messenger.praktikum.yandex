@@ -20,7 +20,8 @@ const store = new Store();
 const authService = new AuthService();
 
 const bus = new AppBus();
-bus.on(EVENTS.GO, (route) => router.go(route));
+bus.on(EVENTS.ROUTER_GO, (route) => router.go(route));
+bus.on(EVENTS.ROUTER_REPLACE, (route) => router.replace(route));
 
 router.beforeEach = function (pathname: string): boolean {
     const route = router.getRoute(pathname);
@@ -38,7 +39,7 @@ router.beforeEach = function (pathname: string): boolean {
         return true;
     }
 
-    router.go("/404");
+    router.replace("/404");
     return false;
 }
 

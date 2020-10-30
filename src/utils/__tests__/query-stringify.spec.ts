@@ -1,5 +1,6 @@
 import {queryStringify} from "../query-stringify";
 import { expect } from 'chai';
+import 'mocha';
 
 describe("queryStringify", function() {
     const validInput = {

@@ -1,3 +1,3 @@
 export const template = `
-        <span>{{{ icon }}} {{ title }}</span>
+        <span>{{#unless appendIcon}} {{{ icon }}} {{/unless}} {{ title }} {{#if appendIcon}} {{{ icon }}} {{/if}}</span>
 `;

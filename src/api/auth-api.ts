@@ -17,7 +17,7 @@ export class AuthApi {
         const options: Options<unknown> = {data: {}, headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.get('/user', options)
-            .then(data => data)
+            .then((data: string) => JSON.parse(data))
             .catch(err => {
                 throw err
             });

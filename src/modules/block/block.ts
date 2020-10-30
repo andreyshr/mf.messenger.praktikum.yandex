@@ -17,8 +17,12 @@ abstract class Block {
     static hydrate() {
         for (const i of this._instances) {
             const el = document.querySelector(`[_key=${i.id}`);
-            if (el && !i._mounted) {
+
+            if (el) {
                 i.setElement(el as HTMLElement);
+            }
+
+            if (el && !i._mounted) {
                 i._attachEvents();
                 i._mounted = true;
             }
@@ -106,8 +110,7 @@ abstract class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    componentDidMount(oldProps?: Props) {
-        return oldProps;
+    componentDidMount() {
     }
 
     private _componentDidUpdate(oldProp: string, newProp: string): boolean {
@@ -125,10 +128,10 @@ abstract class Block {
     }
 
     private _componentMounted() {
-        // if (!this._mounted) this._attachEvents();
-        //
-        // this._mounted = true;
+        this.componentMounted();
     }
+
+    componentMounted() {}
 
     private _attachEvents() {
         const element = this.getContent();
@@ -213,6 +216,7 @@ abstract class Block {
         const element = this.getContent();
         if (element) {
             element.style.display = "block";
+            this.onShow();
         }
     }
 
@@ -220,7 +224,16 @@ abstract class Block {
         const element = this.getContent();
         if (element) {
             element.style.display = "none";
+            this.onHide();
         }
+    }
+
+    onShow() {
+
+    }
+
+    onHide() {
+
     }
 }
 

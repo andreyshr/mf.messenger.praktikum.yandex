@@ -9,7 +9,10 @@ import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.j
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 
-//import { render } from "../../utils/renderDOM.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import EVENTS from "../../modules/event-bus/events.js";
+
+const bus = new AppBus();
 
 import {Props} from "../../modules/block/types";
 
@@ -42,13 +45,25 @@ export const messengerChat = new MessengerChat({
     dialogRemoveChat: new Dialog(dialog),
     workspaceHeader: new WorkSpaceHeader(workspaceHeader),
     messageInputForm: new MessageInputForm(messageInputForm),
-    sidebarHeader: new SidebarHeader({}),
-})
-
-// render(".app", messengerChat);
-//
-// Block.hydrate();
-
-
-
-
+    sidebarHeader: new SidebarHeader({
+        profileLink: {
+            className: "sidebar__profile-link js-profile-link",
+            appendIcon: true,
+            title: "Профиль",
+            attributes: {
+                href: "/profile",
+            },
+            icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
+            events: [
+                {
+                    type: "click",
+                    el: ".js-profile-link",
+                    handler: function(evt: any) {
+                        evt.preventDefault();
+                        bus.emit(EVENTS.ROUTER_GO, "/profile");
+                    }
+                }
+            ]
+        }
+    }),
+});

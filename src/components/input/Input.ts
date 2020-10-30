@@ -15,6 +15,15 @@ export default class Input extends Block {
 
         this.bus = new AppBus();
         this.bus.on(EVENTS.FORM_INVALID, this.showError);
+        this.bus.on(EVENTS.SET_PROFILE, (user) => {
+            if (Object.keys(user).includes(this.props.name)) {
+                this.setProps({
+                    value: user[this.props.name]
+                });
+                this.bus.emit(EVENTS.FORM_INPUT, [this.props.name], this.props.value, this.props.action);
+                this.forceUpdate();
+            }
+        });
 
         Block._instances.push(this);
     }
