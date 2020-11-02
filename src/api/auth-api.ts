@@ -9,7 +9,7 @@ export class AuthApi {
         return authAPIInstance.post('/signin', options)
             .then(data => data)
             .catch(err => {
-                throw err
+                throw err;
             });
     }
 
@@ -37,9 +37,7 @@ export class AuthApi {
         const options: Options<unknown> = {headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.post('/logout', options)
-            .then(() => {
-                document.location.reload();
-            })
+            .then(data => data)
             .catch(err => {
                 throw err
             });

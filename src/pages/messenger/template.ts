@@ -5,11 +5,11 @@ export const template = `
             
             {{{ sidebarHeader }}}
             
-            <div class="sidebar__history-scrollable scrollable vh-100">
+            <ul class="sidebar__history-scrollable scrollable vh-100">
                 {{# each rooms}}
                    {{{ this }}}
                 {{/each}}
-            </div>
+            </ul>
         </aside>
         <main class="messenger__workspace workspace">
         

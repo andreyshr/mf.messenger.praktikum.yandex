@@ -1,11 +1,11 @@
 export const template = `
-                <a data-room-id="{{ id }}"  href="{{ link }}" class="room" title="{{ name }}">
+                <a data-room-id="{{ id }}"  href="{{ link }}" class="room router-link" title="{{ name }}">
                     
                      {{{ avatar }}}
                     
                     <div class="room__info">
                         <div class="room__info-row">
-                            <h3 class="room__title">{{ name }}</h3>
+                            <h3 class="room__title">{{ title }}</h3>
                             <time class="room__last-message-time">{{ time }}</time>
                         </div>
                         <div class="room__info-row">

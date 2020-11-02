@@ -38,17 +38,18 @@ var Input = /** @class */ (function (_super) {
                     node.classList.add('error-message--active');
             }
         };
-        _this.bus = new AppBus();
-        _this.bus.on(EVENTS.FORM_INVALID, _this.showError);
-        _this.bus.on(EVENTS.SET_PROFILE, function (user) {
-            if (Object.keys(user).includes(_this.props.name)) {
+        _this.updateValue = function (name, value, action) {
+            if (action === _this.props.action && _this.props.name === name) {
                 _this.setProps({
-                    value: user[_this.props.name]
+                    value: value
                 });
-                _this.bus.emit(EVENTS.FORM_INPUT, [_this.props.name], _this.props.value, _this.props.action);
+                _this.bus.emit(EVENTS.FORM_INPUT, name, value, _this.props.action);
                 _this.forceUpdate();
             }
-        });
+        };
+        _this.bus = new AppBus();
+        _this.bus.on(EVENTS.FORM_INVALID, _this.showError);
+        _this.bus.on(EVENTS.INPUT_UPDATE_VALUE, _this.updateValue);
         Block._instances.push(_this);
         return _this;
     }

@@ -4,11 +4,10 @@ import { template } from "./template.js";
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
+import Notification from "../../components/notification/Notification.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
 
-//import { render } from "../../utils/renderDOM.js";
-
-import { inputsProps, buttons } from "./data.js";
+import { inputsProps, buttons } from "./initial-props.js";
 
 import {Props} from "../../modules/block/types";
 
@@ -31,6 +30,11 @@ const form: Form = new Form({
     ]
 });
 
+export const props = {
+    form,
+    notification: {}
+}
+
 export default class SignUpPage extends Block {
     constructor(props: Props) {
         super("div", props);
@@ -38,11 +42,8 @@ export default class SignUpPage extends Block {
 
     render() {
         return Handlebars.compile(template)({
-            form: this.props.form.renderToString()
+            form: this.props.form.renderToString(),
+            notification: new Notification(this.props.notification).renderToString()
         });
     }
 }
-
-export const signUpPage = new SignUpPage({
-    form
-});

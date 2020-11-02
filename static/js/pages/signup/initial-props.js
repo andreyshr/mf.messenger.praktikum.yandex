@@ -1,11 +1,4 @@
-import {PropsInput} from "../../components/input/types";
-import {Props} from "../../modules/block/types";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
-
-const bus = new AppBus();
-
-export const inputsProps: PropsInput[] = [
+export var inputsProps = [
     {
         name: "first_name",
         id: "signup-name",
@@ -68,8 +61,7 @@ export const inputsProps: PropsInput[] = [
         action: "signup",
     }
 ];
-
-export const buttons: Props[] = [
+export var buttons = [
     {
         className: 'button button--blue w-100',
         tagName: "button",
@@ -79,21 +71,12 @@ export const buttons: Props[] = [
         title: 'Зарегистрироваться'
     },
     {
-        className: 'button button--transparent w-100 js-link-signin',
+        className: 'button button--transparent w-100 router-link',
         tagName: "a",
         attributes: {
-            href: "/signin.html",
+            href: "/signin",
         },
         title: 'Войти',
-        events: [
-            {
-                type: "click",
-                el: ".js-link-signin",
-                handler: function(evt) {
-                    evt.preventDefault();
-                    bus.emit(EVENTS.ROUTER_GO, "/signin");
-                }
-            }
-        ]
     }
 ];
+//# sourceMappingURL=initial-props.js.map

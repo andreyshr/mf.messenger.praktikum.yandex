@@ -1,7 +1,9 @@
+import Block from "../block/block.js";
 import {Route} from "./route.js";
-import Block from "../block/block";
-import {Nullable} from "../../utils/utility-type";
 import {createUniqID} from "../../utils/create-uniq-id.js";
+
+import {Nullable} from "../../utils/utility-type";
+import {Constructable} from "./types";
 
 export class Router {
     static __instance: Router;
@@ -12,10 +14,9 @@ export class Router {
     routes: Route[];
     history: History;
 
-    beforeEach: (pathname: string) => boolean;
-    beforeStart: () => Promise<void>
+    _routerLink: string;
 
-    constructor(rootQuery: string) {
+    constructor(rootQuery: string, routerLink: string = ".router-link") {
         if (Router.__instance) {
             return Router.__instance;
         }
@@ -24,29 +25,51 @@ export class Router {
         this.history = window.history;
         this._currentRoute = null;
         this._rootQuery = rootQuery;
+        this._routerLink = routerLink;
 
         Router.__instance = this;
     }
 
-    use(pathname: string, block: Block, meta?: any): Router {
+    attachEvent() {
+        const fn = (event: any) => {
+            if (!event?.target?.closest(this._routerLink)) {
+                return;
+            }
+
+            event.preventDefault();
+
+            let el = event.target as HTMLElement;
+            while (el.tagName !== "A") {
+                el = <HTMLElement>el.parentElement;
+            }
+
+            this.go(`${el?.getAttribute("href")}`);
+        };
+
+        document.documentElement.addEventListener("click", fn);
+    }
+
+    use(pathname: string, block: Constructable<Block>, meta?: any): Router {
         const route = new Route(pathname, block, {meta, rootQuery: this._rootQuery});
         this.routes.push(route);
         return this;
     }
 
     start() {
+        this.attachEvent();
+
         window.onpopstate = ((event: any) => {
             if (!this._beforeEach(event.currentTarget?.location?.pathname)) return;
 
             this._onRoute(event.currentTarget?.location?.pathname);
         }).bind(this);
 
-        this.beforeStart()
+        return this.beforeStart()
             .finally(() => {
                 if (!this._beforeEach(window.location.pathname)) return;
 
                 this._onRoute(window.location.pathname);
-            })
+            });
     }
 
     _onRoute(pathname: string) {
@@ -86,11 +109,19 @@ export class Router {
         this.history.forward();
     }
 
-    getRoute(pathname: string) {
-        return this.routes.find((route: Route): boolean => route.match(pathname));
+    getRoute(pathname: string): Nullable<Route> {
+        return this.routes.find((route: Route): boolean => route.match(pathname)) || null;
     }
 
     _beforeEach(pathname: string): boolean {
         return this.beforeEach(pathname);
+    }
+
+    beforeEach(pathname: string): boolean {
+        return !!pathname;
+    }
+
+    beforeStart() {
+        return Promise.resolve();
     }
 }

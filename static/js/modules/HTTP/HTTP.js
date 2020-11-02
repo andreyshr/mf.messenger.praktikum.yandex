@@ -25,8 +25,9 @@ export var METHODS;
     METHODS["DELETE"] = "DELETE";
 })(METHODS || (METHODS = {}));
 var HTTP = /** @class */ (function () {
-    function HTTP(serviceUrl) {
+    function HTTP(serviceUrl, baseUrl) {
         if (serviceUrl === void 0) { serviceUrl = ""; }
+        if (baseUrl === void 0) { baseUrl = "https://ya-praktikum.tech"; }
         this.request = function (url, options) {
             var method = options.method, data = options.data, headers = options.headers;
             return new Promise(function (resolve, reject) {
@@ -48,7 +49,7 @@ var HTTP = /** @class */ (function () {
                         resolve(xhr.response);
                     }
                     else {
-                        reject(JSON.parse(xhr.response));
+                        reject(xhr);
                     }
                 };
                 xhr.onabort = handleError;
@@ -57,16 +58,19 @@ var HTTP = /** @class */ (function () {
                 if (method === METHODS.GET || !data) {
                     xhr.send();
                 }
+                else if (data instanceof FormData) {
+                    xhr.send(data);
+                }
                 else {
                     xhr.send(JSON.stringify(data));
                 }
             });
         };
-        this._url = HTTP.baseUrl + serviceUrl;
+        this._baseUrl = baseUrl;
+        this._url = this._baseUrl + serviceUrl;
     }
     HTTP.prototype.get = function (url, options) {
         if (options === void 0) { options = {}; }
-        console.log(options);
         return this.request(this._url + url, __assign(__assign({}, options), { method: METHODS.GET }));
     };
     HTTP.prototype.post = function (url, options) {
@@ -82,11 +86,13 @@ var HTTP = /** @class */ (function () {
         return this.request(this._url + url, __assign(__assign({}, options), { method: METHODS.DELETE }));
     };
     ;
-    HTTP.baseUrl = "https://ya-praktikum.tech";
     return HTTP;
 }());
+export { HTTP };
 export var apiInstance = new HTTP('/api/v2');
 export var authAPIInstance = new HTTP('/api/v2/auth');
 export var profileAPIInstance = new HTTP('/api/v2/user/profile');
+export var chatsAPIInstance = new HTTP('/api/v2/chats');
+export var userAPIInstance = new HTTP('/api/v2/user');
 export default HTTP;
 //# sourceMappingURL=HTTP.js.map

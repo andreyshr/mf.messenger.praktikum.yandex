@@ -7,9 +7,8 @@ export const template = `
                     
                     {{{ avatarLoadButton }}}
                     
-                    <input id="avatar" type="file" name="avatar"/>
+                    <input id="avatar" type="file" name="avatar" accept="image/*"/>
                 </div>
-                <h1 class="profile__form-title">{{ title }}</h1>
                 <div class="profile__form-rows">
                     {{#each inputs}}
                         <div class="profile__form-row">

@@ -1,58 +1,80 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
+import {Props} from "../../modules/block/types";
 
 import Room from "../../components/room/Room.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
-import {addRoomEvents} from "../../utils/add-room-events.js";
 
-import {Props} from "../../modules/block/types";
+import {ChatsService} from "../../services/chats-service.js"
+import {UserService} from "../../services/user-service.js";
+import Store from "../../modules/store/store.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { sidebarHeader, workspaceEmpty } from "../messenger-chat/initial-props.js";
 
-const bus = new AppBus();
+const chatsService = new ChatsService();
+const userService = new UserService();
+const store = new Store();
 
-import { rooms, workspaceEmpty } from "../messenger-chat/data.js";
+export const props = {
+    rooms: store.get("chats") || [],
+    sidebarHeader,
+    workspaceEmpty
+}
 
-const roomsEv: Props = rooms.map(addRoomEvents);
-
-export default class MessengerChat extends Block {
+export default class Messenger extends Block {
     constructor(props: Props) {
         super("div", props);
+
+        Block._instances.push(this);
+    }
+
+    get chats() {
+        return store.get("chats");
+    }
+
+    onShow = () => {
+        if (!this.chats) {
+            chatsService.getChats().then((data) => {
+                this.setProps({
+                    rooms: data.map(this.createRoom)
+                })
+            });
+        } else {
+            this.setProps({
+                rooms: this.chats.map(this.createRoom)
+            })
+        }
+    }
+
+    componentMounted() {
+        document.addEventListener("submit", (evt: any) => {
+            if (!evt?.target?.closest(".sidebar__search form")) {
+                return;
+            }
+
+            evt.preventDefault();
+            userService.search(evt.target[0].value)
+                .then(data => {
+                    this.setProps({
+                        rooms: data.map((user: any) => ({ title: user.login, avatarImg: user.avatarImg })).map(this.createRoom)
+                    })
+                })
+        });
+    }
+
+    createRoom(room: Record<string, string>): Record<string, string> {
+        return {
+            ...room,
+            link: `/messenger/${room.id}`,
+        };
     }
 
     render() {
         return Handlebars.compile(template)({
-            rooms: this.props.rooms.map((room: Block) => room.renderToString()),
-            sidebarHeader: this.props.sidebarHeader.renderToString(),
-            workspaceEmpty: this.props.workspaceEmpty.renderToString()
+            rooms: this.props.rooms.map((room: Props): string => new Room(room).renderToString()),
+            sidebarHeader: new SidebarHeader(this.props.sidebarHeader).renderToString(),
+            workspaceEmpty: new WorkSpaceEmpty(this.props.workspaceEmpty).renderToString()
         });
     }
 }
-
-export const messengerChat = new MessengerChat({
-    rooms: roomsEv.map((props: Props) => new Room(props)),
-    sidebarHeader: new SidebarHeader({
-        profileLink: {
-            className: "sidebar__profile-link js-profile-link",
-            appendIcon: true,
-            title: "Профиль",
-            attributes: {
-                href: "/profile",
-            },
-            icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
-            events: [
-                {
-                    type: "click",
-                    el: ".js-profile-link",
-                    handler: function(evt: any) {
-                        evt.preventDefault();
-                        bus.emit(EVENTS.ROUTER_GO, "/profile");
-                    }
-                }
-            ]
-        }
-    }),
-    workspaceEmpty: new WorkSpaceEmpty(workspaceEmpty)
-});

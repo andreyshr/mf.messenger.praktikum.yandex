@@ -19,8 +19,7 @@ export default class WorkSpaceHeader extends Block {
             menuChat: new Menu(this.props.menuChat).renderToString(),
             avatar: new Avatar({
                 className: "room__avatar avatar avatar--sm",
-                avatarImg: this.props.avatarImg,
-                stubLetters: this.props.stubLetters
+                avatarImg: this.props.avatarImg
             }).renderToString()
         });
     }

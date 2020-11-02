@@ -1,9 +1,5 @@
 import {PropsInput} from "../../components/input/types";
 import {Props} from "../../modules/block/types";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
-
-const bus = new AppBus();
 
 export const inputsProps: PropsInput[] = [
     {
@@ -39,21 +35,11 @@ export const buttons: Props[] = [
         title: 'Авторизоваться'
     },
     {
-        className: 'button button--transparent w-100 js-link-signup',
+        className: 'button button--transparent w-100 router-link',
         attributes: {
-            href: "/signup.html",
+            href: "/signup",
         },
         tagName: "a",
         title: 'Зарегистрироваться',
-        events: [
-            {
-                type: "click",
-                el: ".js-link-signup",
-                handler: function(evt) {
-                    evt.preventDefault();
-                    bus.emit(EVENTS.ROUTER_GO, "/signup");
-                }
-            }
-        ]
     }
 ]

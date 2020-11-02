@@ -38,7 +38,6 @@ var Block = /** @class */ (function () {
             }
             if (el && !i._mounted) {
                 i._attachEvents();
-                i._mounted = true;
             }
         }
     };
@@ -115,9 +114,12 @@ var Block = /** @class */ (function () {
         var element = this.getContent();
         if (element) {
             this.events.forEach(function (event) {
+                if (event.el === "#avatar")
+                    console.log("avatar");
                 _this._delegate(event.type, document.documentElement, event.el, event.handler);
             });
         }
+        this._mounted = true;
     };
     Block.prototype._delegate = function (eventName, element, cssSelector, callback) {
         var fn = function (event) {
@@ -128,7 +130,6 @@ var Block = /** @class */ (function () {
             callback(event);
         };
         element.addEventListener(eventName, fn);
-        //this.listeners.push({ fn, element, eventName });
         return this;
     };
     Block.prototype._render = function () {

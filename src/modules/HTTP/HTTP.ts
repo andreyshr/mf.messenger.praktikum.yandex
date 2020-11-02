@@ -16,16 +16,16 @@ export enum METHODS  {
     DELETE = 'DELETE',
 }
 
-class HTTP {
-    static baseUrl: string = "https://ya-praktikum.tech";
+export class HTTP {
+    _baseUrl: string;
     private readonly _url: string;
 
-    constructor(serviceUrl: string = "") {
-        this._url = HTTP.baseUrl + serviceUrl;
+    constructor(serviceUrl: string = "", baseUrl: string = "https://ya-praktikum.tech") {
+        this._baseUrl = baseUrl;
+        this._url = this._baseUrl + serviceUrl;
     }
 
     get<T>(url: string, options: Options<T> = {}) {
-        console.log(options);
         return this.request(this._url + url, {...options, method: METHODS.GET});
     }
 
@@ -68,7 +68,7 @@ class HTTP {
                 if (xhr.status === HTTP_STATUSES['200']) {
                     resolve(xhr.response);
                 } else {
-                    reject(JSON.parse(xhr.response));
+                    reject(xhr);
                 }
             };
 
@@ -78,6 +78,8 @@ class HTTP {
 
             if (method === METHODS.GET || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
                 xhr.send(JSON.stringify(data));
             }
@@ -88,5 +90,7 @@ class HTTP {
 export const apiInstance = new HTTP('/api/v2');
 export const authAPIInstance = new HTTP('/api/v2/auth');
 export const profileAPIInstance = new HTTP('/api/v2/user/profile');
+export const chatsAPIInstance = new HTTP('/api/v2/chats');
+export const userAPIInstance = new HTTP('/api/v2/user');
 
 export default HTTP;

@@ -3,7 +3,7 @@ export const template = `
         <div class="error m-auto">
             <h1 class="error__title">{{ title }}</h1>
             <p class="error__description">{{ description }}</p>
-            <a class="link" href="{{ linkHref }}">{{ linkTitle }}</a>
+            <a class="link router-link" href="{{ linkHref }}">{{ linkTitle }}</a>
         </div>
     </main>
 `;

@@ -11,6 +11,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Room from "../../components/room/Room.js";
@@ -20,58 +31,92 @@ import Dialog from "../../components/dialog/Dialog.js";
 import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
+import { ChatsService } from "../../services/chats-service.js";
+import Store from "../../modules/store/store.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
+import { last } from "../../utils/mydash/last.js";
+var chatsService = new ChatsService();
+var store = new Store();
 var bus = new AppBus();
-import { rooms, messages, menuEmoji, menuMessage, workspaceHeader, messageInputForm, dialog } from "./data.js";
+import { menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat } from "./initial-props.js";
+export var props = {
+    rooms: [],
+    messages: [],
+    menuEmoji: menuEmoji,
+    menuMessage: menuMessage,
+    dialogRemoveChat: dialogRemoveChat,
+    messageInputForm: messageInputForm,
+    sidebarHeader: sidebarHeader,
+    workspaceHeader: workspaceHeader,
+};
 var MessengerChat = /** @class */ (function (_super) {
     __extends(MessengerChat, _super);
     function MessengerChat(props) {
-        return _super.call(this, "div", props) || this;
+        var _this = _super.call(this, "div", props) || this;
+        Block._instances.push(_this);
+        return _this;
     }
+    Object.defineProperty(MessengerChat.prototype, "chats", {
+        get: function () {
+            return store.get("chats");
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MessengerChat.prototype, "currentChat", {
+        get: function () {
+            return store.get("currentChat");
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MessengerChat.prototype.onShow = function () {
+        var _this = this;
+        var chatId = last(document.location.pathname.split("/"));
+        if (!this.chats) {
+            chatsService.getChats().then(function () {
+                _this.setProps({
+                    rooms: _this.chats.map(_this.createRoom),
+                });
+                _this.setCurrentChat(chatId);
+            });
+        }
+        else {
+            this.setProps({
+                rooms: this.chats.map(this.createRoom),
+            });
+            this.setCurrentChat(chatId);
+        }
+    };
+    MessengerChat.prototype.setCurrentChat = function (chatId) {
+        var currentChat = this.chats.find(function (c) { return c.id.toString() === chatId.toString(); });
+        if (currentChat) {
+            store.set("currentChat", currentChat);
+            this.setProps({
+                workspaceHeader: __assign(__assign({}, workspaceHeader), this.currentChat)
+            });
+        }
+        else {
+            bus.emit(EVENTS.ROUTER_REPLACE, "/404");
+        }
+    };
+    MessengerChat.prototype.createRoom = function (room) {
+        return __assign(__assign({}, room), { link: "/messenger/" + room.id });
+    };
     MessengerChat.prototype.render = function () {
         return Handlebars.compile(template)({
-            rooms: this.props.rooms.map(function (room) { return room.renderToString(); }),
-            messages: this.props.messages.map(function (message) { return message.renderToString(); }),
-            menuEmoji: this.props.menuEmoji.renderToString(),
-            menuMessage: this.props.menuMessage.renderToString(),
-            dialogRemoveChat: this.props.dialogRemoveChat.renderToString(),
-            workspaceHeader: this.props.workspaceHeader.renderToString(),
-            messageInputForm: this.props.messageInputForm.renderToString(),
-            sidebarHeader: this.props.sidebarHeader.renderToString(),
+            rooms: this.props.rooms.map(function (room) { return new Room(room).renderToString(); }),
+            messages: this.props.messages.map(function (message) { return new Message(message).renderToString(); }),
+            menuEmoji: new Menu(this.props.menuEmoji).renderToString(),
+            menuMessage: new Menu(this.props.menuMessage).renderToString(),
+            dialogRemoveChat: new Dialog(this.props.dialogRemoveChat).renderToString(),
+            messageInputForm: new MessageInputForm(this.props.messageInputForm).renderToString(),
+            sidebarHeader: new SidebarHeader(this.props.sidebarHeader).renderToString(),
+            workspaceHeader: new WorkSpaceHeader(this.props.workspaceHeader).renderToString(),
         });
     };
     return MessengerChat;
 }(Block));
 export default MessengerChat;
-export var messengerChat = new MessengerChat({
-    rooms: rooms.map(function (props) { return new Room(props); }),
-    messages: messages.map(function (props) { return new Message(props); }),
-    menuEmoji: new Menu(menuEmoji),
-    menuMessage: new Menu(menuMessage),
-    dialogRemoveChat: new Dialog(dialog),
-    workspaceHeader: new WorkSpaceHeader(workspaceHeader),
-    messageInputForm: new MessageInputForm(messageInputForm),
-    sidebarHeader: new SidebarHeader({
-        profileLink: {
-            className: "sidebar__profile-link js-profile-link",
-            appendIcon: true,
-            title: "Профиль",
-            attributes: {
-                href: "/profile",
-            },
-            icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
-            events: [
-                {
-                    type: "click",
-                    el: ".js-profile-link",
-                    handler: function (evt) {
-                        evt.preventDefault();
-                        bus.emit(EVENTS.ROUTER_GO, "/profile");
-                    }
-                }
-            ]
-        }
-    }),
-});
 //# sourceMappingURL=index.js.map

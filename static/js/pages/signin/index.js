@@ -16,9 +16,9 @@ import { template } from "./template.js";
 import Form from "../../components/form/Form.js";
 import Button from "../../components/button/Button.js";
 import Input from "../../components/input/Input.js";
+import Notification from "../../components/notification/Notification.js";
 import { addInputEvents } from "../../utils/add-input-events.js";
-//import { render } from "../../utils/renderDOM.js";
-import { inputsProps, buttons } from "./data.js";
+import { inputsProps, buttons } from "./initial-props.js";
 var inputs = inputsProps.map(addInputEvents);
 var form = new Form({
     className: "form form--signin",
@@ -36,6 +36,10 @@ var form = new Form({
         }
     ]
 });
+export var props = {
+    form: form,
+    notification: {}
+};
 var SignInPage = /** @class */ (function (_super) {
     __extends(SignInPage, _super);
     function SignInPage(props) {
@@ -43,13 +47,11 @@ var SignInPage = /** @class */ (function (_super) {
     }
     SignInPage.prototype.render = function () {
         return Handlebars.compile(template)({
-            form: this.props.form.renderToString()
+            form: this.props.form.renderToString(),
+            notification: new Notification(this.props.notification).renderToString()
         });
     };
     return SignInPage;
 }(Block));
 export default SignInPage;
-export var signInPage = new SignInPage({
-    form: form
-});
 //# sourceMappingURL=index.js.map

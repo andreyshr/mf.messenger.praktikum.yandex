@@ -15,15 +15,7 @@ export default class Input extends Block {
 
         this.bus = new AppBus();
         this.bus.on(EVENTS.FORM_INVALID, this.showError);
-        this.bus.on(EVENTS.SET_PROFILE, (user) => {
-            if (Object.keys(user).includes(this.props.name)) {
-                this.setProps({
-                    value: user[this.props.name]
-                });
-                this.bus.emit(EVENTS.FORM_INPUT, [this.props.name], this.props.value, this.props.action);
-                this.forceUpdate();
-            }
-        });
+        this.bus.on(EVENTS.INPUT_UPDATE_VALUE, this.updateValue);
 
         Block._instances.push(this);
     }
@@ -36,6 +28,16 @@ export default class Input extends Block {
             if (node) node.classList.remove('error-message--active');
         } else {
             if (node) node.classList.add('error-message--active');
+        }
+    }
+
+    updateValue = (name: string, value: string, action: string) => {
+        if (action === this.props.action && this.props.name === name) {
+            this.setProps({
+                value: value
+            });
+            this.bus.emit(EVENTS.FORM_INPUT, name, value, this.props.action);
+            this.forceUpdate();
         }
     }
 

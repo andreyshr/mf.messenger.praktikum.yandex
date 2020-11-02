@@ -24,7 +24,6 @@ abstract class Block {
 
             if (el && !i._mounted) {
                 i._attachEvents();
-                i._mounted = true;
             }
         }
     }
@@ -123,7 +122,7 @@ abstract class Block {
         return true;
     }
 
-    componentDidUpdate(oldProp: string, newProp: string): boolean {
+    componentDidUpdate(oldProp?: string, newProp?: string): boolean {
         return oldProp === newProp;
     }
 
@@ -137,9 +136,11 @@ abstract class Block {
         const element = this.getContent();
         if (element) {
             this.events.forEach((event: BlockEvent) => {
+                if (event.el === "#avatar") console.log("avatar")
                 this._delegate(event.type, document.documentElement, event.el, event.handler);
             });
         }
+        this._mounted = true;
     }
 
     private _delegate(eventName: string, element: HTMLElement, cssSelector: string, callback: (event?: Event) => {}) {
@@ -152,7 +153,6 @@ abstract class Block {
         };
 
         element.addEventListener(eventName, fn);
-        //this.listeners.push({ fn, element, eventName });
 
         return this;
     }
