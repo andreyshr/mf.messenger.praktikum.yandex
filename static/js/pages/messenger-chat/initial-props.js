@@ -1,106 +1,3 @@
-export var rooms = [
-    {
-        id: "1",
-        className: "sidebar__list-item",
-        name: "Андрей",
-        stubLetters: "А",
-        newMessagesCount: "3",
-        message: "Изображение",
-        link: "/messenger-chat.html",
-        time: "10:40"
-    },
-    {
-        id: "2",
-        className: "sidebar__list-item",
-        name: "Киноклуб",
-        avatarImg: "https://i.pinimg.com/736x/fb/45/ba/fb45baac1eed3c1b19d4aad23b054fa8.jpg",
-        newMessagesCount: "2",
-        message: "стикер",
-        link: "/messenger-chat.html",
-        time: "12:00"
-    },
-    {
-        id: "3",
-        name: "тет-а-теты",
-        className: "sidebar__list-item",
-        stubLetters: "Т",
-        message: "И Human Interface Guidelines и Material Design рекомендуют...",
-        link: "/messenger-chat.html",
-        time: "Ср"
-    },
-    {
-        id: "4",
-        className: "sidebar__list-item",
-        name: "Илья",
-        stubLetters: "И",
-        message: "Привет",
-        link: "/messenger-chat.html",
-        time: "Вчера"
-    },
-    {
-        id: "5",
-        className: "sidebar__list-item",
-        name: "Илья Смирнов",
-        stubLetters: "ИС",
-        message: "Привет",
-        link: "/messenger-chat.html",
-        time: "Вчера"
-    },
-    {
-        id: "6",
-        className: "sidebar__list-item",
-        name: "Вадим",
-        avatarImg: "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png",
-        message: "Так увлёкся работой по курсу, что совсем забыл его анонсир...",
-        link: "/messenger-chat.html",
-        time: "1 мая 2020"
-    }
-];
-export var messages = [
-    {
-        id: "1",
-        className: "message message--inbox",
-        time: "11:56",
-        message: "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой."
-    },
-    {
-        id: "2",
-        className: "message message--inbox message--image",
-        time: "11:56",
-        img: "https://images.unsplash.com/photo-1496680154270-b79e35576fe5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1310&q=80"
-    },
-    {
-        id: "3",
-        className: "message message--inbox message--image",
-        time: "11:56",
-        img: "https://images.unsplash.com/photo-1495707902641-75cac588d2e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-    },
-    {
-        id: "4",
-        className: "message message--inbox message--image",
-        time: "11:56",
-        img: "https://images.unsplash.com/photo-1536627217140-899b0bc9d881?ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
-    },
-    {
-        id: "5",
-        className: "message message--outbox message--emoji",
-        emoji: true,
-        time: "11:56",
-        message: "&#128513;"
-    },
-    {
-        id: "6",
-        className: "message message--outbox",
-        time: "11:56",
-        message: "Круто"
-    },
-    {
-        id: "7",
-        className: "message message--outbox",
-        message: "Шикарные камеры",
-        time: "11:56",
-    }
-];
 export var menuChat = {
     className: "p-relative ml-auto",
     menuListClass: "menu--bottom menu--right",
@@ -146,17 +43,28 @@ export var menuMessage = {
         }
     ]
 };
+export var sidebarHeader = {
+    profileLink: {
+        className: "sidebar__profile-link router-link",
+        appendIcon: true,
+        title: "Профиль",
+        attributes: {
+            href: "/profile",
+        },
+        icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
+    }
+};
 export var workspaceHeader = {
     className: "workspace__header",
-    chatName: "Вадим",
-    userLastActiveTime: "Был 5 минут назад",
-    historyTime: "19 июня",
-    avatarImg: "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png",
+    title: "",
+    userLastActiveTime: "",
+    historyTime: "",
+    avatar: "",
     menuChat: menuChat
 };
 export var workspaceEmpty = {
     className: "workspace__empty w-100 h-100",
-    title: "Выберите чат чтобы отправить сообщение"
+    title: "Выберите чат чтобы отправить сообщение",
 };
 export var messageInputForm = {
     className: "workspace__user-form",
@@ -166,7 +74,7 @@ export var messageInputForm = {
         icon: "<svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <circle cx=\"14\" cy=\"14\" r=\"14\" fill=\"#3369F3\"/> <rect x=\"8\" y=\"13.2002\" width=\"11\" height=\"1.6\" fill=\"white\"/> <path d=\"M15 9L19 14L15 19\" stroke=\"white\" stroke-width=\"1.6\"/> </svg>"
     }
 };
-export var dialog = {
+export var dialogRemoveChat = {
     title: "Вы хотите удалить чат?",
     removeButton: {
         className: "button button--md button--red",
@@ -177,4 +85,4 @@ export var dialog = {
         title: "Отменить"
     }
 };
-//# sourceMappingURL=data.js.map
+//# sourceMappingURL=initial-props.js.map

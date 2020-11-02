@@ -1,10 +1,11 @@
 // Pages
-import {signInPage} from "./pages/signin/index.js";
-import {signUpPage} from "./pages/signup/index.js";
-import {page404} from "./pages/404/index.js";
-import {messengerChat} from "./pages/messenger/index.js";
-import {messengerChat as messengerChatID} from "./pages/messenger-chat/index.js";
-import {profile} from "./pages/profile/index.js";
+import SignInPage, {props as propsSignIn} from "./pages/signin/index.js";
+import SignUpPage, {props as propsSignUp} from "./pages/signup/index.js";
+import Messenger, {props as propsMessenger} from "./pages/messenger/index.js";
+import MessengerChat, {props as propsMessengerChat} from "./pages/messenger-chat/index.js";
+import Profile, {props as propsProfile} from "./pages/profile/index.js";
+import Page404, {props as props404Page} from "./pages/404/index.js";
+import Page500, {props as props500Page} from "./pages/500/index.js";
 
 // Modules
 import {Router} from "./modules/router/router.js";
@@ -56,10 +57,11 @@ router.beforeStart = function (): Promise<void> {
 }
 
 router
-    .use("/signin", signInPage, {guest: true})
-    .use("/signup", signUpPage, {guest: true})
-    .use("/messenger", messengerChat, {auth: true})
-    .use("/messenger/:id", messengerChatID, {auth: true})
-    .use("/profile", profile, {auth: true})
-    .use("/404", page404)
+    .use("/signin", SignInPage.bind(this, propsSignIn), {guest: true})
+    .use("/signup", SignUpPage.bind(this, propsSignUp), {guest: true})
+    .use("/messenger", Messenger.bind(this, propsMessenger), {auth: true})
+    .use("/messenger/:id", MessengerChat.bind(this, propsMessengerChat), {auth: true})
+    .use("/profile", Profile.bind(this, propsProfile), {auth: true})
+    .use("/404", Page404.bind(this, props404Page))
+    .use("/500", Page500.bind(this, props500Page))
     .start();

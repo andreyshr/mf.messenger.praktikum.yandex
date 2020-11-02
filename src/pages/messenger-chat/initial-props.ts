@@ -1,109 +1,5 @@
 import {Props} from "../../modules/block/types";
 
-export const rooms: Props[] = [
-    {
-        id: "1",
-        className: "sidebar__list-item",
-        name: "Андрей",
-        stubLetters: "А",
-        newMessagesCount: "3",
-        message: "Изображение",
-        link: "/messenger-chat.html",
-        time: "10:40"
-    },
-    {
-        id: "2",
-        className: "sidebar__list-item",
-        name: "Киноклуб",
-        avatarImg: "https://i.pinimg.com/736x/fb/45/ba/fb45baac1eed3c1b19d4aad23b054fa8.jpg",
-        newMessagesCount: "2",
-        message: "стикер",
-        link: "/messenger-chat.html",
-        time: "12:00"
-    },
-    {
-        id: "3",
-        name: "тет-а-теты",
-        className: "sidebar__list-item",
-        stubLetters: "Т",
-        message: "И Human Interface Guidelines и Material Design рекомендуют...",
-        link: "/messenger-chat.html",
-        time: "Ср"
-    },
-    {
-        id: "4",
-        className: "sidebar__list-item",
-        name: "Илья",
-        stubLetters: "И",
-        message: "Привет",
-        link: "/messenger-chat.html",
-        time: "Вчера"
-    },
-    {
-        id: "5",
-        className: "sidebar__list-item",
-        name: "Илья Смирнов",
-        stubLetters: "ИС",
-        message: "Привет",
-        link: "/messenger-chat.html",
-        time: "Вчера"
-    },
-    {
-        id: "6",
-        className: "sidebar__list-item",
-        name: "Вадим",
-        avatarImg: "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png",
-        message: "Так увлёкся работой по курсу, что совсем забыл его анонсир...",
-        link: "/messenger-chat.html",
-        time: "1 мая 2020"
-    }
-];
-
-export const messages: Props[] = [
-    {
-        id: "1",
-        className: "message message--inbox",
-        time: "11:56",
-        message: "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой."
-    },
-    {
-        id: "2",
-        className: "message message--inbox message--image",
-        time: "11:56",
-        img: "https://images.unsplash.com/photo-1496680154270-b79e35576fe5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1310&q=80"
-    },
-    {
-        id: "3",
-        className: "message message--inbox message--image",
-        time: "11:56",
-        img: "https://images.unsplash.com/photo-1495707902641-75cac588d2e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-    },
-    {
-        id: "4",
-        className: "message message--inbox message--image",
-        time: "11:56",
-        img: "https://images.unsplash.com/photo-1536627217140-899b0bc9d881?ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80"
-    },
-    {
-        id: "5",
-        className: "message message--outbox message--emoji",
-        emoji: true,
-        time: "11:56",
-        message: "&#128513;"
-    },
-    {
-        id: "6",
-        className: "message message--outbox",
-        time: "11:56",
-        message: "Круто"
-    },
-    {
-        id: "7",
-        className: "message message--outbox",
-        message: "Шикарные камеры",
-        time: "11:56",
-    }
-]
 
 export const menuChat: Props = {
     className: "p-relative ml-auto",
@@ -153,18 +49,30 @@ export const menuMessage: Props = {
     ]
 }
 
+export const sidebarHeader: Props = {
+    profileLink: {
+        className: "sidebar__profile-link router-link",
+        appendIcon: true,
+        title: "Профиль",
+        attributes: {
+            href: "/profile",
+        },
+        icon: "<svg width=\"6\" height=\"10\" viewBox=\"0 0 6 10\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M1 9L5 5L1 1\" stroke=\"#999999\"/>\n                    </svg>",
+    }
+}
+
 export const workspaceHeader: Props = {
     className: "workspace__header",
-    chatName: "Вадим",
-    userLastActiveTime: "Был 5 минут назад",
-    historyTime: "19 июня",
-    avatarImg: "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png",
+    title: "",
+    userLastActiveTime: "",
+    historyTime: "",
+    avatar: "",
     menuChat
 }
 
 export const workspaceEmpty: Props = {
     className: "workspace__empty w-100 h-100",
-    title: "Выберите чат чтобы отправить сообщение"
+    title: "Выберите чат чтобы отправить сообщение",
 }
 
 export const messageInputForm: Props = {
@@ -176,7 +84,7 @@ export const messageInputForm: Props = {
     }
 }
 
-export const dialog: Props = {
+export const dialogRemoveChat: Props = {
     title: "Вы хотите удалить чат?",
     removeButton: {
         className: "button button--md button--red",

@@ -1,6 +1,6 @@
 import {profileAPIInstance} from "../modules/HTTP/HTTP.js";
 import {Options} from "../modules/HTTP/types";
-import {AvatarData, ProfileData} from "../services/types";
+import {ProfileData} from "../services/types";
 
 export class ProfileApi {
     update(data: ProfileData) {
@@ -13,8 +13,8 @@ export class ProfileApi {
             });
     }
 
-    updateAvatar(data: any) {
-        const options: Options<AvatarData> = {data, headers: {"Content-Type": "multipart/form-data"}};
+    updateAvatar(data: FormData) {
+        const options: Options<FormData> = {data};
 
         return profileAPIInstance.put('/avatar', options)
             .then(data => data)

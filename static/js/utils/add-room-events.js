@@ -11,13 +11,16 @@ var __assign = (this && this.__assign) || function () {
 };
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
+import Store from "../modules/store/store.js";
 var bus = new AppBus();
+var store = new Store();
 export var addRoomEvents = function (room) { return (__assign(__assign({}, room), { events: [
         {
             type: "click",
             el: "[data-room-id='" + room.id + "']",
             handler: function (evt) {
                 evt.preventDefault();
+                store.set("currentChat", room);
                 bus.emit(EVENTS.ROUTER_GO, "/messenger/:id");
             }
         }

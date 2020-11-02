@@ -1,2 +1,2 @@
-export var template = "\n    <main class=\"container overflow-hidden\">\n    <div class=\"profile h-100\">\n        <a class=\"profile__back-link\" href=\"/messenger.html\">\n            \n            {{{ buttonBack }}}\n            \n        </a>\n        <div class=\"profile__wrapper\">\n            {{{ form }}}\n        </div>\n    </div>\n</main>\n";
+export var template = "\n    <main class=\"container overflow-hidden\">\n    <div class=\"profile h-100\">\n    \n        {{{ buttonBack }}}\n    \n        <div class=\"profile__wrapper\">\n            {{{ form }}}\n        </div>\n    </div>\n    \n    {{{ notification }}}\n</main>\n";
 //# sourceMappingURL=template.js.map

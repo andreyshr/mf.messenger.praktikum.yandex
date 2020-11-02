@@ -12,10 +12,11 @@ export default class Room extends Block {
     avatar: Block;
     constructor(props: Props) {
         super("li", props);
+
         Block._instances.push(this);
     }
 
-    onClick(evt: any) {
+    onClick(evt: Event) {
         evt.preventDefault();
         bus.emit(EVENTS.ROUTER_GO, "/messenger/:id");
     }

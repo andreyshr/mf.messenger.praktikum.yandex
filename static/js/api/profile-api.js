@@ -11,7 +11,7 @@ var ProfileApi = /** @class */ (function () {
         });
     };
     ProfileApi.prototype.updateAvatar = function (data) {
-        var options = { data: data, headers: { "Content-Type": "multipart/form-data" } };
+        var options = { data: data };
         return profileAPIInstance.put('/avatar', options)
             .then(function (data) { return data; })
             .catch(function (err) {

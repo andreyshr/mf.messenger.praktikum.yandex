@@ -1,15 +1,13 @@
 import {isObject} from "../isObject";
-import { expect } from 'chai';
-import 'mocha';
 
 describe("isObject", function() {
-    it("when value is object expect true", function() {
-        expect(isObject({})).to.be.true;
+    it("should return true if arg is object", function() {
+        expect(isObject({})).toBe(true);
     });
 
-    it("when value is primitive expect false", function() {
-        expect(isObject('2')).to.be.false;
-        expect(isObject(2)).to.be.false;
-        expect(isObject(true)).to.be.false;
+    it("should return false if arg is not object", function() {
+        expect(isObject('2')).toBe(false);
+        expect(isObject(2)).toBe(false);
+        expect(isObject(true)).toBe(false);
     });
 });

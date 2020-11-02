@@ -13,6 +13,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
+export var props = {
+    title: "404",
+    description: "Не туда попали",
+    linkTitle: "Назад к чатам",
+    linkHref: "/messenger"
+};
 var Page404 = /** @class */ (function (_super) {
     __extends(Page404, _super);
     function Page404(props) {
@@ -24,10 +30,4 @@ var Page404 = /** @class */ (function (_super) {
     return Page404;
 }(Block));
 export default Page404;
-export var page404 = new Page404({
-    title: "404",
-    description: "Не туда попали",
-    linkTitle: "Назад к чатам",
-    linkHref: "/messenger.html"
-});
 //# sourceMappingURL=index.js.map

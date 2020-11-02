@@ -29,9 +29,7 @@ var AuthApi = /** @class */ (function () {
     AuthApi.prototype.logout = function () {
         var options = { headers: { "Content-Type": "application/json" } };
         return authAPIInstance.post('/logout', options)
-            .then(function () {
-            document.location.reload();
-        })
+            .then(function (data) { return data; })
             .catch(function (err) {
             throw err;
         });

@@ -10,6 +10,7 @@
   --color-gray-5: #f8f8f8;
   --color-gray-6: #e2e2e2;
   --color-red: #FF2F2F;
+  --color-green: #4BB543;
   --shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
 }
 
@@ -664,14 +665,8 @@ li {
   width: 90%;
   max-width: 600px;
 }
-
-.profile__form-title {
-  margin: 20px 0 100px 0;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 16px;
-  text-align: center;
-  color: var(--color-dark);
+.profile__form > .profile__form-row {
+  margin-bottom: 120px;
 }
 
 .profile__form-rows {
@@ -1036,6 +1031,28 @@ li {
   border-radius: 30px;
   color: var(--color-dark);
   background: var(--color-gray-2);
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 20px;
+  border-radius: 6px;
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.notification--warning {
+  background: var(--color-red);
+}
+
+.notification--success {
+  background: var(--color-green);
 }
 
 /*# sourceMappingURL=styles.css.map */

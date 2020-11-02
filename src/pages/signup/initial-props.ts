@@ -1,7 +1,7 @@
-import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
-export var inputsProps = [
+import {PropsInput} from "../../components/input/types";
+import {Props} from "../../modules/block/types";
+
+export const inputsProps: PropsInput[] = [
     {
         name: "first_name",
         id: "signup-name",
@@ -64,7 +64,8 @@ export var inputsProps = [
         action: "signup",
     }
 ];
-export var buttons = [
+
+export const buttons: Props[] = [
     {
         className: 'button button--blue w-100',
         tagName: "button",
@@ -74,22 +75,11 @@ export var buttons = [
         title: 'Зарегистрироваться'
     },
     {
-        className: 'button button--transparent w-100 js-link-signin',
+        className: 'button button--transparent w-100 router-link',
         tagName: "a",
         attributes: {
-            href: "/signin.html",
+            href: "/signin",
         },
         title: 'Войти',
-        events: [
-            {
-                type: "click",
-                el: ".js-link-signin",
-                handler: function (evt) {
-                    evt.preventDefault();
-                    bus.emit(EVENTS.ROUTER_GO, "/signin");
-                }
-            }
-        ]
     }
 ];
-//# sourceMappingURL=data.js.map

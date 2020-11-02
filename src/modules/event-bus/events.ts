@@ -5,5 +5,9 @@ export default {
     LOGOUT: 'logout',
     ROUTER_GO: 'go',
     ROUTER_REPLACE: 'replace',
-    SET_PROFILE: 'set_profile'
+    INPUT_UPDATE_VALUE: 'input_update_value',
+    ROOM_UPDATE: 'room_update',
+    NOTIFICATION_SHOW: 'notification_show',
+    CURRENT_CHAT_UPDATE: 'current_chat_update',
+    PROFILE_UPDATE_AVATAR: 'profile_update_avatar',
 }
