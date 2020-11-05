@@ -21,9 +21,9 @@ import Notification from "../../components/notification/Notification.js";
 import Store from "../../modules/store/store.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-import { inputsProps, buttons, buttonBack } from "./initial-props.js";
-import { addInputEvents } from "../../utils/add-input-events.js";
-var inputs = inputsProps.map(addInputEvents);
+import { inputs, buttons, buttonBack } from "./initial-props.js";
+var bus = new AppBus();
+var store = new Store();
 var form = new Form({
     template: "profile",
     className: "profile__form",
@@ -39,29 +39,25 @@ var form = new Form({
     events: [
         {
             type: "submit",
-            el: "form",
+            el: "form.profile__form",
             handler: function (evt) {
                 form.onSubmit(evt);
             }
         },
-    ]
-});
-var bus = new AppBus();
-var store = new Store();
-export var props = {
-    form: form,
-    notification: {},
-    buttonBack: new Button("a", buttonBack),
-    events: [
         {
             type: "change",
             el: "#avatar",
             handler: function (evt) {
                 evt.preventDefault();
-                bus.emit(EVENTS.PROFILE_UPDATE_AVATAR, evt.target);
+                bus.emit(EVENTS.PROFILE_UPDATE_AVATAR, evt.target.files);
             }
         }
     ]
+});
+export var props = {
+    form: form,
+    notification: {},
+    buttonBack: new Button("a", buttonBack),
 };
 var Profile = /** @class */ (function (_super) {
     __extends(Profile, _super);
@@ -71,8 +67,11 @@ var Profile = /** @class */ (function (_super) {
             Object.keys(_this.user).forEach(function (key) {
                 bus.emit(EVENTS.INPUT_UPDATE_VALUE, key, _this.user[key], "profile");
             });
-            document.querySelector(".avatar img").src = _this.user.avatar;
+            bus.emit(EVENTS.AVATAR_UPDATE);
         };
+        bus.on(EVENTS.AVATAR_UPDATE, function () {
+            document.querySelector(".profile__form .avatar img").src = 'https://ya-praktikum.tech/' + _this.user.avatar;
+        });
         Block._instances.push(_this);
         return _this;
     }

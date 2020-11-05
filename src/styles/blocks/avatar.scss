@@ -3,15 +3,26 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 47px;
-    height: 47px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: var(--color-gray-2);
 }
 
 .avatar__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
     overflow: hidden;
+    width: 48px;
+    height: 48px;
+}
+
+.avatar--lg .avatar__wrapper {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
 }
 
 .avatar__stub {
@@ -40,8 +51,4 @@
 .avatar--lg .avatar__stub {
     font-size: 40px;
     line-height: 40px;
-}
-
-.avatar--lg .avatar__wrapper {
-    border-radius: 0;
 }

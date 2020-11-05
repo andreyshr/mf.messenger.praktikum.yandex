@@ -28,10 +28,10 @@ var Notification = /** @class */ (function (_super) {
             _this.show();
             setTimeout(function () {
                 _this.hide();
-            }, 5000);
+            }, 3500);
         };
-        Block._instances.push(_this);
         bus.on(EVENTS.NOTIFICATION_SHOW, _this.showNotification);
+        Block._instances.push(_this);
         return _this;
     }
     Notification.prototype.componentMounted = function () {

@@ -1,3 +1,7 @@
+export type EmptyRequest = {
+
+}
+
 export type SigninData = {
     login: string,
     password: string,
@@ -23,6 +27,13 @@ export type ProfileData = {
     phone: string
 }
 
-export type AvatarData = {
-    avatar: FormData
+export type CreateChatRequest = {
+    title: string
 }
+
+export type ChatUsersRequest = {
+    users: number[],
+    chatId: number
+}
+
+

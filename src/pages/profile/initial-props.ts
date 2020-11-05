@@ -1,11 +1,13 @@
 import {PropsInput} from "../../components/input/types";
 import {Props} from "../../modules/block/types";
+import {addInputEvents} from "../../utils/add-input-events.js";
+
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 const bus = new AppBus();
 
-export const inputsProps: PropsInput[] = [
+const inputsProps: PropsInput[] = [
     {
         template: "profile",
         name: "first_name",
@@ -88,6 +90,8 @@ export const inputsProps: PropsInput[] = [
     //     action: "profile",
     // }
 ];
+
+export const inputs = inputsProps.map(addInputEvents);
 
 export const buttons: Props[] = [
     {

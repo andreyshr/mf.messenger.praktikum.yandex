@@ -36,6 +36,11 @@ abstract class Block {
     events: BlockEvent[];
     eventBus: () => EventBus;
 
+    listeners: any
+
+    root: boolean;
+    children: Block[]
+
     protected constructor(tagName: string = "div", props: Props = {}) {
         const eventBus = new EventBus();
 
@@ -53,6 +58,11 @@ abstract class Block {
         this.eventBus = () => eventBus;
 
         this.events = this.props.events || [];
+
+        this.listeners = [];
+
+        this.root = props.root || false;
+        this.children = [];
 
         this._mounted = false;
 
@@ -136,11 +146,16 @@ abstract class Block {
         const element = this.getContent();
         if (element) {
             this.events.forEach((event: BlockEvent) => {
-                if (event.el === "#avatar") console.log("avatar")
                 this._delegate(event.type, document.documentElement, event.el, event.handler);
             });
         }
         this._mounted = true;
+    }
+
+    detachEvents() {
+        for (const {fn, eventName} of this.listeners) {
+            document.documentElement.removeEventListener(eventName, fn);
+        }
     }
 
     private _delegate(eventName: string, element: HTMLElement, cssSelector: string, callback: (event?: Event) => {}) {
@@ -153,6 +168,7 @@ abstract class Block {
         };
 
         element.addEventListener(eventName, fn);
+        this.listeners.push({ eventName, fn });
 
         return this;
     }
@@ -172,7 +188,11 @@ abstract class Block {
         return block;
     }
 
-    renderToString(): string {
+    renderToString(parent?: any): string {
+        if (parent) {
+            parent.children.push(this);
+        }
+
         const wrapper = document.createElement('div');
         if (this._element) this._element.innerHTML = this.render();
         wrapper.appendChild(this._element as HTMLElement);
@@ -226,6 +246,12 @@ abstract class Block {
             element.style.display = "none";
             this.onHide();
         }
+    }
+
+    unmount() {
+        this.getContent().remove();
+        this.detachEvents();
+        Block._instances = []
     }
 
     onShow() {

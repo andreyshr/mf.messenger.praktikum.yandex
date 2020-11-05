@@ -5,14 +5,29 @@ import Store from "../modules/store/store.js";
 var ProfileService = /** @class */ (function () {
     function ProfileService() {
         var _this = this;
+        this.updateAvatar = function (files) {
+            var formData = new FormData();
+            formData.append("avatar", files[0]);
+            return _this.profileApi.updateAvatar(formData)
+                .then(function (data) {
+                _this.store.set("user", data);
+                _this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Аватар обновлён", "success");
+                _this.bus.emit(EVENTS.AVATAR_UPDATE, _this.store.get("user").avatar);
+            })
+                .catch(function (err) {
+                var errorMessage = JSON.parse(err.response).reason;
+                _this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
+                throw err;
+            });
+        };
+        if (ProfileService.__instance) {
+            return ProfileService.__instance;
+        }
         this.profileApi = new ProfileApi();
         this.bus = new AppBus();
         this.store = new Store();
-        this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, function (input) {
-            var formData = new FormData();
-            formData.append("avatar", input.files[0]);
-            _this.updateAvatar(formData);
-        });
+        this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, this.updateAvatar);
+        ProfileService.__instance = this;
     }
     ProfileService.prototype.updateProfile = function (data) {
         var _this = this;
@@ -28,18 +43,7 @@ var ProfileService = /** @class */ (function () {
             throw err;
         });
     };
-    ProfileService.prototype.updateAvatar = function (data) {
-        var _this = this;
-        return this.profileApi.updateAvatar(data)
-            .then(function () {
-            _this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Аватар обновлён", "success");
-        })
-            .catch(function (err) {
-            var errorMessage = JSON.parse(err.response).reason;
-            _this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-            throw err;
-        });
-    };
+    ProfileService.__instance = null;
     return ProfileService;
 }());
 export { ProfileService };

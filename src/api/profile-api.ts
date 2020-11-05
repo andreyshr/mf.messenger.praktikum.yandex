@@ -7,7 +7,7 @@ export class ProfileApi {
         const options: Options<ProfileData> = {data, headers: {"Content-Type": "application/json"}};
 
         return profileAPIInstance.put('/', options)
-            .then(data => data)
+            .then((data: string) => JSON.parse(data))
             .catch(err => {
                 throw err
             });
@@ -17,7 +17,7 @@ export class ProfileApi {
         const options: Options<FormData> = {data};
 
         return profileAPIInstance.put('/avatar', options)
-            .then(data => data)
+            .then((data: string) => JSON.parse(data))
             .catch(err => {
                 throw err
             });

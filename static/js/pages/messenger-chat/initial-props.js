@@ -1,3 +1,12 @@
+import EVENTS from "../../modules/event-bus/events.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import { UserService } from "../../services/user-service.js";
+var userService = new UserService();
+var bus = new AppBus();
+export var roomsList = {
+    className: "sidebar__history-scrollable scrollable vh-100",
+    rooms: []
+};
 export var menuChat = {
     className: "p-relative ml-auto",
     menuListClass: "menu--bottom menu--right",
@@ -7,14 +16,16 @@ export var menuChat = {
     },
     items: [
         {
-            title: "Редактировать",
-            icon: "<svg width=\"22\" height=\"19\" viewBox=\"0 0 22 19\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <rect width=\"22\" height=\"1.5\" transform=\"matrix(1 0 0 -1 0 19)\" fill=\"#3369F3\"/> <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.2602 0L19.0001 2.73982L16.9452 4.79468L14.2054 2.05487L16.2602 0ZM13.5202 2.73976L16.26 5.47958L6.7394 15.0002H4V12.26L13.5202 2.73976Z\" fill=\"#3369F3\"/> </svg>"
+            menuButtonClassName: "js-add-user-open-dialog",
+            title: "Добавить пользователя",
+            icon: "<svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style='transform: rotate(45deg)' fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <circle cx=\"11\" cy=\"11\" r=\"10.25\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.1109\" y1=\"7.11103\" x2=\"14.8891\" y2=\"14.8892\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.11078\" y1=\"14.8891\" x2=\"14.889\" y2=\"7.11093\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> </svg>",
         },
         {
-            title: "Удалить",
+            menuButtonClassName: "js-remove-user-open-dialog",
+            title: "Удалить пользователя",
             icon: "<svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <circle cx=\"11\" cy=\"11\" r=\"10.25\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.1109\" y1=\"7.11103\" x2=\"14.8891\" y2=\"14.8892\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.11078\" y1=\"14.8891\" x2=\"14.889\" y2=\"7.11093\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> </svg>"
         }
-    ]
+    ],
 };
 export var menuEmoji = {
     className: "p-relative",
@@ -64,7 +75,12 @@ export var workspaceHeader = {
 };
 export var workspaceEmpty = {
     className: "workspace__empty w-100 h-100",
-    title: "Выберите чат чтобы отправить сообщение",
+    title: "Выберите чат чтобы отправить сообщение или создайте новый",
+    buttonCreateChat: {
+        className: "button button--blue button--lg js-button-create-chat",
+        type: "button",
+        title: "Создать чат",
+    }
 };
 export var messageInputForm = {
     className: "workspace__user-form",
@@ -75,14 +91,57 @@ export var messageInputForm = {
     }
 };
 export var dialogRemoveChat = {
-    title: "Вы хотите удалить чат?",
-    removeButton: {
-        className: "button button--md button--red",
-        title: "Удалить"
-    },
+    users: [],
     cancelButton: {
         className: "button button--md button--gray js-close-dialog-button",
-        title: "Отменить"
+        title: "Закрыть"
     }
 };
+export var events = [
+    {
+        type: "click",
+        el: ".js-add-user-open-dialog",
+        handler: function () {
+            bus.emit(EVENTS.OPEN_ADD_USER_DIALOG);
+        }
+    },
+    {
+        type: "click",
+        el: ".js-remove-user-open-dialog",
+        handler: function () {
+            bus.emit(EVENTS.OPEN_REMOVE_USER_DIALOG);
+        }
+    },
+    {
+        type: "click",
+        el: ".js-close-dialog-button",
+        handler: function () {
+            bus.emit(EVENTS.CLOSE_DIALOG);
+        }
+    },
+    {
+        type: "click",
+        el: ".overlay",
+        handler: function () {
+            bus.emit(EVENTS.CLOSE_DIALOG);
+        }
+    },
+    {
+        type: "input",
+        el: ".js-user-search",
+        handler: function (evt) {
+            evt.preventDefault();
+            userService.search(evt.target.value);
+        }
+    },
+    {
+        type: "click",
+        el: ".js-user-button",
+        handler: function (evt) {
+            evt.preventDefault();
+            var userId = evt.target.dataset.userId;
+            bus.emit(EVENTS.CHAT_USER_ACTION, parseInt(userId, 10));
+        }
+    }
+];
 //# sourceMappingURL=initial-props.js.map

@@ -12,10 +12,10 @@ import Store from "../../modules/store/store.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
-import {inputsProps, buttons, buttonBack} from "./initial-props.js";
-import {addInputEvents} from "../../utils/add-input-events.js";
+import {inputs, buttons, buttonBack} from "./initial-props.js";
 
-const inputs = inputsProps.map(addInputEvents);
+const bus = new AppBus();
+const store = new Store();
 
 const form: Form = new Form({
         template: "profile",
@@ -32,39 +32,36 @@ const form: Form = new Form({
         events: [
             {
                 type: "submit",
-                el: "form",
+                el: "form.profile__form",
                 handler: function (evt: Event) {
                     form.onSubmit(evt);
                 }
             },
+            {
+                type: "change",
+                el: "#avatar",
+                handler: function (evt: Event) {
+                    evt.preventDefault();
+                    bus.emit(EVENTS.PROFILE_UPDATE_AVATAR, (evt.target as HTMLInputElement).files);
+                }
+            }
         ]
     }
 );
-
-const bus = new AppBus();
-const store = new Store();
 
 export const props = {
     form,
     notification: {},
     buttonBack: new Button("a", buttonBack),
-    events: [
-        {
-            type: "change",
-            el: "#avatar",
-            handler: function (evt: Event) {
-                evt.preventDefault();
-                bus.emit(EVENTS.PROFILE_UPDATE_AVATAR, (evt.target as HTMLInputElement));
-            }
-        }
-    ]
 }
 
 export default class Profile extends Block {
-    store: Store;
-
     constructor(props: Props) {
         super("div", props);
+
+        bus.on(EVENTS.AVATAR_UPDATE, () => {
+            (document.querySelector(".profile__form .avatar img") as HTMLImageElement).src = 'https://ya-praktikum.tech/' + this.user.avatar
+        });
 
         Block._instances.push(this);
     }
@@ -78,7 +75,7 @@ export default class Profile extends Block {
             bus.emit(EVENTS.INPUT_UPDATE_VALUE, key, this.user[key], "profile");
         });
 
-        (document.querySelector(".avatar img") as HTMLImageElement).src = this.user.avatar;
+        bus.emit(EVENTS.AVATAR_UPDATE);
     }
 
     render() {

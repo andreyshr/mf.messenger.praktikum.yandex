@@ -8,13 +8,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
-.workspace__empty span {
+.workspace__empty > span {
+    margin-bottom: 24px;
     font-weight: 500;
     font-size: 12px;
     line-height: 12px;
     color: var(--color-gray-1);
+}
+
+.workspace__empty input {
+    margin-bottom: 16px;
+    border: none;
+    border-bottom: 1px solid var(--color-gray-1);
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    outline: none;
 }
 
 .workspace__history {

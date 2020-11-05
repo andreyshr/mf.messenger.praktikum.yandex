@@ -25,6 +25,9 @@ var Block = /** @class */ (function () {
         this.props = this._makePropsProxy(props);
         this.eventBus = function () { return eventBus; };
         this.events = this.props.events || [];
+        this.listeners = [];
+        this.root = props.root || false;
+        this.children = [];
         this._mounted = false;
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -114,12 +117,16 @@ var Block = /** @class */ (function () {
         var element = this.getContent();
         if (element) {
             this.events.forEach(function (event) {
-                if (event.el === "#avatar")
-                    console.log("avatar");
                 _this._delegate(event.type, document.documentElement, event.el, event.handler);
             });
         }
         this._mounted = true;
+    };
+    Block.prototype.detachEvents = function () {
+        for (var _i = 0, _a = this.listeners; _i < _a.length; _i++) {
+            var _b = _a[_i], fn = _b.fn, eventName = _b.eventName;
+            document.documentElement.removeEventListener(eventName, fn);
+        }
     };
     Block.prototype._delegate = function (eventName, element, cssSelector, callback) {
         var fn = function (event) {
@@ -130,6 +137,7 @@ var Block = /** @class */ (function () {
             callback(event);
         };
         element.addEventListener(eventName, fn);
+        this.listeners.push({ eventName: eventName, fn: fn });
         return this;
     };
     Block.prototype._render = function () {
@@ -139,7 +147,10 @@ var Block = /** @class */ (function () {
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return block;
     };
-    Block.prototype.renderToString = function () {
+    Block.prototype.renderToString = function (parent) {
+        if (parent) {
+            parent.children.push(this);
+        }
         var wrapper = document.createElement('div');
         if (this._element)
             this._element.innerHTML = this.render();
@@ -187,6 +198,11 @@ var Block = /** @class */ (function () {
             element.style.display = "none";
             this.onHide();
         }
+    };
+    Block.prototype.unmount = function () {
+        this.getContent().remove();
+        this.detachEvents();
+        Block._instances = [];
     };
     Block.prototype.onShow = function () {
     };

@@ -1,5 +1,16 @@
 import {Props} from "../../modules/block/types";
+import EVENTS from "../../modules/event-bus/events.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import {UserService} from "../../services/user-service.js";
 
+const userService = new UserService();
+
+const bus = new AppBus();
+
+export const roomsList: Props = {
+    className: "sidebar__history-scrollable scrollable vh-100",
+    rooms: []
+};
 
 export const menuChat: Props = {
     className: "p-relative ml-auto",
@@ -10,14 +21,16 @@ export const menuChat: Props = {
     },
     items: [
         {
-            title: "Редактировать",
-            icon: "<svg width=\"22\" height=\"19\" viewBox=\"0 0 22 19\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <rect width=\"22\" height=\"1.5\" transform=\"matrix(1 0 0 -1 0 19)\" fill=\"#3369F3\"/> <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.2602 0L19.0001 2.73982L16.9452 4.79468L14.2054 2.05487L16.2602 0ZM13.5202 2.73976L16.26 5.47958L6.7394 15.0002H4V12.26L13.5202 2.73976Z\" fill=\"#3369F3\"/> </svg>"
+            menuButtonClassName: "js-add-user-open-dialog",
+            title: "Добавить пользователя",
+            icon: "<svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style='transform: rotate(45deg)' fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <circle cx=\"11\" cy=\"11\" r=\"10.25\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.1109\" y1=\"7.11103\" x2=\"14.8891\" y2=\"14.8892\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.11078\" y1=\"14.8891\" x2=\"14.889\" y2=\"7.11093\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> </svg>",
         },
         {
-            title: "Удалить",
+            menuButtonClassName: "js-remove-user-open-dialog",
+            title: "Удалить пользователя",
             icon: "<svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"> <circle cx=\"11\" cy=\"11\" r=\"10.25\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.1109\" y1=\"7.11103\" x2=\"14.8891\" y2=\"14.8892\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> <line x1=\"7.11078\" y1=\"14.8891\" x2=\"14.889\" y2=\"7.11093\" stroke=\"#3369F3\" stroke-width=\"1.5\"/> </svg>"
         }
-    ]
+    ],
 }
 
 export const menuEmoji: Props = {
@@ -27,7 +40,7 @@ export const menuEmoji: Props = {
         className: "button button--icon button--round button--transparent button--opener",
         icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"#3369F3\" viewBox=\"0 0 1000 1000\"> <g transform=\"translate(0.000000,512.000000) scale(0.100000,-0.100000)\"> <path d=\"M4530.1,5007.9C3375.4,4889,2341.7,4400,1530.4,3588.6C751.6,2809.9,287.5,1860.5,124.4,723.1c-32.6-226.3-32.6-982,0-1208.3c163-1137.4,629.1-2086.8,1405.9-2865.5c778.7-776.8,1728.1-1242.9,2865.5-1405.9c226.3-32.6,982-32.6,1208.3,0c1147,163,2100.2,634.9,2880.8,1425.1C9259.9-2549,9714.4-1616.8,9875.5-485.2c32.6,226.3,32.6,982,0,1208.3c-163,1137.4-629.1,2086.8-1405.9,2865.5c-759.5,759.5-1687.8,1223.7-2779.2,1392.5C5448.8,5017.5,4775.6,5034.8,4530.1,5007.9z M5613.7,4538c974.3-141.9,1854.7-581.1,2539.4-1265.9c686.6-686.6,1114.4-1545.9,1269.7-2549c21.1-145.8,30.7-331.8,30.7-604.2c0-725-141.9-1340.7-456.5-1973.6c-228.3-458.4-466.1-794-828.6-1160.4c-694.3-703.9-1545.9-1131.6-2564.4-1288.9c-289.6-44.1-918.7-44.1-1208.3,0c-1003.1,155.4-1862.4,583.1-2549,1269.7c-688.6,686.6-1114.4,1545.9-1269.7,2549C538.7-226.3,533,393.3,567.5,656c203.3,1517.1,1106.7,2790.7,2453.1,3458.1c533.2,264.7,1097.1,416.2,1720.4,462.2C4915.6,4589.8,5408.5,4566.8,5613.7,4538z\"/> <path d=\"M3241.2,1875.9c-456.5-149.6-619.5-728.8-303-1079.8c270.4-303,726.9-303,997.4,0c122.8,136.2,168.8,270.4,159.2,473.7c-7.7,126.6-19.2,184.1-57.5,258.9c-67.1,128.5-186,245.5-316.5,308.8C3594.1,1900.8,3369.7,1918.1,3241.2,1875.9z\"/> <path d=\"M6371.4,1877.8c-182.2-61.4-320.3-178.4-404.7-343.3c-74.8-143.9-86.3-381.7-26.9-537c55.6-149.6,184.1-287.7,339.5-364.4c111.2-53.7,143.9-61.4,282-61.4c126.6,0,174.5,9.6,264.7,49.9c143.8,67.1,270.4,186,335.7,318.4c72.9,151.5,84.4,372.1,23,531.3c-53.7,143.9-195.6,297.3-339.5,368.3C6720.4,1900.8,6496,1918.1,6371.4,1877.8z\"/> <path d=\"M1965.7-820.8c-65.2-49.9-99.7-138.1-84.4-216.7c32.6-170.7,454.6-680.9,788.3-953.2c535.1-435.4,1154.6-694.3,1852.8-774.9c1053-122.7,2050.3,153.4,2807.9,774.9c374,308.8,796,832.4,796,991.6c0,61.4-47.9,149.6-99.7,186c-55.6,38.4-186.1,40.3-239.8,1.9c-24.9-17.3-97.8-109.3-163-207.1c-67.1-95.9-207.1-264.7-312.6-374C6695.5-2033,5941.7-2343.7,5000-2343.7c-780.6,0-1423.2,211-1985.1,650.2c-212.9,166.9-494.8,466.1-638.7,675.1c-65.2,97.8-138.1,189.9-163,207.1C2153.7-769,2023.3-774.8,1965.7-820.8z\"/> </g> </svg>"
     },
-    items: [{ icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }, { icon: "&#128513;" }]
+    items: [{icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}, {icon: "&#128513;"}]
 }
 
 export const menuMessage: Props = {
@@ -72,7 +85,12 @@ export const workspaceHeader: Props = {
 
 export const workspaceEmpty: Props = {
     className: "workspace__empty w-100 h-100",
-    title: "Выберите чат чтобы отправить сообщение",
+    title: "Выберите чат чтобы отправить сообщение или создайте новый",
+    buttonCreateChat: {
+        className: "button button--blue button--lg js-button-create-chat",
+        type: "button",
+        title: "Создать чат",
+    }
 }
 
 export const messageInputForm: Props = {
@@ -85,13 +103,57 @@ export const messageInputForm: Props = {
 }
 
 export const dialogRemoveChat: Props = {
-    title: "Вы хотите удалить чат?",
-    removeButton: {
-        className: "button button--md button--red",
-        title: "Удалить"
-    },
+    users: [],
     cancelButton: {
         className: "button button--md button--gray js-close-dialog-button",
-        title: "Отменить"
+        title: "Закрыть"
     }
 }
+
+export const events = [
+    {
+        type: "click",
+        el: ".js-add-user-open-dialog",
+        handler: function () {
+            bus.emit(EVENTS.OPEN_ADD_USER_DIALOG);
+        }
+    },
+    {
+        type: "click",
+        el: ".js-remove-user-open-dialog",
+        handler: function () {
+            bus.emit(EVENTS.OPEN_REMOVE_USER_DIALOG);
+        }
+    },
+    {
+        type: "click",
+        el: ".js-close-dialog-button",
+        handler: function () {
+            bus.emit(EVENTS.CLOSE_DIALOG);
+        }
+    },
+    {
+        type: "click",
+        el: ".overlay",
+        handler: function () {
+            bus.emit(EVENTS.CLOSE_DIALOG);
+        }
+    },
+    {
+        type: "input",
+        el: ".js-user-search",
+        handler: function (evt: Event) {
+            evt.preventDefault();
+            userService.search((evt.target as HTMLInputElement).value);
+        }
+    },
+    {
+        type: "click",
+        el: ".js-user-button",
+        handler: function (evt: Event) {
+            evt.preventDefault();
+            const userId: string | undefined = (evt.target as HTMLElement).dataset.userId;
+            bus.emit(EVENTS.CHAT_USER_ACTION, parseInt(userId as string, 10) as number);
+        }
+    }
+]

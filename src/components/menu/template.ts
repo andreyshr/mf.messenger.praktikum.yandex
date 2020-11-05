@@ -6,7 +6,7 @@ export const template = `
              <ul class="menu__list">
                 {{# each items}}
                     <li class="menu__item">
-                        <button type="button" class="menu__button">
+                        <button type="button" class="menu__button {{ menuButtonClassName }}">
                             {{{ this.icon }}}
                             <span>{{ this.title }}</span>
                         </button>

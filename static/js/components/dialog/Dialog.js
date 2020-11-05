@@ -25,15 +25,52 @@ var __assign = (this && this.__assign) || function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Button from "../button/Button.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import UsersList from "../users-list/UsersList.js";
+import EVENTS from "../../modules/event-bus/events.js";
+import { ChatsService } from "../../services/chats-service.js";
+import { UserService } from "../../services/user-service.js";
+import Store from "../../modules/store/store.js";
+var bus = new AppBus();
+var chatsService = new ChatsService();
+var userService = new UserService();
+var store = new Store();
 var Dialog = /** @class */ (function (_super) {
     __extends(Dialog, _super);
     function Dialog(props) {
         var _this = _super.call(this, "div", props) || this;
+        _this.onShow = function () {
+            if (store.get("dialog") === 'remove_user') {
+                chatsService.getUsers();
+            }
+            if (store.get("dialog") === 'add_user') {
+                userService.search("");
+            }
+        };
+        _this.onHide = function () {
+            bus.emit(EVENTS.USERS_UPDATE, []);
+            var input = document.querySelector(".js-user-search");
+            if (input) {
+                input.value = "";
+            }
+        };
+        bus.on(EVENTS.OPEN_ADD_USER_DIALOG, function () {
+            store.set("dialog", "add_user");
+            _this.show();
+        });
+        bus.on(EVENTS.OPEN_REMOVE_USER_DIALOG, function () {
+            store.set("dialog", "remove_user");
+            _this.show();
+        });
+        bus.on(EVENTS.CLOSE_DIALOG, _this.hide.bind(_this));
         Block._instances.push(_this);
         return _this;
     }
+    Dialog.prototype.componentMounted = function () {
+        this.hide();
+    };
     Dialog.prototype.render = function () {
-        return Handlebars.compile(template)(__assign(__assign({}, this.props), { removeButton: new Button("button", this.props.removeButton).renderToString(), cancelButton: new Button("button", this.props.cancelButton).renderToString() }));
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { usersList: new UsersList({ users: this.props.users }).renderToString(), cancelButton: new Button("button", this.props.cancelButton).renderToString() }));
     };
     return Dialog;
 }(Block));

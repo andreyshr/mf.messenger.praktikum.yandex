@@ -29,11 +29,12 @@ var Avatar = /** @class */ (function (_super) {
     function Avatar(props) {
         var _this = _super.call(this, "div", props) || this;
         _this._stubImage = "https://www.lync.me/public/storage/users/images/profile_images/default.png";
+        _this._avatarImg = _this.props.avatarImg ? 'https://ya-praktikum.tech/' + _this.props.avatarImg : "";
         Block._instances.push(_this);
         return _this;
     }
     Avatar.prototype.render = function () {
-        return Handlebars.compile(template)(__assign(__assign({}, this.props), { avatarImg: this.props.avatarImg || this._stubImage }));
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { avatarImg: this._avatarImg || this._stubImage }));
     };
     return Avatar;
 }(Block));
