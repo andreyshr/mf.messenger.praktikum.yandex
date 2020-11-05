@@ -1,7 +1,8 @@
+import { addInputEvents } from "../../utils/add-input-events.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 var bus = new AppBus();
-export var inputsProps = [
+var inputsProps = [
     {
         template: "profile",
         name: "first_name",
@@ -64,6 +65,7 @@ export var inputsProps = [
         action: "profile",
     },
 ];
+export var inputs = inputsProps.map(addInputEvents);
 export var buttons = [
     {
         className: 'button button--blue button--lg ma-auto',

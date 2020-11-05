@@ -4,22 +4,26 @@ import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 
 import {ProfileData} from "./types";
+import {Nullable} from "../utils/utility-type";
 
 export class ProfileService {
     profileApi: ProfileApi;
     bus: AppBus;
     store: Store;
+    static __instance: Nullable<ProfileService> = null;
 
     constructor() {
+        if (ProfileService.__instance) {
+            return ProfileService.__instance;
+        }
+
         this.profileApi = new ProfileApi();
         this.bus = new AppBus();
         this.store = new Store();
 
-        this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, (input) => {
-            const formData = new FormData();
-            formData.append("avatar", input.files[0]);
-            this.updateAvatar(formData);
-        })
+        this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, this.updateAvatar);
+
+        ProfileService.__instance = this;
     }
 
     updateProfile(data: ProfileData) {
@@ -36,10 +40,15 @@ export class ProfileService {
             });
     }
 
-    updateAvatar(data: FormData) {
-        return this.profileApi.updateAvatar(data)
-            .then(() => {
+    updateAvatar = (files: any[]) => {
+        const formData = new FormData();
+        formData.append("avatar", files[0]);
+
+        return this.profileApi.updateAvatar(formData)
+            .then((data) => {
+                this.store.set("user", data);
                 this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Аватар обновлён", "success");
+                this.bus.emit(EVENTS.AVATAR_UPDATE, this.store.get("user").avatar);
             })
             .catch(err => {
                 const errorMessage =  JSON.parse(err.response).reason

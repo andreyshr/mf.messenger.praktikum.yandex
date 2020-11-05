@@ -1,10 +1,19 @@
 export const template = `
-        <div class="dialog d-none" id="remove-chat">
+        <div class="overlay"></div>
+        <div class="dialog" id="remove-chat">
             <div class="dialog__body">
-                <p class="dialog__title">{{ title }}</p>
-                <div class="dialog__content">
                 
-                    {{{ removeButton }}}
+                <div class="sidebar__search">
+                    <form>
+                        <label>
+                            <input type="text" placeholder="Поиск" class="js-user-search" autofocus>
+                        </label>             
+                    </form>
+                </div>
+                
+                {{{ usersList }}}
+                
+                <div class="dialog__content">
                     
                     {{{ cancelButton }}}
                     

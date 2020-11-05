@@ -5,15 +5,8 @@ export const template = `
             
             {{{ sidebarHeader }}}
             
-            <div class="sidebar__history-scrollable scrollable vh-100">
-                <ul class="sidebar__list">
-                
-                    {{# each rooms}}
-                        {{{ this }}}
-                    {{/each}}
-                    
-                </ul>
-            </div>
+            {{{ roomsList }}}
+            
         </aside>
         <main class="messenger__workspace workspace">
         
@@ -37,9 +30,9 @@ export const template = `
                     {{{ messageInputForm }}}
                     
             </div>
+            
+            {{{ notification }}}
         </main>
-        
-        <div class="overlay d-none"></div>
         
         {{{ dialogRemoveChat }}}
         

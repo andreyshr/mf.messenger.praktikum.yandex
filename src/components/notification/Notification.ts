@@ -10,9 +10,9 @@ export default class Notification extends Block {
     constructor(props: Props) {
         super("div", props);
 
-        Block._instances.push(this);
+        bus.on(EVENTS.NOTIFICATION_SHOW, this.showNotification);
 
-        bus.on(EVENTS.NOTIFICATION_SHOW, this.showNotification)
+        Block._instances.push(this);
     }
 
     showNotification = (message: string, type: string) => {
@@ -23,7 +23,7 @@ export default class Notification extends Block {
         this.show();
         setTimeout(() => {
             this.hide();
-        }, 5000)
+        }, 3500)
     }
 
     componentMounted() {

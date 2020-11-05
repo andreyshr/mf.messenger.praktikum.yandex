@@ -4,11 +4,13 @@ import {Props} from "../../modules/block/types";
 
 export default class Avatar extends Block {
     _stubImage: string;
+    _avatarImg: string;
 
     constructor(props: Props) {
         super("div", props);
 
         this._stubImage = "https://www.lync.me/public/storage/users/images/profile_images/default.png";
+        this._avatarImg = this.props.avatarImg ? 'https://ya-praktikum.tech/' + this.props.avatarImg : ""
 
         Block._instances.push(this);
     }
@@ -16,7 +18,7 @@ export default class Avatar extends Block {
     render() {
         return Handlebars.compile(template)({
             ...this.props,
-            avatarImg: this.props.avatarImg || this._stubImage
+            avatarImg: this._avatarImg || this._stubImage
         });
     }
 }

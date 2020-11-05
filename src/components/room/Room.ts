@@ -27,7 +27,6 @@ export default class Room extends Block {
             avatar: new Avatar({
                 className: "room__avatar avatar",
                 avatarImg: this.props.avatarImg,
-                stubLetters: this.props.stubLetters,
                 newMessagesCount: this.props.newMessagesCount,
             }).renderToString()
         });

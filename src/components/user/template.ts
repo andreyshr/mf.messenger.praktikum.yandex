@@ -1,0 +1,12 @@
+export const template = `
+                <div data-user-id="{{ id }}" class="room js-user-button">
+                    
+                     {{{ avatar }}}
+                    
+                    <div class="room__info">
+                        <div class="room__info-row">
+                            <h3 class="room__title">{{ title }}</h3>
+                        </div>
+                    </div>
+                </div>
+`;

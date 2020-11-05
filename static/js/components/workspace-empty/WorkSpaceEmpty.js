@@ -11,8 +11,20 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
+import Button from "../button/Button.js";
 var WorkSpaceEmpty = /** @class */ (function (_super) {
     __extends(WorkSpaceEmpty, _super);
     function WorkSpaceEmpty(props) {
@@ -21,7 +33,7 @@ var WorkSpaceEmpty = /** @class */ (function (_super) {
         return _this;
     }
     WorkSpaceEmpty.prototype.render = function () {
-        return Handlebars.compile(template)(this.props);
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { buttonCreateChat: new Button("button", this.props.buttonCreateChat).renderToString() }));
     };
     return WorkSpaceEmpty;
 }(Block));

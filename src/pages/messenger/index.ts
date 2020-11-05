@@ -1,25 +1,30 @@
 import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import {template} from "./template.js";
 import {Props} from "../../modules/block/types";
 
-import Room from "../../components/room/Room.js";
+import RoomsList from "../../components/rooms-list/RoomsList.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
+import Notification from "../../components/notification/Notification.js";
 
 import {ChatsService} from "../../services/chats-service.js"
-import {UserService} from "../../services/user-service.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import EVENTS from "../../modules/event-bus/events.js";
 import Store from "../../modules/store/store.js";
 
-import { sidebarHeader, workspaceEmpty } from "../messenger-chat/initial-props.js";
+import {roomsList, sidebarHeader, workspaceEmpty} from "../messenger-chat/initial-props.js";
+import {events} from "./events.js";
 
 const chatsService = new ChatsService();
-const userService = new UserService();
 const store = new Store();
+const bus = new AppBus();
 
 export const props = {
-    rooms: store.get("chats") || [],
+    roomsList,
     sidebarHeader,
-    workspaceEmpty
+    workspaceEmpty,
+    notification: {},
+    events,
 }
 
 export default class Messenger extends Block {
@@ -36,45 +41,19 @@ export default class Messenger extends Block {
     onShow = () => {
         if (!this.chats) {
             chatsService.getChats().then((data) => {
-                this.setProps({
-                    rooms: data.map(this.createRoom)
-                })
-            });
-        } else {
-            this.setProps({
-                rooms: this.chats.map(this.createRoom)
+                bus.emit(EVENTS.ROOMS_UPDATE, data);
             })
+        } else {
+            bus.emit(EVENTS.ROOMS_UPDATE, this.chats);
         }
-    }
-
-    componentMounted() {
-        document.addEventListener("submit", (evt: any) => {
-            if (!evt?.target?.closest(".sidebar__search form")) {
-                return;
-            }
-
-            evt.preventDefault();
-            userService.search(evt.target[0].value)
-                .then(data => {
-                    this.setProps({
-                        rooms: data.map((user: any) => ({ title: user.login, avatarImg: user.avatarImg })).map(this.createRoom)
-                    })
-                })
-        });
-    }
-
-    createRoom(room: Record<string, string>): Record<string, string> {
-        return {
-            ...room,
-            link: `/messenger/${room.id}`,
-        };
     }
 
     render() {
         return Handlebars.compile(template)({
-            rooms: this.props.rooms.map((room: Props): string => new Room(room).renderToString()),
+            roomsList: new RoomsList(this.props.roomsList).renderToString(),
             sidebarHeader: new SidebarHeader(this.props.sidebarHeader).renderToString(),
-            workspaceEmpty: new WorkSpaceEmpty(this.props.workspaceEmpty).renderToString()
+            workspaceEmpty: new WorkSpaceEmpty(this.props.workspaceEmpty).renderToString(),
+            notification: new Notification(this.props.notification).renderToString()
         });
     }
 }

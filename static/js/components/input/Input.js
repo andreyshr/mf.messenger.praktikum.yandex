@@ -28,14 +28,16 @@ var Input = /** @class */ (function (_super) {
             var input = inputs.find(function (input) { return input.name === _this.props.name; });
             if (!input)
                 return;
-            var node = document.querySelector(".error-message[data-name=" + input.name + "]");
+            var nodes = Array.from(document.querySelectorAll(".error-message[data-name=" + input.name + "]"));
             if (input.status) {
-                if (node)
-                    node.classList.remove('error-message--active');
+                if (nodes.length) {
+                    nodes.forEach(function (n) { return n.classList.remove('error-message--active'); });
+                }
             }
             else {
-                if (node)
-                    node.classList.add('error-message--active');
+                if (nodes.length) {
+                    nodes.forEach(function (n) { return n.classList.add('error-message--active'); });
+                }
             }
         };
         _this.updateValue = function (name, value, action) {

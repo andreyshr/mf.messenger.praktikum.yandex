@@ -2,7 +2,7 @@
     display: none;
     position: absolute;
     padding: 7px;
-    width: 180px;
+    width: 220px;
     box-shadow: var(--shadow);
     background: var(--color-white);
     z-index: 1;
@@ -72,6 +72,7 @@
 
 .menu__button span {
     padding-left: 12px;
+    text-align: left;
 }
 
 .menu__list {

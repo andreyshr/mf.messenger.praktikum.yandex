@@ -23,11 +23,15 @@ export default class Input extends Block {
     showError = (...inputs: PropsInput[]) => {
         const input = inputs.find((input: PropsInput): boolean => input.name === this.props.name);
         if (!input) return;
-        const node = document.querySelector(`.error-message[data-name=${input.name}]`);
+        const nodes = Array.from(document.querySelectorAll(`.error-message[data-name=${input.name}]`));
         if (input.status) {
-            if (node) node.classList.remove('error-message--active');
+            if (nodes.length) {
+                nodes.forEach(n => n.classList.remove('error-message--active'));
+            }
         } else {
-            if (node) node.classList.add('error-message--active');
+            if (nodes.length) {
+                nodes.forEach(n => n.classList.add('error-message--active'));
+            }
         }
     }
 

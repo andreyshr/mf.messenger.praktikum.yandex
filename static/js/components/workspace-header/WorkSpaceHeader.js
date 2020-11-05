@@ -26,15 +26,22 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Menu from "../menu/Menu.js";
 import Avatar from "../avatar/Avatar.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
+import EVENTS from "../../modules/event-bus/events.js";
+var bus = new AppBus();
 var WorkSpaceHeader = /** @class */ (function (_super) {
     __extends(WorkSpaceHeader, _super);
     function WorkSpaceHeader(props) {
         var _this = _super.call(this, "header", props) || this;
+        bus.on(EVENTS.ROOM_UPDATE, function (currentChat) {
+            console.log(currentChat);
+            _this.setProps(__assign(__assign({}, _this.props), currentChat));
+        });
         Block._instances.push(_this);
         return _this;
     }
     WorkSpaceHeader.prototype.render = function () {
-        return Handlebars.compile(template)(__assign(__assign({}, this.props), { menuChat: new Menu(this.props.menuChat).renderToString(), avatar: new Avatar({
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { historyTime: this.props.historyTime || "Сегодня", menuChat: new Menu(this.props.menuChat).renderToString(), avatar: new Avatar({
                 className: "room__avatar avatar avatar--sm",
                 avatarImg: this.props.avatarImg
             }).renderToString() }));

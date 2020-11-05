@@ -60,6 +60,8 @@ var Route = /** @class */ (function () {
     };
     Route.prototype.leave = function () {
         if (this._block) {
+            // this._block.unmount();
+            // this._block = null;
             this._block.hide();
         }
     };

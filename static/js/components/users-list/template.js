@@ -1,0 +1,2 @@
+export var template = "\n            <ul class=\"sidebar__list sidebar__list--users scrollable\">\n                {{# each users}}\n                   {{{ this }}}\n                {{/each}}\n            </ul>\n";
+//# sourceMappingURL=template.js.map

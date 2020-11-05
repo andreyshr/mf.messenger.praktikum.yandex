@@ -1,5 +1,5 @@
 export const template = `
-                <a data-room-id="{{ id }}"  href="{{ link }}" class="room router-link" title="{{ name }}">
+                <a data-room-id="{{ id }}"  href="{{ link }}" class="room router-link {{#if active }}room--active{{/if}}" title="{{ name }}">
                     
                      {{{ avatar }}}
                     

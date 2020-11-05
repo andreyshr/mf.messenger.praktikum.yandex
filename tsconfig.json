@@ -14,6 +14,11 @@
     "sourceMap": true,
     "strictNullChecks": true
   },
+  "types": [
+    "handlebars",
+    "node",
+    "jest"
+  ],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

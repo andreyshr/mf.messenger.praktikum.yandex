@@ -5,16 +5,13 @@ export const template = `
             
             {{{ sidebarHeader }}}
             
-            <ul class="sidebar__history-scrollable scrollable vh-100">
-                {{# each rooms}}
-                   {{{ this }}}
-                {{/each}}
-            </ul>
+            {{{ roomsList }}}
         </aside>
         <main class="messenger__workspace workspace">
         
             {{{ workspaceEmpty }}}
-        
+            
+            {{{ notification }}}
         </main>
     </div>
 </div>
