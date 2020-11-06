@@ -1,7 +1,9 @@
 export const template = `
                <span>{{ title }}</span>
                
-               <input name="title" type="text" placeholder="Введите название чата">
-               
-               {{{ buttonCreateChat }}}
+               <form class="js-form-create-chat">
+                   <input name="title" type="text" placeholder="Введите название чата">
+                   
+                   {{{ buttonCreateChat }}}
+               </form>
 `;

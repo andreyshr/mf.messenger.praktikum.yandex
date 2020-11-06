@@ -18,7 +18,7 @@ export default class RoomsList extends Block {
         Block._instances.push(this);
     }
 
-    roomsUpdate = (chats: any) => {
+    roomsUpdate = (chats: Props) => {
         this.setProps({
             rooms: chats.map(this.createRoom)
         })

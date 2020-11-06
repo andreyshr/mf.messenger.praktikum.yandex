@@ -16,7 +16,6 @@ export default class WorkSpaceHeader extends Block {
         super("header", props);
 
         bus.on(EVENTS.ROOM_UPDATE, (currentChat) => {
-            console.log(currentChat)
             this.setProps({
                 ...this.props,
                 ...currentChat,

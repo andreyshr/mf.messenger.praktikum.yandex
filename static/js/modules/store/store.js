@@ -1,5 +1,3 @@
-// import AppBus from "../event-bus/app-bus.js";
-// import EVENTS from "../event-bus/events.js";
 var Store = /** @class */ (function () {
     function Store() {
         this._store = {};
@@ -13,7 +11,6 @@ var Store = /** @class */ (function () {
     };
     Store.prototype.set = function (name, value) {
         this._store[name] = value;
-        //bus.emit()
     };
     Store.__instance = null;
     return Store;

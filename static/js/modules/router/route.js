@@ -60,26 +60,23 @@ var Route = /** @class */ (function () {
     };
     Route.prototype.leave = function () {
         if (this._block) {
-            // this._block.unmount();
-            // this._block = null;
             this._block.hide();
         }
     };
     Route.prototype.match = function (url) {
         var route = this.findMatchedRoutes(url);
-        //console.log(route);
         return !!route;
     };
     Route.prototype.render = function () {
-        var _a, _b;
+        var _a;
         if (!this._block) {
             this._block = new this._blockClass();
             render(this._props.rootQuery, this._block);
             Block.hydrate();
-            (_a = this._block) === null || _a === void 0 ? void 0 : _a.show();
+            this._block.show();
             return;
         }
-        (_b = this._block) === null || _b === void 0 ? void 0 : _b.show();
+        (_a = this._block) === null || _a === void 0 ? void 0 : _a.show();
     };
     Route.PARAMETER_REGEXP = /([:*])(\w+)/g;
     Route.WILDCARD_REGEXP = /\*/g;

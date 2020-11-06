@@ -1,8 +1,3 @@
-import EVENTS from "../../modules/event-bus/events.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import { UserService } from "../../services/user-service.js";
-var userService = new UserService();
-var bus = new AppBus();
 export var roomsList = {
     className: "sidebar__history-scrollable scrollable vh-100",
     rooms: []
@@ -78,7 +73,9 @@ export var workspaceEmpty = {
     title: "Выберите чат чтобы отправить сообщение или создайте новый",
     buttonCreateChat: {
         className: "button button--blue button--lg js-button-create-chat",
-        type: "button",
+        attributes: {
+            type: "submit"
+        },
         title: "Создать чат",
     }
 };
@@ -97,51 +94,4 @@ export var dialogRemoveChat = {
         title: "Закрыть"
     }
 };
-export var events = [
-    {
-        type: "click",
-        el: ".js-add-user-open-dialog",
-        handler: function () {
-            bus.emit(EVENTS.OPEN_ADD_USER_DIALOG);
-        }
-    },
-    {
-        type: "click",
-        el: ".js-remove-user-open-dialog",
-        handler: function () {
-            bus.emit(EVENTS.OPEN_REMOVE_USER_DIALOG);
-        }
-    },
-    {
-        type: "click",
-        el: ".js-close-dialog-button",
-        handler: function () {
-            bus.emit(EVENTS.CLOSE_DIALOG);
-        }
-    },
-    {
-        type: "click",
-        el: ".overlay",
-        handler: function () {
-            bus.emit(EVENTS.CLOSE_DIALOG);
-        }
-    },
-    {
-        type: "input",
-        el: ".js-user-search",
-        handler: function (evt) {
-            evt.preventDefault();
-            userService.search(evt.target.value);
-        }
-    },
-    {
-        type: "click",
-        el: ".js-user-button",
-        handler: function (evt) {
-            evt.preventDefault();
-            var userId = evt.target.dataset.userId;
-            bus.emit(EVENTS.CHAT_USER_ACTION, parseInt(userId, 10));
-        }
-    }
-];
 //# sourceMappingURL=initial-props.js.map

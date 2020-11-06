@@ -9,44 +9,46 @@ const bus = new AppBus();
 export const events = [
     {
         type: "input",
-        el: ".js-chats-search",
-        handler(evt: any) {
+        el: ".messenger--list .js-input-chat-search",
+        handler(evt: Event) {
             evt.preventDefault();
-            if (evt.target.value && store.get("chats")) {
-                bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").filter((chat: Props): boolean => {
-                    return chat.title.indexOf(evt.target.value) !== -1;
-                }).map((c: any) => {
-                    if (c.id.toString() === store.get("currentChat").id.toString()) {
-                        return {
-                            ...c,
-                            active: true
-                        }
-                    } else {
-                        return c;
-                    }
-                }));
-            } else {
-                bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").map((c: any) => {
-                    if (c.id.toString() === store.get("currentChat").id.toString()) {
-                        return {
-                            ...c,
-                            active: true
-                        }
-                    } else {
-                        return c;
-                    }
-                }));
-            }
+
+            const value: string = (evt.target as HTMLInputElement).value;
+
+            searchChatByName(value)
         }
     },
     {
-        type: "click",
-        el: ".js-button-create-chat",
-        handler: function () {
+        type: "submit",
+        el: ".messenger--list .js-form-chat-search",
+        handler(evt: Event) {
+            evt.preventDefault();
+
+            const input = (evt.target as HTMLFormElement)[0];
+            const value: string = (input as HTMLInputElement).value;
+
+            searchChatByName(value)
+        }
+    },
+    {
+        type: "submit",
+        el: ".js-form-create-chat",
+        handler: function (evt: Event) {
+            evt.preventDefault();
             const input = document.querySelector("input[name='title']") as HTMLInputElement;
-            if (input) {
+            if (input.value) {
                 bus.emit(EVENTS.CREATE_CHAT, input.value)
             }
         }
     }
 ];
+
+function searchChatByName(value: string) {
+    if (value && store.get("chats")) {
+        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").filter((chat: Props): boolean => {
+            return chat.title.indexOf(value) !== -1;
+        }));
+    } else {
+        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats"));
+    }
+}

@@ -1,11 +1,4 @@
 import {Props} from "../../modules/block/types";
-import EVENTS from "../../modules/event-bus/events.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import {UserService} from "../../services/user-service.js";
-
-const userService = new UserService();
-
-const bus = new AppBus();
 
 export const roomsList: Props = {
     className: "sidebar__history-scrollable scrollable vh-100",
@@ -88,7 +81,9 @@ export const workspaceEmpty: Props = {
     title: "Выберите чат чтобы отправить сообщение или создайте новый",
     buttonCreateChat: {
         className: "button button--blue button--lg js-button-create-chat",
-        type: "button",
+        attributes: {
+          type: "submit"
+        },
         title: "Создать чат",
     }
 }
@@ -109,51 +104,3 @@ export const dialogRemoveChat: Props = {
         title: "Закрыть"
     }
 }
-
-export const events = [
-    {
-        type: "click",
-        el: ".js-add-user-open-dialog",
-        handler: function () {
-            bus.emit(EVENTS.OPEN_ADD_USER_DIALOG);
-        }
-    },
-    {
-        type: "click",
-        el: ".js-remove-user-open-dialog",
-        handler: function () {
-            bus.emit(EVENTS.OPEN_REMOVE_USER_DIALOG);
-        }
-    },
-    {
-        type: "click",
-        el: ".js-close-dialog-button",
-        handler: function () {
-            bus.emit(EVENTS.CLOSE_DIALOG);
-        }
-    },
-    {
-        type: "click",
-        el: ".overlay",
-        handler: function () {
-            bus.emit(EVENTS.CLOSE_DIALOG);
-        }
-    },
-    {
-        type: "input",
-        el: ".js-user-search",
-        handler: function (evt: Event) {
-            evt.preventDefault();
-            userService.search((evt.target as HTMLInputElement).value);
-        }
-    },
-    {
-        type: "click",
-        el: ".js-user-button",
-        handler: function (evt: Event) {
-            evt.preventDefault();
-            const userId: string | undefined = (evt.target as HTMLElement).dataset.userId;
-            bus.emit(EVENTS.CHAT_USER_ACTION, parseInt(userId as string, 10) as number);
-        }
-    }
-]

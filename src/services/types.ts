@@ -2,12 +2,12 @@ export type EmptyRequest = {
 
 }
 
-export type SigninData = {
+export type SigninRequest = {
     login: string,
     password: string,
 }
 
-export type SignupData = {
+export type SignupRequest = {
     first_name: string,
     second_name: string,
     email: string,
@@ -16,7 +16,7 @@ export type SignupData = {
     phone: string
 }
 
-export type ProfileData = {
+export type ProfileRequest = {
     first_name: string,
     second_name: string,
     display_name: string,
@@ -34,6 +34,38 @@ export type CreateChatRequest = {
 export type ChatUsersRequest = {
     users: number[],
     chatId: number
+}
+
+export type SearchRequest = {
+    login: string
+}
+
+export type UserResponse = {
+    avatar: string | null
+    display_name: string | null,
+    email: string
+    first_name: string
+    id: number
+    login: string
+    phone: string
+    second_name: string
+}
+
+export type ProfileResponse = {
+    avatar: string | null
+    display_name: string | null,
+    email: string
+    first_name: string
+    id: number
+    login: string
+    phone: string
+    second_name: string
+}
+
+export type ChatResponse = {
+    avatar: string | null
+    id: number
+    title: string
 }
 
 

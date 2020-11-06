@@ -1,10 +1,10 @@
 import {profileAPIInstance} from "../modules/HTTP/HTTP.js";
 import {Options} from "../modules/HTTP/types";
-import {ProfileData} from "../services/types";
+import {ProfileRequest} from "../services/types";
 
 export class ProfileApi {
-    update(data: ProfileData) {
-        const options: Options<ProfileData> = {data, headers: {"Content-Type": "application/json"}};
+    update(data: ProfileRequest) {
+        const options: Options<ProfileRequest> = {data, headers: {"Content-Type": "application/json"}};
 
         return profileAPIInstance.put('/', options)
             .then((data: string) => JSON.parse(data))

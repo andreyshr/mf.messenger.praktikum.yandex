@@ -159,8 +159,8 @@ abstract class Block {
     }
 
     private _delegate(eventName: string, element: HTMLElement, cssSelector: string, callback: (event?: Event) => {}) {
-        const fn = (event: any) => {
-            if (!event?.target?.closest(cssSelector)) {
+        const fn = (event: Event) => {
+            if (!(event.target as HTMLElement).closest(cssSelector)) {
                 return;
             }
 

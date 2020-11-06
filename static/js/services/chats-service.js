@@ -16,8 +16,7 @@ var ChatsService = /** @class */ (function () {
                 .then(function (err) { return err; });
         };
         this.getUsers = function () {
-            var chatId = _this.currentChat.id;
-            return _this.chatsApi.getUsers(chatId)
+            return _this.chatsApi.getUsers(_this.currentChatId)
                 .then(function (data) {
                 _this.bus.emit(EVENTS.USERS_UPDATE, data.map(function (user) { return ({ title: user.login, id: user.id, avatarImg: user.avatar }); }));
                 return data;
@@ -25,17 +24,17 @@ var ChatsService = /** @class */ (function () {
                 .catch(function (err) { return err; });
         };
         this.userAction = function (userId) {
-            if (_this.store.get("dialog") === "remove_user") {
+            if (_this.dialog === "remove_user") {
                 _this.removeUsers(userId);
             }
-            if (_this.store.get("dialog") === "add_user") {
+            if (_this.dialog === "add_user") {
                 _this.addUsers(userId);
             }
         };
         this.addUsers = function (userId) {
             var data = {
                 users: [userId],
-                chatId: _this.currentChat.id
+                chatId: _this.currentChatId
             };
             return _this.chatsApi.addUsers(data)
                 .then(function (data) {
@@ -49,11 +48,11 @@ var ChatsService = /** @class */ (function () {
         this.removeUsers = function (userId) {
             var data = {
                 users: [userId],
-                chatId: _this.currentChat.id
+                chatId: _this.currentChatId
             };
             return _this.chatsApi.removeUsers(data)
                 .then(function () {
-                if (userId === _this.store.get("user").id) {
+                if (userId === _this.user.id) {
                     _this.bus.emit(EVENTS.NOTIFICATION_SHOW, "\u0427\u0430\u0442 \u0443\u0434\u0430\u043B\u0451\u043D", "success");
                     return _this.getChats()
                         .then(function () {
@@ -83,6 +82,27 @@ var ChatsService = /** @class */ (function () {
     Object.defineProperty(ChatsService.prototype, "currentChat", {
         get: function () {
             return this.store.get("currentChat");
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ChatsService.prototype, "currentChatId", {
+        get: function () {
+            return this.currentChat.id;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ChatsService.prototype, "user", {
+        get: function () {
+            return this.store.get("user");
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ChatsService.prototype, "dialog", {
+        get: function () {
+            return this.store.get("dialog");
         },
         enumerable: false,
         configurable: true

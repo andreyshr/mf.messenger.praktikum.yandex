@@ -34,7 +34,6 @@ var WorkSpaceHeader = /** @class */ (function (_super) {
     function WorkSpaceHeader(props) {
         var _this = _super.call(this, "header", props) || this;
         bus.on(EVENTS.ROOM_UPDATE, function (currentChat) {
-            console.log(currentChat);
             _this.setProps(__assign(__assign({}, _this.props), currentChat));
         });
         Block._instances.push(_this);

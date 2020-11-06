@@ -25,8 +25,8 @@ var __assign = (this && this.__assign) || function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Button from "../button/Button.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
 import UsersList from "../users-list/UsersList.js";
+import AppBus from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 import { ChatsService } from "../../services/chats-service.js";
 import { UserService } from "../../services/user-service.js";
@@ -40,10 +40,15 @@ var Dialog = /** @class */ (function (_super) {
     function Dialog(props) {
         var _this = _super.call(this, "div", props) || this;
         _this.onShow = function () {
+            var searchInput = document.querySelector(".js-user-search");
             if (store.get("dialog") === 'remove_user') {
+                if (searchInput)
+                    searchInput.style.display = "none";
                 chatsService.getUsers();
             }
             if (store.get("dialog") === 'add_user') {
+                if (searchInput)
+                    searchInput.style.display = "block";
                 userService.search("");
             }
         };

@@ -1,10 +1,10 @@
 import {authAPIInstance} from "../modules/HTTP/HTTP.js";
 import {Options} from "../modules/HTTP/types";
-import {SigninData, SignupData} from "../services/types";
+import {EmptyRequest, SigninRequest, SignupRequest} from "../services/types";
 
 export class AuthApi {
-    signin(data: SigninData) {
-        const options: Options<SigninData> = {data, headers: {"Content-Type": "application/json"}};
+    signin(data: SigninRequest) {
+        const options: Options<SigninRequest> = {data, headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.post('/signin', options)
             .then(data => data)
@@ -14,7 +14,7 @@ export class AuthApi {
     }
 
     getUser() {
-        const options: Options<unknown> = {data: {}, headers: {"Content-Type": "application/json"}};
+        const options: Options<EmptyRequest> = {data: {}, headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.get('/user', options)
             .then((data: string) => JSON.parse(data))
@@ -23,8 +23,8 @@ export class AuthApi {
             });
     }
 
-    signup(data: SignupData) {
-        const options: Options<SignupData> = {data, headers: {"Content-Type": "application/json"}};
+    signup(data: SignupRequest) {
+        const options: Options<SignupRequest> = {data, headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.post('/signup', options)
             .then(data => data)
@@ -34,7 +34,7 @@ export class AuthApi {
     }
 
     logout() {
-        const options: Options<unknown> = {headers: {"Content-Type": "application/json"}};
+        const options: Options<EmptyRequest> = {headers: {"Content-Type": "application/json"}};
 
         return authAPIInstance.post('/logout', options)
             .then(data => data)

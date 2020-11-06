@@ -1,6 +1,4 @@
 import { Nullable } from "../../utils/utility-type";
-// import AppBus from "../event-bus/app-bus.js";
-// import EVENTS from "../event-bus/events.js";
 
 export default class Store {
     static __instance: Nullable<Store> = null;
@@ -21,6 +19,5 @@ export default class Store {
 
     set(name: string, value: any) {
         this._store[name] = value;
-        //bus.emit()
     }
 }

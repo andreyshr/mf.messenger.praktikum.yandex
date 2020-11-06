@@ -14,9 +14,6 @@ var UserService = /** @class */ (function () {
     }
     UserService.prototype.search = function (login) {
         var _this = this;
-        if (this.store.get("dialog") === 'remove_user') {
-            return;
-        }
         return this.userApi.search(login)
             .then(function (data) {
             _this.bus.emit(EVENTS.USERS_UPDATE, data.map(function (user) { return ({ title: user.login, id: user.id, avatarImg: user.avatar }); }));

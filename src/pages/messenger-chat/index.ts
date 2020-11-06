@@ -22,7 +22,8 @@ const chatsService = new ChatsService();
 const store = new Store();
 const bus = new AppBus();
 
-import {roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat, events} from "./initial-props.js";
+import {roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat} from "./initial-props.js";
+import {events} from "./events.js"
 
 export const props = {
     notification: {},
@@ -80,7 +81,7 @@ export default class MessengerChat extends Block {
     }
 
     setCurrentChat(chatId: string | number) {
-        const currentChat = this.chats.find((c: any) => c.id.toString() === chatId.toString());
+        const currentChat = this.chats.find((c: Props): boolean => c.id.toString() === chatId.toString());
 
         if (currentChat) {
             store.set("currentChat", currentChat);
