@@ -70,7 +70,9 @@ var Profile = /** @class */ (function (_super) {
             bus.emit(EVENTS.AVATAR_UPDATE);
         };
         bus.on(EVENTS.AVATAR_UPDATE, function () {
-            document.querySelector(".profile__form .avatar img").src = 'https://ya-praktikum.tech/' + _this.user.avatar;
+            if (_this.user.avatar) {
+                document.querySelector(".profile__form .avatar img").src = 'https://ya-praktikum.tech/' + _this.user.avatar;
+            }
         });
         Block._instances.push(_this);
         return _this;

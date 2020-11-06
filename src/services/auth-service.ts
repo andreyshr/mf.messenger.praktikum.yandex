@@ -3,7 +3,7 @@ import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 
-import {SignupData} from "./types";
+import {SignupRequest, UserResponse} from "./types";
 import {Nullable} from "../utils/utility-type";
 
 export class AuthService {
@@ -29,7 +29,7 @@ export class AuthService {
     signin(login: string, password: string) {
         return this.authApi.signin({login, password})
             .then(() => this.getUser())
-            .then(data => {
+            .then((data: UserResponse) => {
                 this.store.set("user", data);
                 this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
             })
@@ -42,16 +42,16 @@ export class AuthService {
 
     getUser() {
         return this.authApi.getUser()
-            .then((data: any) => data)
+            .then((data: UserResponse) => data)
             .catch(err => {
                 throw err
             });
     }
 
-    signup(data: SignupData) {
+    signup(data: SignupRequest) {
         return this.authApi.signup(data)
             .then(() => this.getUser())
-            .then(data => {
+            .then((data: UserResponse) => {
                 this.store.set("user", data);
                 this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
             })

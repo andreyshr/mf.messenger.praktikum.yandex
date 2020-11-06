@@ -4,11 +4,9 @@ export const template = `
             <div class="dialog__body">
                 
                 <div class="sidebar__search">
-                    <form>
-                        <label>
-                            <input type="text" placeholder="Поиск" class="js-user-search" autofocus>
-                        </label>             
-                    </form>
+                    <label>
+                        <input type="text" placeholder="Поиск" class="js-user-search" autofocus>
+                    </label>             
                 </div>
                 
                 {{{ usersList }}}

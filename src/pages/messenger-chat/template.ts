@@ -1,6 +1,6 @@
 export const template = `
     <div class="container vh-100 overflow-hidden">
-    <div class="messenger">
+    <div class="messenger messenger--chat">
         <aside class="messenger__sidebar sidebar">
             
             {{{ sidebarHeader }}}

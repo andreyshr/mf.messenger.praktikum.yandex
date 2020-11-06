@@ -40,7 +40,8 @@ import { last } from "../../utils/mydash/last.js";
 var chatsService = new ChatsService();
 var store = new Store();
 var bus = new AppBus();
-import { roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat, events } from "./initial-props.js";
+import { roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat } from "./initial-props.js";
+import { events } from "./events.js";
 export var props = {
     notification: {},
     messages: [],

@@ -16,8 +16,7 @@ var Router = /** @class */ (function () {
     Router.prototype.attachEvent = function () {
         var _this = this;
         var fn = function (event) {
-            var _a;
-            if (!((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest(_this._routerLink))) {
+            if (!event.target.closest(_this._routerLink)) {
                 return;
             }
             event.preventDefault();

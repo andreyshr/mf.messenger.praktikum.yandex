@@ -31,8 +31,8 @@ export class Router {
     }
 
     attachEvent() {
-        const fn = (event: any) => {
-            if (!event?.target?.closest(this._routerLink)) {
+        const fn = (event: Event) => {
+            if (!(event.target as HTMLElement).closest(this._routerLink)) {
                 return;
             }
 

@@ -1,14 +1,3 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import EVENTS from "../../modules/event-bus/events.js";
 import Store from "../../modules/store/store.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
@@ -17,42 +6,43 @@ var bus = new AppBus();
 export var events = [
     {
         type: "input",
-        el: ".js-chats-search",
+        el: ".messenger--list .js-input-chat-search",
         handler: function (evt) {
             evt.preventDefault();
-            if (evt.target.value && store.get("chats")) {
-                bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").filter(function (chat) {
-                    return chat.title.indexOf(evt.target.value) !== -1;
-                }).map(function (c) {
-                    if (c.id.toString() === store.get("currentChat").id.toString()) {
-                        return __assign(__assign({}, c), { active: true });
-                    }
-                    else {
-                        return c;
-                    }
-                }));
-            }
-            else {
-                bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").map(function (c) {
-                    if (c.id.toString() === store.get("currentChat").id.toString()) {
-                        return __assign(__assign({}, c), { active: true });
-                    }
-                    else {
-                        return c;
-                    }
-                }));
-            }
+            var value = evt.target.value;
+            searchChatByName(value);
         }
     },
     {
-        type: "click",
-        el: ".js-button-create-chat",
-        handler: function () {
+        type: "submit",
+        el: ".messenger--list .js-form-chat-search",
+        handler: function (evt) {
+            evt.preventDefault();
+            var input = evt.target[0];
+            var value = input.value;
+            searchChatByName(value);
+        }
+    },
+    {
+        type: "submit",
+        el: ".js-form-create-chat",
+        handler: function (evt) {
+            evt.preventDefault();
             var input = document.querySelector("input[name='title']");
-            if (input) {
+            if (input.value) {
                 bus.emit(EVENTS.CREATE_CHAT, input.value);
             }
         }
     }
 ];
+function searchChatByName(value) {
+    if (value && store.get("chats")) {
+        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").filter(function (chat) {
+            return chat.title.indexOf(value) !== -1;
+        }));
+    }
+    else {
+        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats"));
+    }
+}
 //# sourceMappingURL=events.js.map

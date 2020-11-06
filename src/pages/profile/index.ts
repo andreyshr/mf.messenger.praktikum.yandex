@@ -60,7 +60,9 @@ export default class Profile extends Block {
         super("div", props);
 
         bus.on(EVENTS.AVATAR_UPDATE, () => {
-            (document.querySelector(".profile__form .avatar img") as HTMLImageElement).src = 'https://ya-praktikum.tech/' + this.user.avatar
+            if (this.user.avatar) {
+                (document.querySelector(".profile__form .avatar img") as HTMLImageElement).src = 'https://ya-praktikum.tech/' + this.user.avatar;
+            }
         });
 
         Block._instances.push(this);

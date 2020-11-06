@@ -3,7 +3,7 @@ import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 import {Nullable} from "../utils/utility-type";
-import {ChatUsersRequest} from "./types";
+import {ChatResponse, ChatUsersRequest, ProfileResponse} from "./types";
 
 export class ChatsService {
     chatsApi: ChatsApi;
@@ -30,9 +30,21 @@ export class ChatsService {
         return this.store.get("currentChat");
     }
 
+    get currentChatId() {
+        return this.currentChat.id;
+    }
+
+    get user() {
+        return this.store.get("user");
+    }
+
+    get dialog() {
+        return this.store.get("dialog");
+    }
+
     getChats() {
         return this.chatsApi.getChats()
-            .then((data: any) => {
+            .then((data: ChatResponse[]): ChatResponse[] => {
                 this.store.set("chats", data);
                 return data;
             })
@@ -44,7 +56,7 @@ export class ChatsService {
     createChat = (title: string) => {
         return this.chatsApi.createChat(title)
             .then(() => this.getChats())
-            .then((data: any) => {
+            .then((data: ChatResponse[]): ChatResponse[] => {
                 this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Чат "${title}" создан`, "success");
                 this.bus.emit(EVENTS.ROOMS_UPDATE, data);
                 return data;
@@ -53,20 +65,19 @@ export class ChatsService {
     }
 
     getUsers = () => {
-        const chatId = this.currentChat.id;
-        return this.chatsApi.getUsers(chatId)
-            .then((data: any) => {
-                this.bus.emit(EVENTS.USERS_UPDATE, data.map((user: any) => ({ title: user.login, id: user.id, avatarImg: user.avatar })));
+        return this.chatsApi.getUsers(this.currentChatId)
+            .then((data: ProfileResponse[]): ProfileResponse[] => {
+                this.bus.emit(EVENTS.USERS_UPDATE, data.map((user: ProfileResponse) => ({ title: user.login, id: user.id, avatarImg: user.avatar })));
                 return data;
             })
             .catch(err => err);
     }
 
     userAction = (userId: number) => {
-        if (this.store.get("dialog") === "remove_user") {
+        if (this.dialog === "remove_user") {
             this.removeUsers(userId);
         }
-        if (this.store.get("dialog") === "add_user") {
+        if (this.dialog === "add_user") {
             this.addUsers(userId);
         }
     }
@@ -74,11 +85,11 @@ export class ChatsService {
     addUsers = (userId: number) => {
         const data: ChatUsersRequest = {
             users: [userId],
-            chatId: this.currentChat.id
+            chatId: this.currentChatId
         }
 
         return this.chatsApi.addUsers(data)
-            .then((data: any) => {
+            .then((data: unknown) => {
                 this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Пользователь добавлен в чат`, "success");
 
                 return data;
@@ -91,12 +102,12 @@ export class ChatsService {
     removeUsers = (userId: number) => {
         const data: ChatUsersRequest = {
             users: [userId],
-            chatId: this.currentChat.id
+            chatId: this.currentChatId
         }
 
         return this.chatsApi.removeUsers(data)
             .then(() => {
-                if (userId === this.store.get("user").id) {
+                if (userId === this.user.id) {
                     this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Чат удалён`, "success");
 
                     return this.getChats()

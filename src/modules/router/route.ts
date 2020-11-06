@@ -35,12 +35,12 @@ export class Route {
             }, {});
     }
 
-    clean(s: any) {
+    clean(s: RegExp | string): RegExp | string {
         if (s instanceof RegExp) return s;
         return s.replace(/\/+$/, '').replace(/^\/+/, '^/');
     }
 
-    replaceDynamicURLParts(route: any) {
+    replaceDynamicURLParts(route: RegExp | string) {
         let paramNames: string[] = [];
         let regexp: RegExp | string;
 
@@ -79,15 +79,12 @@ export class Route {
 
     leave() {
         if (this._block) {
-            // this._block.unmount();
-            // this._block = null;
             this._block.hide();
         }
     }
 
     match(url: string): boolean {
         const route = this.findMatchedRoutes(url);
-        //console.log(route);
         return !!route;
     }
 
@@ -99,7 +96,7 @@ export class Route {
 
             Block.hydrate();
 
-            this._block?.show();
+            this._block.show();
 
             return;
         }

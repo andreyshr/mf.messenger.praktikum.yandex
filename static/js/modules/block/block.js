@@ -130,8 +130,7 @@ var Block = /** @class */ (function () {
     };
     Block.prototype._delegate = function (eventName, element, cssSelector, callback) {
         var fn = function (event) {
-            var _a;
-            if (!((_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest(cssSelector))) {
+            if (!event.target.closest(cssSelector)) {
                 return;
             }
             callback(event);

@@ -19,8 +19,8 @@ import {AuthService} from "./services/auth-service.js";
 const router = new Router(".app");
 const store = new Store();
 const authService = new AuthService();
-
 const bus = new AppBus();
+
 bus.on(EVENTS.ROUTER_GO, (route) => router.go(route));
 bus.on(EVENTS.ROUTER_REPLACE, (route) => router.replace(route));
 
