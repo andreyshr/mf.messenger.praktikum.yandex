@@ -41,12 +41,12 @@ var Dialog = /** @class */ (function (_super) {
         var _this = _super.call(this, "div", props) || this;
         _this.onShow = function () {
             var searchInput = document.querySelector(".js-user-search");
-            if (store.get("dialog") === 'remove_user') {
+            if (store.get("dialog") === "remove_user") {
                 if (searchInput)
                     searchInput.style.display = "none";
                 chatsService.getUsers();
             }
-            if (store.get("dialog") === 'add_user') {
+            if (store.get("dialog") === "add_user") {
                 if (searchInput)
                     searchInput.style.display = "block";
                 userService.search("");
@@ -75,7 +75,9 @@ var Dialog = /** @class */ (function (_super) {
         this.hide();
     };
     Dialog.prototype.render = function () {
-        return Handlebars.compile(template)(__assign(__assign({}, this.props), { usersList: new UsersList({ users: this.props.users }).renderToString(), cancelButton: new Button("button", this.props.cancelButton).renderToString() }));
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { usersList: new UsersList({
+                users: this.props.users,
+            }).renderToString(), cancelButton: new Button("button", this.props.cancelButton).renderToString() }));
     };
     return Dialog;
 }(Block));

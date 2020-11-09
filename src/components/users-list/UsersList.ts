@@ -1,6 +1,6 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 import User from "../user/User.js";
 
@@ -20,13 +20,15 @@ export default class UsersList extends Block {
 
     usersUpdate = (users: Props) => {
         this.setProps({
-           users
-        })
-    }
+            users,
+        });
+    };
 
     render() {
         return Handlebars.compile(template)({
-            users: this.props.users.map((user: Props): string => new User(user).renderToString())
+            users: this.props.users.map((user: Props): string =>
+                new User(user).renderToString()
+            ),
         });
     }
 }

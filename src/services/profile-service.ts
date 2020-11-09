@@ -1,10 +1,10 @@
-import {ProfileApi} from "../api/profile-api.js";
+import { ProfileApi } from "../api/profile-api.js";
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 
-import {ProfileRequest, ProfileResponse, UserResponse} from "./types";
-import {Nullable} from "../utils/utility-type";
+import { ProfileRequest, ProfileResponse, UserResponse } from "./types";
+import { Nullable } from "../utils/utility-type";
 
 export class ProfileService {
     profileApi: ProfileApi;
@@ -27,16 +27,28 @@ export class ProfileService {
     }
 
     updateProfile(data: ProfileRequest) {
-        return this.profileApi.update(data)
+        return this.profileApi
+            .update(data)
             .then((data: ProfileResponse) => {
                 this.store.set("user", data);
-                this.bus.emit(EVENTS.INPUT_UPDATE_VALUE, this.store.get("user"));
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Информация о пользователе обновлена", "success");
+                this.bus.emit(
+                    EVENTS.INPUT_UPDATE_VALUE,
+                    this.store.get("user")
+                );
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    "Информация о пользователе обновлена",
+                    "success"
+                );
             })
-            .catch(err => {
-                const errorMessage =  JSON.parse(err.response).reason
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-                throw err
+            .catch((err) => {
+                const errorMessage = JSON.parse(err.response).reason;
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    errorMessage,
+                    "warning"
+                );
+                throw err;
             });
     }
 
@@ -44,16 +56,28 @@ export class ProfileService {
         const formData = new FormData();
         formData.append("avatar", files[0]);
 
-        return this.profileApi.updateAvatar(formData)
+        return this.profileApi
+            .updateAvatar(formData)
             .then((data: UserResponse) => {
                 this.store.set("user", data);
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Аватар обновлён", "success");
-                this.bus.emit(EVENTS.AVATAR_UPDATE, this.store.get("user").avatar);
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    "Аватар обновлён",
+                    "success"
+                );
+                this.bus.emit(
+                    EVENTS.AVATAR_UPDATE,
+                    this.store.get("user").avatar
+                );
             })
-            .catch(err => {
-                const errorMessage =  JSON.parse(err.response).reason
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-                throw err
+            .catch((err) => {
+                const errorMessage = JSON.parse(err.response).reason;
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    errorMessage,
+                    "warning"
+                );
+                throw err;
             });
-    }
+    };
 }

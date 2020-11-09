@@ -1,4 +1,4 @@
-import {Listeners, Listener} from "./types";
+import { Listeners, Listener } from "./types";
 
 export class EventBus {
     listeners: Listeners;
@@ -21,7 +21,7 @@ export class EventBus {
         }
 
         this.listeners[event] = this.listeners[event].filter(
-            listener => listener !== callback
+            (listener) => listener !== callback
         );
     }
 
@@ -30,7 +30,7 @@ export class EventBus {
             throw new Error(`Нет события: ${event}`);
         }
 
-        this.listeners[event].forEach(function(listener: Listener) {
+        this.listeners[event].forEach(function (listener: Listener) {
             listener(...args);
         });
     }

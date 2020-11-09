@@ -1,10 +1,10 @@
-import {AuthApi} from "../api/auth-api.js";
+import { AuthApi } from "../api/auth-api.js";
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 
-import {SignupRequest, UserResponse} from "./types";
-import {Nullable} from "../utils/utility-type";
+import { SignupRequest, UserResponse } from "./types";
+import { Nullable } from "../utils/utility-type";
 
 export class AuthService {
     authApi: AuthApi;
@@ -27,48 +27,60 @@ export class AuthService {
     }
 
     signin(login: string, password: string) {
-        return this.authApi.signin({login, password})
+        return this.authApi
+            .signin({ login, password })
             .then(() => this.getUser())
             .then((data: UserResponse) => {
                 this.store.set("user", data);
                 this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
             })
-            .catch(err => {
-                const errorMessage =  JSON.parse(err.response).reason
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-                throw err
+            .catch((err) => {
+                const errorMessage = JSON.parse(err.response).reason;
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    errorMessage,
+                    "warning"
+                );
+                throw err;
             });
     }
 
     getUser() {
-        return this.authApi.getUser()
+        return this.authApi
+            .getUser()
             .then((data: UserResponse) => data)
-            .catch(err => {
-                throw err
+            .catch((err) => {
+                throw err;
             });
     }
 
     signup(data: SignupRequest) {
-        return this.authApi.signup(data)
+        return this.authApi
+            .signup(data)
             .then(() => this.getUser())
             .then((data: UserResponse) => {
                 this.store.set("user", data);
                 this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
             })
-            .catch(err => {
-                const errorMessage =  JSON.parse(err.response).reason
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-                throw err
+            .catch((err) => {
+                const errorMessage = JSON.parse(err.response).reason;
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    errorMessage,
+                    "warning"
+                );
+                throw err;
             });
     }
 
     logout = () => {
-        return this.authApi.logout()
+        return this.authApi
+            .logout()
             .then(() => document.location.reload())
-            .catch(err => {
-                throw err
+            .catch((err) => {
+                throw err;
             });
-    }
+    };
 
     isAuth() {
         return this.store.get("user");

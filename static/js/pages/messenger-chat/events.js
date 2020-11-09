@@ -22,28 +22,28 @@ export var events = [
         el: ".js-add-user-open-dialog",
         handler: function () {
             bus.emit(EVENTS.OPEN_ADD_USER_DIALOG);
-        }
+        },
     },
     {
         type: "click",
         el: ".js-remove-user-open-dialog",
         handler: function () {
             bus.emit(EVENTS.OPEN_REMOVE_USER_DIALOG);
-        }
+        },
     },
     {
         type: "click",
         el: ".js-close-dialog-button",
         handler: function () {
             bus.emit(EVENTS.CLOSE_DIALOG);
-        }
+        },
     },
     {
         type: "click",
         el: ".overlay",
         handler: function () {
             bus.emit(EVENTS.CLOSE_DIALOG);
-        }
+        },
     },
     {
         type: "input",
@@ -51,7 +51,7 @@ export var events = [
         handler: function (evt) {
             evt.preventDefault();
             userService.search(evt.target.value);
-        }
+        },
     },
     {
         type: "click",
@@ -62,9 +62,10 @@ export var events = [
             while (!el.classList.contains("room")) {
                 el = el.parentElement;
             }
-            var userId = el.dataset.userId;
+            var userId = el.dataset
+                .userId;
             bus.emit(EVENTS.CHAT_USER_ACTION, parseInt(userId, 10));
-        }
+        },
     },
     {
         type: "input",
@@ -73,7 +74,7 @@ export var events = [
             evt.preventDefault();
             var value = evt.target.value;
             searchChatByName(value);
-        }
+        },
     },
     {
         type: "submit",
@@ -83,15 +84,19 @@ export var events = [
             var input = evt.target[0];
             var value = input.value;
             searchChatByName(value);
-        }
+        },
     },
 ];
 function searchChatByName(value) {
     if (value && store.get("chats")) {
-        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").filter(function (chat) {
+        bus.emit(EVENTS.ROOMS_UPDATE, store
+            .get("chats")
+            .filter(function (chat) {
             return chat.title.indexOf(value) !== -1;
-        }).map(function (c) {
-            if (c.id.toString() === store.get("currentChat").id.toString()) {
+        })
+            .map(function (c) {
+            if (c.id.toString() ===
+                store.get("currentChat").id.toString()) {
                 return __assign(__assign({}, c), { active: true });
             }
             else {
@@ -101,7 +106,8 @@ function searchChatByName(value) {
     }
     else {
         bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").map(function (c) {
-            if (c.id.toString() === store.get("currentChat").id.toString()) {
+            if (c.id.toString() ===
+                store.get("currentChat").id.toString()) {
                 return __assign(__assign({}, c), { active: true });
             }
             else {

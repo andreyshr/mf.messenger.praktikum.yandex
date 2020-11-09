@@ -1,6 +1,6 @@
-import {Router} from "../router";
+import { Router } from "../router";
 import Block from "../../block/block";
-import {Props} from "../../block/types";
+import { Props } from "../../block/types";
 
 beforeAll(() => {
     const _location = window.location;
@@ -8,35 +8,37 @@ beforeAll(() => {
     delete window.location;
     window.location = {
         ..._location,
-        pathname: "/component"
-    }
+        pathname: "/component",
+    };
 });
 
-describe("Router", function() {
+describe("Router", function () {
     class Component extends Block {
         constructor(props: Props) {
             super("div", props);
         }
 
         render() {
-            return ""
+            return "";
         }
     }
 
-
-    it("should add route to routes array", function() {
+    it("should add route to routes array", function () {
         const router = new Router(".app");
-        router.use('/component', Component);
+        router.use("/component", Component);
 
-        expect(router.routes[0]["_pathname"]).toEqual('/component');
+        expect(router.routes[0]["_pathname"]).toEqual("/component");
         expect(router.routes[0]["_blockClass"]).toEqual(Component);
         expect(router.routes[0]["_block"]).toBeNull();
-        expect(router.routes[0]["_props"]).toEqual({ meta: undefined, rootQuery: '.app' });
+        expect(router.routes[0]["_props"]).toEqual({
+            meta: undefined,
+            rootQuery: ".app",
+        });
     });
 
     it("should render block on start", async () => {
         const router = new Router(".app");
-        router.use('/component', Component);
+        router.use("/component", Component);
 
         await router.start();
         expect(router.routes[0]["_block"] instanceof Block).toBeTruthy();
@@ -44,7 +46,7 @@ describe("Router", function() {
 
     it("should attach event for router-link on start", async () => {
         const router = new Router(".app");
-        router.use('/component', Component);
+        router.use("/component", Component);
         router.attachEvent = jest.fn();
 
         await router.start();
@@ -53,7 +55,7 @@ describe("Router", function() {
 
     it("should go to path", async () => {
         const router = new Router(".app");
-        router.use('/component', Component);
+        router.use("/component", Component);
         router.history.pushState = jest.fn();
 
         await router.start();
@@ -64,7 +66,7 @@ describe("Router", function() {
 
     it("should go back", async () => {
         const router = new Router(".app");
-        router.use('/component', Component);
+        router.use("/component", Component);
         router.history.back = jest.fn();
 
         await router.start();
@@ -75,7 +77,7 @@ describe("Router", function() {
 
     it("should go forward", async () => {
         const router = new Router(".app");
-        router.use('/component', Component);
+        router.use("/component", Component);
         router.history.forward = jest.fn();
 
         await router.start();

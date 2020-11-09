@@ -1,66 +1,84 @@
-import {Validator} from "../validator";
-import {VerifiableInput} from "../types";
+import { Validator } from "../validator";
+import { VerifiableInput } from "../types";
 
-describe("Validator", function() {
+describe("Validator", function () {
     const validator = new Validator();
 
     it("should validate correct email", function () {
         const input = {
-          name: "email",
-          value: "test@test.com",
-          rule: "email"
+            name: "email",
+            value: "test@test.com",
+            rule: "email",
         };
 
-        expect(validator.validate(input as VerifiableInput)).toEqual({ name: "email", status: true });
+        expect(validator.validate(input as VerifiableInput)).toEqual({
+            name: "email",
+            status: true,
+        });
     });
 
     it("should validate incorrect email", function () {
         const input = {
             name: "email",
             value: "test@test",
-            rule: "email"
+            rule: "email",
         };
 
-        expect(validator.validate(input as VerifiableInput)).toEqual({ name: "email", status: false });
+        expect(validator.validate(input as VerifiableInput)).toEqual({
+            name: "email",
+            status: false,
+        });
     });
 
     it("should validate correct password", function () {
         const input = {
             name: "password",
             value: "password12",
-            rule: "password"
+            rule: "password",
         };
 
-        expect(validator.validate(input as VerifiableInput)).toEqual({ name: "password", status: true });
+        expect(validator.validate(input as VerifiableInput)).toEqual({
+            name: "password",
+            status: true,
+        });
     });
 
     it("should validate incorrect password", function () {
         const input = {
             name: "password",
             value: "пароль",
-            rule: "password"
+            rule: "password",
         };
 
-        expect(validator.validate(input as VerifiableInput)).toEqual({ name: "password", status: false });
+        expect(validator.validate(input as VerifiableInput)).toEqual({
+            name: "password",
+            status: false,
+        });
     });
 
     it("should validate correct required value", function () {
         const input = {
             name: "prop",
             value: "p",
-            rule: "required"
+            rule: "required",
         };
 
-        expect(validator.validate(input as VerifiableInput)).toEqual({ name: "prop", status: true });
+        expect(validator.validate(input as VerifiableInput)).toEqual({
+            name: "prop",
+            status: true,
+        });
     });
 
     it("should validate incorrect required value", function () {
         const input = {
             name: "prop",
             value: "",
-            rule: "required"
+            rule: "required",
         };
 
-        expect(validator.validate(input as VerifiableInput)).toEqual({ name: "prop", status: false });
+        expect(validator.validate(input as VerifiableInput)).toEqual({
+            name: "prop",
+            status: false,
+        });
     });
 });

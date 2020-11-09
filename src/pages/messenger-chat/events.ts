@@ -1,7 +1,7 @@
 import EVENTS from "../../modules/event-bus/events.js";
 import AppBus from "../../modules/event-bus/app-bus.js";
-import {UserService} from "../../services/user-service.js";
-import {Props} from "../../modules/block/types";
+import { UserService } from "../../services/user-service.js";
+import { Props } from "../../modules/block/types";
 import Store from "../../modules/store/store.js";
 
 const userService = new UserService();
@@ -14,28 +14,28 @@ export const events = [
         el: ".js-add-user-open-dialog",
         handler: function () {
             bus.emit(EVENTS.OPEN_ADD_USER_DIALOG);
-        }
+        },
     },
     {
         type: "click",
         el: ".js-remove-user-open-dialog",
         handler: function () {
             bus.emit(EVENTS.OPEN_REMOVE_USER_DIALOG);
-        }
+        },
     },
     {
         type: "click",
         el: ".js-close-dialog-button",
         handler: function () {
             bus.emit(EVENTS.CLOSE_DIALOG);
-        }
+        },
     },
     {
         type: "click",
         el: ".overlay",
         handler: function () {
             bus.emit(EVENTS.CLOSE_DIALOG);
-        }
+        },
     },
     {
         type: "input",
@@ -43,7 +43,7 @@ export const events = [
         handler: function (evt: Event) {
             evt.preventDefault();
             userService.search((evt.target as HTMLInputElement).value);
-        }
+        },
     },
     {
         type: "click",
@@ -54,9 +54,13 @@ export const events = [
             while (!el.classList.contains("room")) {
                 el = <HTMLElement>el.parentElement;
             }
-            const userId: string | undefined = (el as HTMLElement).dataset.userId;
-            bus.emit(EVENTS.CHAT_USER_ACTION, parseInt(userId as string, 10) as number);
-        }
+            const userId: string | undefined = (el as HTMLElement).dataset
+                .userId;
+            bus.emit(
+                EVENTS.CHAT_USER_ACTION,
+                parseInt(userId as string, 10) as number
+            );
+        },
     },
     {
         type: "input",
@@ -66,8 +70,8 @@ export const events = [
 
             const value = (evt.target as HTMLInputElement).value;
 
-            searchChatByName(value)
-        }
+            searchChatByName(value);
+        },
     },
     {
         type: "submit",
@@ -78,35 +82,54 @@ export const events = [
             const input = (evt.target as HTMLFormElement)[0];
             const value: string = (input as HTMLInputElement).value;
 
-            searchChatByName(value)
-        }
+            searchChatByName(value);
+        },
     },
-]
+];
 
 function searchChatByName(value: string) {
     if (value && store.get("chats")) {
-        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").filter((chat: Props): boolean => {
-            return chat.title.indexOf(value) !== -1;
-        }).map((c: Props): Props => {
-            if (c.id.toString() === store.get("currentChat").id.toString()) {
-                return {
-                    ...c,
-                    active: true
-                }
-            } else {
-                return c;
-            }
-        }));
+        bus.emit(
+            EVENTS.ROOMS_UPDATE,
+            store
+                .get("chats")
+                .filter((chat: Props): boolean => {
+                    return chat.title.indexOf(value) !== -1;
+                })
+                .map(
+                    (c: Props): Props => {
+                        if (
+                            c.id.toString() ===
+                            store.get("currentChat").id.toString()
+                        ) {
+                            return {
+                                ...c,
+                                active: true,
+                            };
+                        } else {
+                            return c;
+                        }
+                    }
+                )
+        );
     } else {
-        bus.emit(EVENTS.ROOMS_UPDATE, store.get("chats").map((c: Props): Props => {
-            if (c.id.toString() === store.get("currentChat").id.toString()) {
-                return {
-                    ...c,
-                    active: true
+        bus.emit(
+            EVENTS.ROOMS_UPDATE,
+            store.get("chats").map(
+                (c: Props): Props => {
+                    if (
+                        c.id.toString() ===
+                        store.get("currentChat").id.toString()
+                    ) {
+                        return {
+                            ...c,
+                            active: true,
+                        };
+                    } else {
+                        return c;
+                    }
                 }
-            } else {
-                return c;
-            }
-        }));
+            )
+        );
     }
 }

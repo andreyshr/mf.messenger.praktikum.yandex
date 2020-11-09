@@ -5,9 +5,9 @@ import Menu from "../menu/Menu.js";
 import Avatar from "../avatar/Avatar.js";
 
 import AppBus from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js"
+import EVENTS from "../../modules/event-bus/events.js";
 
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 const bus = new AppBus();
 
@@ -19,7 +19,7 @@ export default class WorkSpaceHeader extends Block {
             this.setProps({
                 ...this.props,
                 ...currentChat,
-            })
+            });
         });
 
         Block._instances.push(this);
@@ -32,8 +32,8 @@ export default class WorkSpaceHeader extends Block {
             menuChat: new Menu(this.props.menuChat).renderToString(),
             avatar: new Avatar({
                 className: "room__avatar avatar avatar--sm",
-                avatarImg: this.props.avatarImg
-            }).renderToString()
+                avatarImg: this.props.avatarImg,
+            }).renderToString(),
         });
     }
 }

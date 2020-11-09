@@ -34,7 +34,7 @@ var RoomsList = /** @class */ (function (_super) {
         var _this = _super.call(this, "div", props) || this;
         _this.roomsUpdate = function (chats) {
             _this.setProps({
-                rooms: chats.map(_this.createRoom)
+                rooms: chats.map(_this.createRoom),
             });
         };
         bus.on(EVENTS.ROOMS_UPDATE, _this.roomsUpdate);
@@ -46,7 +46,9 @@ var RoomsList = /** @class */ (function (_super) {
     };
     RoomsList.prototype.render = function () {
         return Handlebars.compile(template)({
-            rooms: this.props.rooms.map(function (room) { return new Room(room).renderToString(); })
+            rooms: this.props.rooms.map(function (room) {
+                return new Room(room).renderToString();
+            }),
         });
     };
     return RoomsList;

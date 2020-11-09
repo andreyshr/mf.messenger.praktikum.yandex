@@ -2,7 +2,7 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
 import Button from "../button/Button.js";
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 export default class MessageInputForm extends Block {
     constructor(props: Props) {
@@ -14,7 +14,10 @@ export default class MessageInputForm extends Block {
     render() {
         return Handlebars.compile(template)({
             ...this.props,
-            buttonSendMessage: new Button("button", this.props.buttonSendMessage).renderToString()
+            buttonSendMessage: new Button(
+                "button",
+                this.props.buttonSendMessage
+            ).renderToString(),
         });
     }
 }

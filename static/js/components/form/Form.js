@@ -45,7 +45,7 @@ var Form = /** @class */ (function (_super) {
         _this.state = {
             inputs: _this.props.inputs.reduce(_this.createStateInputs, {}),
             required: _this.props.inputs.reduce(_this.createStateRequired, {}),
-            action: _this.props.action
+            action: _this.props.action,
         };
         _this.store = new Store();
         _this.bus = new AppBus();
@@ -54,14 +54,18 @@ var Form = /** @class */ (function (_super) {
             if (_this.state.action !== action)
                 return;
             _this.state.inputs[name] = value;
-            var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
+            var errors = [
+                _this.validator.validate(_this.createVerifiableInput(name)),
+            ];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
         _this.bus.on(EVENTS.FORM_VALIDATE, function (name, action) {
             var _a;
             if (_this.state.action !== action)
                 return;
-            var errors = [_this.validator.validate(_this.createVerifiableInput(name))];
+            var errors = [
+                _this.validator.validate(_this.createVerifiableInput(name)),
+            ];
             (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
         _this.validator = new Validator();
@@ -82,28 +86,32 @@ var Form = /** @class */ (function (_super) {
         return {
             name: name,
             value: this.state.inputs[name],
-            rule: this.state.required[name]
+            rule: this.state.required[name],
         };
     };
     Form.prototype.onSubmit = function (evt) {
         var _a;
         var _this = this;
         evt.preventDefault();
-        var errors = Object.keys(this.state.inputs)
-            .map(function (name) { return _this.validator.validate(_this.createVerifiableInput(name)); });
+        var errors = Object.keys(this.state.inputs).map(function (name) {
+            return _this.validator.validate(_this.createVerifiableInput(name));
+        });
         (_a = this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
         if (errors.every(function (e) { return e.status; })) {
             if (this.props.action === "signin") {
                 var _b = this.state.inputs, login = _b.login, password = _b.password;
-                this.authService.signin(login, password)
+                this.authService
+                    .signin(login, password)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "signup") {
-                this.authService.signup(this.state.inputs)
+                this.authService
+                    .signup(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "profile") {
-                this.profileService.updateProfile(this.state.inputs)
+                this.profileService
+                    .updateProfile(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
         }
@@ -112,10 +120,18 @@ var Form = /** @class */ (function (_super) {
         return Handlebars.compile(this.props.template === "profile" ? templateProfile : templateMain)({
             className: this.props.className,
             title: this.props.title,
-            inputs: this.props.inputs.map(function (input) { return input.renderToString(); }),
-            buttons: this.props.buttons.map(function (button) { return button.renderToString(); }),
-            avatar: this.props.template === "profile" ? this.props.avatar.renderToString() : "",
-            avatarLoadButton: this.props.template === "profile" ? this.props.avatarLoadButton.renderToString() : "",
+            inputs: this.props.inputs.map(function (input) {
+                return input.renderToString();
+            }),
+            buttons: this.props.buttons.map(function (button) {
+                return button.renderToString();
+            }),
+            avatar: this.props.template === "profile"
+                ? this.props.avatar.renderToString()
+                : "",
+            avatarLoadButton: this.props.template === "profile"
+                ? this.props.avatarLoadButton.renderToString()
+                : "",
         });
     };
     return Form;

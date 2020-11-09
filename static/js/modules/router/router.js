@@ -29,7 +29,10 @@ var Router = /** @class */ (function () {
         document.documentElement.addEventListener("click", fn);
     };
     Router.prototype.use = function (pathname, block, meta) {
-        var route = new Route(pathname, block, { meta: meta, rootQuery: this._rootQuery });
+        var route = new Route(pathname, block, {
+            meta: meta,
+            rootQuery: this._rootQuery,
+        });
         this.routes.push(route);
         return this;
     };
@@ -42,8 +45,7 @@ var Router = /** @class */ (function () {
                 return;
             _this._onRoute((_d = (_c = event.currentTarget) === null || _c === void 0 ? void 0 : _c.location) === null || _d === void 0 ? void 0 : _d.pathname);
         }).bind(this);
-        return this.beforeStart()
-            .finally(function () {
+        return this.beforeStart().finally(function () {
             if (!_this._beforeEach(window.location.pathname))
                 return;
             _this._onRoute(window.location.pathname);
@@ -78,7 +80,9 @@ var Router = /** @class */ (function () {
         this.history.forward();
     };
     Router.prototype.getRoute = function (pathname) {
-        return this.routes.find(function (route) { return route.match(pathname); }) || null;
+        return (this.routes.find(function (route) {
+            return route.match(pathname);
+        }) || null);
     };
     Router.prototype._beforeEach = function (pathname) {
         return this.beforeEach(pathname);

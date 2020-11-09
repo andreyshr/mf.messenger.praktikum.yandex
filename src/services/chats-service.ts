@@ -1,9 +1,9 @@
-import {ChatsApi} from "../api/chats-api.js";
+import { ChatsApi } from "../api/chats-api.js";
 import AppBus from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
-import {Nullable} from "../utils/utility-type";
-import {ChatResponse, ChatUsersRequest, ProfileResponse} from "./types";
+import { Nullable } from "../utils/utility-type";
+import { ChatResponse, ChatUsersRequest, ProfileResponse } from "./types";
 
 export class ChatsService {
     chatsApi: ChatsApi;
@@ -43,35 +43,49 @@ export class ChatsService {
     }
 
     getChats() {
-        return this.chatsApi.getChats()
+        return this.chatsApi
+            .getChats()
             .then((data: ChatResponse[]): ChatResponse[] => {
                 this.store.set("chats", data);
                 return data;
             })
-            .catch(err => {
-                throw err
+            .catch((err) => {
+                throw err;
             });
     }
 
     createChat = (title: string) => {
-        return this.chatsApi.createChat(title)
+        return this.chatsApi
+            .createChat(title)
             .then(() => this.getChats())
             .then((data: ChatResponse[]): ChatResponse[] => {
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Чат "${title}" создан`, "success");
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    `Чат "${title}" создан`,
+                    "success"
+                );
                 this.bus.emit(EVENTS.ROOMS_UPDATE, data);
                 return data;
             })
-            .then(err => err);
-    }
+            .then((err) => err);
+    };
 
     getUsers = () => {
-        return this.chatsApi.getUsers(this.currentChatId)
+        return this.chatsApi
+            .getUsers(this.currentChatId)
             .then((data: ProfileResponse[]): ProfileResponse[] => {
-                this.bus.emit(EVENTS.USERS_UPDATE, data.map((user: ProfileResponse) => ({ title: user.login, id: user.id, avatarImg: user.avatar })));
+                this.bus.emit(
+                    EVENTS.USERS_UPDATE,
+                    data.map((user: ProfileResponse) => ({
+                        title: user.login,
+                        id: user.id,
+                        avatarImg: user.avatar,
+                    }))
+                );
                 return data;
             })
-            .catch(err => err);
-    }
+            .catch((err) => err);
+    };
 
     userAction = (userId: number) => {
         if (this.dialog === "remove_user") {
@@ -80,49 +94,70 @@ export class ChatsService {
         if (this.dialog === "add_user") {
             this.addUsers(userId);
         }
-    }
+    };
 
     addUsers = (userId: number) => {
         const data: ChatUsersRequest = {
             users: [userId],
-            chatId: this.currentChatId
-        }
+            chatId: this.currentChatId,
+        };
 
-        return this.chatsApi.addUsers(data)
+        return this.chatsApi
+            .addUsers(data)
             .then((data: unknown) => {
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Пользователь добавлен в чат`, "success");
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    `Пользователь добавлен в чат`,
+                    "success"
+                );
 
                 return data;
             })
             .catch(() => {
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, 'Произошла ошибка', "warning");
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    "Произошла ошибка",
+                    "warning"
+                );
             });
-    }
+    };
 
     removeUsers = (userId: number) => {
         const data: ChatUsersRequest = {
             users: [userId],
-            chatId: this.currentChatId
-        }
+            chatId: this.currentChatId,
+        };
 
-        return this.chatsApi.removeUsers(data)
+        return this.chatsApi
+            .removeUsers(data)
             .then(() => {
                 if (userId === this.user.id) {
-                    this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Чат удалён`, "success");
+                    this.bus.emit(
+                        EVENTS.NOTIFICATION_SHOW,
+                        `Чат удалён`,
+                        "success"
+                    );
 
-                    return this.getChats()
-                        .then(() => {
-                            this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
-                            this.bus.emit(EVENTS.CLOSE_DIALOG);
-                        });
+                    return this.getChats().then(() => {
+                        this.bus.emit(EVENTS.ROUTER_REPLACE, "/messenger");
+                        this.bus.emit(EVENTS.CLOSE_DIALOG);
+                    });
                 } else {
-                    this.bus.emit(EVENTS.NOTIFICATION_SHOW, `Пользователь удалён из чата`, "success");
+                    this.bus.emit(
+                        EVENTS.NOTIFICATION_SHOW,
+                        `Пользователь удалён из чата`,
+                        "success"
+                    );
 
                     return this.getUsers();
                 }
             })
             .catch(() => {
-                this.bus.emit(EVENTS.NOTIFICATION_SHOW, 'Произошла ошибка', "warning");
+                this.bus.emit(
+                    EVENTS.NOTIFICATION_SHOW,
+                    "Произошла ошибка",
+                    "warning"
+                );
             });
-    }
+    };
 }

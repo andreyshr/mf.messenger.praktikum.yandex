@@ -8,7 +8,8 @@ var ProfileService = /** @class */ (function () {
         this.updateAvatar = function (files) {
             var formData = new FormData();
             formData.append("avatar", files[0]);
-            return _this.profileApi.updateAvatar(formData)
+            return _this.profileApi
+                .updateAvatar(formData)
                 .then(function (data) {
                 _this.store.set("user", data);
                 _this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Аватар обновлён", "success");
@@ -31,7 +32,8 @@ var ProfileService = /** @class */ (function () {
     }
     ProfileService.prototype.updateProfile = function (data) {
         var _this = this;
-        return this.profileApi.update(data)
+        return this.profileApi
+            .update(data)
             .then(function (data) {
             _this.store.set("user", data);
             _this.bus.emit(EVENTS.INPUT_UPDATE_VALUE, _this.store.get("user"));

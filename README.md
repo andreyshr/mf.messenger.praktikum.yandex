@@ -14,4 +14,5 @@
 - /signup - guest user
 - /messenger - auth user
 - /messenger/:id - auth user
+- /profile - auth user
 

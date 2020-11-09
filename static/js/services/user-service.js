@@ -14,9 +14,14 @@ var UserService = /** @class */ (function () {
     }
     UserService.prototype.search = function (login) {
         var _this = this;
-        return this.userApi.search(login)
+        return this.userApi
+            .search(login)
             .then(function (data) {
-            _this.bus.emit(EVENTS.USERS_UPDATE, data.map(function (user) { return ({ title: user.login, id: user.id, avatarImg: user.avatar }); }));
+            _this.bus.emit(EVENTS.USERS_UPDATE, data.map(function (user) { return ({
+                title: user.login,
+                id: user.id,
+                avatarImg: user.avatar,
+            }); }));
             return data;
         })
             .catch(function (err) {

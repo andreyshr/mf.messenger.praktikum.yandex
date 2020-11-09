@@ -1,5 +1,5 @@
-import {isArray} from "./isArray.js";
-import {isObject} from "./isObject.js";
+import { isArray } from "./isArray.js";
+import { isObject } from "./isObject.js";
 
 export function isEmpty(value: any): boolean {
     if (value instanceof Map || value instanceof Set) return !value.size;

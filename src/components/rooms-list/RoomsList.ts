@@ -1,6 +1,6 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 import Room from "../room/Room.js";
 
@@ -20,9 +20,9 @@ export default class RoomsList extends Block {
 
     roomsUpdate = (chats: Props) => {
         this.setProps({
-            rooms: chats.map(this.createRoom)
-        })
-    }
+            rooms: chats.map(this.createRoom),
+        });
+    };
 
     createRoom(room: Record<string, string>): Record<string, string> {
         return {
@@ -33,7 +33,9 @@ export default class RoomsList extends Block {
 
     render() {
         return Handlebars.compile(template)({
-            rooms: this.props.rooms.map((room: Props) => new Room(room).renderToString())
+            rooms: this.props.rooms.map((room: Props) =>
+                new Room(room).renderToString()
+            ),
         });
     }
 }

@@ -42,7 +42,7 @@ var form = new Form({
             el: "form.profile__form",
             handler: function (evt) {
                 form.onSubmit(evt);
-            }
+            },
         },
         {
             type: "change",
@@ -50,9 +50,9 @@ var form = new Form({
             handler: function (evt) {
                 evt.preventDefault();
                 bus.emit(EVENTS.PROFILE_UPDATE_AVATAR, evt.target.files);
-            }
-        }
-    ]
+            },
+        },
+    ],
 });
 export var props = {
     form: form,
@@ -71,7 +71,8 @@ var Profile = /** @class */ (function (_super) {
         };
         bus.on(EVENTS.AVATAR_UPDATE, function () {
             if (_this.user.avatar) {
-                document.querySelector(".profile__form .avatar img").src = 'https://ya-praktikum.tech/' + _this.user.avatar;
+                document.querySelector(".profile__form .avatar img").src =
+                    "https://ya-praktikum.tech/" + _this.user.avatar;
             }
         });
         Block._instances.push(_this);
@@ -88,7 +89,7 @@ var Profile = /** @class */ (function (_super) {
         return Handlebars.compile(template)({
             form: this.props.form.renderToString(),
             buttonBack: this.props.buttonBack.renderToString(),
-            notification: new Notification(this.props.notification).renderToString()
+            notification: new Notification(this.props.notification).renderToString(),
         });
     };
     return Profile;

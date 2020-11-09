@@ -42,7 +42,7 @@ var WorkSpaceHeader = /** @class */ (function (_super) {
     WorkSpaceHeader.prototype.render = function () {
         return Handlebars.compile(template)(__assign(__assign({}, this.props), { historyTime: this.props.historyTime || "Сегодня", menuChat: new Menu(this.props.menuChat).renderToString(), avatar: new Avatar({
                 className: "room__avatar avatar avatar--sm",
-                avatarImg: this.props.avatarImg
+                avatarImg: this.props.avatarImg,
             }).renderToString() }));
     };
     return WorkSpaceHeader;

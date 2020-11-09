@@ -59,24 +59,24 @@ export var inputsProps = [
         placeholder: "Введите пароль",
         errorMessage: "Символы латинского алфавита и цифры(мин. 6)",
         action: "signup",
-    }
+    },
 ];
 export var buttons = [
     {
-        className: 'button button--blue w-100',
+        className: "button button--blue w-100",
         tagName: "button",
         attributes: {
             type: "submit",
         },
-        title: 'Зарегистрироваться'
+        title: "Зарегистрироваться",
     },
     {
-        className: 'button button--transparent w-100 router-link',
+        className: "button button--transparent w-100 router-link",
         tagName: "a",
         attributes: {
             href: "/signin",
         },
-        title: 'Войти',
-    }
+        title: "Войти",
+    },
 ];
 //# sourceMappingURL=initial-props.js.map

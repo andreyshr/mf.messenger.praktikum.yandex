@@ -1,5 +1,5 @@
 import Block from "../modules/block/block";
-import {Nullable} from "./utility-type";
+import { Nullable } from "./utility-type";
 
 export function render(query: string, block: Block): Nullable<Node> {
     const root = document.querySelector(query) as Node;

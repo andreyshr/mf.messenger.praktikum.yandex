@@ -1,9 +1,9 @@
 import Block from "../block/block.js";
-import {Route} from "./route.js";
-import {createUniqID} from "../../utils/create-uniq-id.js";
+import { Route } from "./route.js";
+import { createUniqID } from "../../utils/create-uniq-id.js";
 
-import {Nullable} from "../../utils/utility-type";
-import {Constructable} from "./types";
+import { Nullable } from "../../utils/utility-type";
+import { Constructable } from "./types";
 
 export class Router {
     static __instance: Router;
@@ -50,7 +50,10 @@ export class Router {
     }
 
     use(pathname: string, block: Constructable<Block>, meta?: any): Router {
-        const route = new Route(pathname, block, {meta, rootQuery: this._rootQuery});
+        const route = new Route(pathname, block, {
+            meta,
+            rootQuery: this._rootQuery,
+        });
         this.routes.push(route);
         return this;
     }
@@ -59,17 +62,17 @@ export class Router {
         this.attachEvent();
 
         window.onpopstate = ((event: any) => {
-            if (!this._beforeEach(event.currentTarget?.location?.pathname)) return;
+            if (!this._beforeEach(event.currentTarget?.location?.pathname))
+                return;
 
             this._onRoute(event.currentTarget?.location?.pathname);
         }).bind(this);
 
-        return this.beforeStart()
-            .finally(() => {
-                if (!this._beforeEach(window.location.pathname)) return;
+        return this.beforeStart().finally(() => {
+            if (!this._beforeEach(window.location.pathname)) return;
 
-                this._onRoute(window.location.pathname);
-            });
+            this._onRoute(window.location.pathname);
+        });
     }
 
     _onRoute(pathname: string) {
@@ -88,7 +91,7 @@ export class Router {
     go(pathname: string) {
         if (!this._beforeEach(pathname)) return;
 
-        this.history.pushState({id: createUniqID()}, "", pathname);
+        this.history.pushState({ id: createUniqID() }, "", pathname);
 
         this._onRoute(pathname);
     }
@@ -96,7 +99,7 @@ export class Router {
     replace(pathname: string) {
         if (!this._beforeEach(pathname)) return;
 
-        this.history.replaceState({id: createUniqID()}, "", pathname);
+        this.history.replaceState({ id: createUniqID() }, "", pathname);
 
         this._onRoute(pathname);
     }
@@ -110,7 +113,11 @@ export class Router {
     }
 
     getRoute(pathname: string): Nullable<Route> {
-        return this.routes.find((route: Route): boolean => route.match(pathname)) || null;
+        return (
+            this.routes.find((route: Route): boolean =>
+                route.match(pathname)
+            ) || null
+        );
     }
 
     _beforeEach(pathname: string): boolean {

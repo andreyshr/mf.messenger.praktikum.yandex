@@ -31,19 +31,21 @@ var Input = /** @class */ (function (_super) {
             var nodes = Array.from(document.querySelectorAll(".error-message[data-name=" + input.name + "]"));
             if (input.status) {
                 if (nodes.length) {
-                    nodes.forEach(function (n) { return n.classList.remove('error-message--active'); });
+                    nodes.forEach(function (n) {
+                        return n.classList.remove("error-message--active");
+                    });
                 }
             }
             else {
                 if (nodes.length) {
-                    nodes.forEach(function (n) { return n.classList.add('error-message--active'); });
+                    nodes.forEach(function (n) { return n.classList.add("error-message--active"); });
                 }
             }
         };
         _this.updateValue = function (name, value, action) {
             if (action === _this.props.action && _this.props.name === name) {
                 _this.setProps({
-                    value: value
+                    value: value,
                 });
                 _this.bus.emit(EVENTS.FORM_INPUT, name, value, _this.props.action);
                 _this.forceUpdate();

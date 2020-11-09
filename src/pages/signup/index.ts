@@ -9,7 +9,7 @@ import { addInputEvents } from "../../utils/add-input-events.js";
 
 import { inputsProps, buttons } from "./initial-props.js";
 
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 const inputs = inputsProps.map(addInputEvents);
 
@@ -17,23 +17,26 @@ const form: Form = new Form({
     className: "form form--signup",
     action: "signup",
     title: "Регистрация",
-    inputs: inputs.map(props => new Input(props)),
-    buttons: buttons.map(props => new Button(props.tagName === "button" ? "button" : "a", props)),
+    inputs: inputs.map((props) => new Input(props)),
+    buttons: buttons.map(
+        (props) =>
+            new Button(props.tagName === "button" ? "button" : "a", props)
+    ),
     events: [
         {
             type: "submit",
             el: ".form--signup",
             handler: function (evt: Event) {
                 form.onSubmit(evt);
-            }
-        }
-    ]
+            },
+        },
+    ],
 });
 
 export const props = {
     form,
-    notification: {}
-}
+    notification: {},
+};
 
 export default class SignUpPage extends Block {
     constructor(props: Props) {
@@ -43,7 +46,9 @@ export default class SignUpPage extends Block {
     render() {
         return Handlebars.compile(template)({
             form: this.props.form.renderToString(),
-            notification: new Notification(this.props.notification).renderToString()
+            notification: new Notification(
+                this.props.notification
+            ).renderToString(),
         });
     }
 }

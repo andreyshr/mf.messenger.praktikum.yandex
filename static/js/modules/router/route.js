@@ -22,7 +22,7 @@ var Route = /** @class */ (function () {
     Route.prototype.clean = function (s) {
         if (s instanceof RegExp)
             return s;
-        return s.replace(/\/+$/, '').replace(/^\/+/, '^/');
+        return s.replace(/\/+$/, "").replace(/^\/+/, "^/");
     };
     Route.prototype.replaceDynamicURLParts = function (route) {
         var paramNames = [];
@@ -31,17 +31,19 @@ var Route = /** @class */ (function () {
             regexp = route;
         }
         else {
-            regexp = new RegExp(route.replace(Route.PARAMETER_REGEXP, function (name) {
+            regexp = new RegExp(route
+                .replace(Route.PARAMETER_REGEXP, function (name) {
                 paramNames.push(name);
                 return Route.REPLACE_VARIABLE_REGEXP;
             })
-                .replace(Route.WILDCARD_REGEXP, Route.REPLACE_WILDCARD) + Route.FOLLOWED_BY_SLASH_REGEXP, Route.MATCH_REGEXP_FLAGS);
+                .replace(Route.WILDCARD_REGEXP, Route.REPLACE_WILDCARD) +
+                Route.FOLLOWED_BY_SLASH_REGEXP, Route.MATCH_REGEXP_FLAGS);
         }
         return { regexp: regexp, paramNames: paramNames };
     };
     Route.prototype.findMatchedRoutes = function (url) {
         var _a = this.replaceDynamicURLParts(this.clean(this._pathname)), regexp = _a.regexp, paramNames = _a.paramNames;
-        var match = url.replace(/^\/+/, '/').match(regexp);
+        var match = url.replace(/^\/+/, "/").match(regexp);
         var params = this.regExpResultToParams(match, paramNames);
         return match ? { match: match, pathname: this._pathname, params: params } : false;
     };
@@ -80,10 +82,10 @@ var Route = /** @class */ (function () {
     };
     Route.PARAMETER_REGEXP = /([:*])(\w+)/g;
     Route.WILDCARD_REGEXP = /\*/g;
-    Route.REPLACE_VARIABLE_REGEXP = '([^\/]+)';
-    Route.REPLACE_WILDCARD = '(?:.*)';
-    Route.FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
-    Route.MATCH_REGEXP_FLAGS = '';
+    Route.REPLACE_VARIABLE_REGEXP = "([^/]+)";
+    Route.REPLACE_WILDCARD = "(?:.*)";
+    Route.FOLLOWED_BY_SLASH_REGEXP = "(?:/$|$)";
+    Route.MATCH_REGEXP_FLAGS = "";
     return Route;
 }());
 export { Route };

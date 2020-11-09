@@ -11,7 +11,7 @@ export var events = [
             evt.preventDefault();
             var value = evt.target.value;
             searchChatByName(value);
-        }
+        },
     },
     {
         type: "submit",
@@ -21,7 +21,7 @@ export var events = [
             var input = evt.target[0];
             var value = input.value;
             searchChatByName(value);
-        }
+        },
     },
     {
         type: "submit",
@@ -32,8 +32,8 @@ export var events = [
             if (input.value) {
                 bus.emit(EVENTS.CREATE_CHAT, input.value);
             }
-        }
-    }
+        },
+    },
 ];
 function searchChatByName(value) {
     if (value && store.get("chats")) {

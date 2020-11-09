@@ -25,20 +25,22 @@ var form = new Form({
     action: "signup",
     title: "Регистрация",
     inputs: inputs.map(function (props) { return new Input(props); }),
-    buttons: buttons.map(function (props) { return new Button(props.tagName === "button" ? "button" : "a", props); }),
+    buttons: buttons.map(function (props) {
+        return new Button(props.tagName === "button" ? "button" : "a", props);
+    }),
     events: [
         {
             type: "submit",
             el: ".form--signup",
             handler: function (evt) {
                 form.onSubmit(evt);
-            }
-        }
-    ]
+            },
+        },
+    ],
 });
 export var props = {
     form: form,
-    notification: {}
+    notification: {},
 };
 var SignUpPage = /** @class */ (function (_super) {
     __extends(SignUpPage, _super);
@@ -48,7 +50,7 @@ var SignUpPage = /** @class */ (function (_super) {
     SignUpPage.prototype.render = function () {
         return Handlebars.compile(template)({
             form: this.props.form.renderToString(),
-            notification: new Notification(this.props.notification).renderToString()
+            notification: new Notification(this.props.notification).renderToString(),
         });
     };
     return SignUpPage;

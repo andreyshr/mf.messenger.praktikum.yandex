@@ -18,21 +18,21 @@ export var addInputEvents = function (input) { return (__assign(__assign({}, inp
             el: "input[id=" + input.id + "]",
             handler: function (evt) {
                 bus.emit(EVENTS.FORM_INPUT, evt.target.name, evt.target.value, input.action);
-            }
+            },
         },
         {
             type: "focus",
             el: "input[id=" + input.id + "]",
             handler: function (evt) {
                 bus.emit(EVENTS.FORM_VALIDATE, evt.target.name, input.action);
-            }
+            },
         },
         {
             type: "blur",
             el: "input[id=" + input.id + "]",
             handler: function (evt) {
                 bus.emit(EVENTS.FORM_VALIDATE, evt.target.name, input.action);
-            }
-        }
+            },
+        },
     ] })); };
 //# sourceMappingURL=add-input-events.js.map

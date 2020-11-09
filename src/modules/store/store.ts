@@ -14,7 +14,7 @@ export default class Store {
     }
 
     get(name: string) {
-        return this._store[name]
+        return this._store[name];
     }
 
     set(name: string, value: any) {

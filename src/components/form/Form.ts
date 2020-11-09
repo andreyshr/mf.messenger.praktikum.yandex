@@ -9,9 +9,9 @@ import { Validator } from "../../modules/validator/validator.js";
 import { AuthService } from "../../services/auth-service.js";
 import { ProfileService } from "../../services/profile-service.js";
 
-import {Props} from "../../modules/block/types";
-import {PropsInput} from "../input/types";
-import {VerifiableInput, ValidatedInput} from "../../modules/validator/types";
+import { Props } from "../../modules/block/types";
+import { PropsInput } from "../input/types";
+import { VerifiableInput, ValidatedInput } from "../../modules/validator/types";
 
 import Store from "../../modules/store/store.js";
 
@@ -21,7 +21,7 @@ export default class Form extends Block {
     validator: Validator;
     authService: AuthService;
     profileService: ProfileService;
-    store: Store
+    store: Store;
 
     constructor(props: Props) {
         super("form", props);
@@ -29,27 +29,37 @@ export default class Form extends Block {
         this.state = {
             inputs: this.props.inputs.reduce(this.createStateInputs, {}),
             required: this.props.inputs.reduce(this.createStateRequired, {}),
-            action: this.props.action
-        }
+            action: this.props.action,
+        };
 
         this.store = new Store();
 
         this.bus = new AppBus();
-        this.bus.on(EVENTS.FORM_INPUT, (name: string, value: string, action: string): void => {
-            if (this.state.action !== action) return;
+        this.bus.on(
+            EVENTS.FORM_INPUT,
+            (name: string, value: string, action: string): void => {
+                if (this.state.action !== action) return;
 
-            this.state.inputs[name] = value;
-            const errors: ValidatedInput[] = [this.validator.validate(this.createVerifiableInput(name))];
+                this.state.inputs[name] = value;
+                const errors: ValidatedInput[] = [
+                    this.validator.validate(this.createVerifiableInput(name)),
+                ];
 
-            this.bus.emit(EVENTS.FORM_INVALID, ...errors);
-        })
-        this.bus.on(EVENTS.FORM_VALIDATE, (name: string, action: string): void => {
-            if (this.state.action !== action) return;
+                this.bus.emit(EVENTS.FORM_INVALID, ...errors);
+            }
+        );
+        this.bus.on(
+            EVENTS.FORM_VALIDATE,
+            (name: string, action: string): void => {
+                if (this.state.action !== action) return;
 
-            const errors: ValidatedInput[] = [this.validator.validate(this.createVerifiableInput(name))];
+                const errors: ValidatedInput[] = [
+                    this.validator.validate(this.createVerifiableInput(name)),
+                ];
 
-            this.bus.emit(EVENTS.FORM_INVALID, ...errors);
-        })
+                this.bus.emit(EVENTS.FORM_INVALID, ...errors);
+            }
+        );
 
         this.validator = new Validator();
         this.authService = new AuthService();
@@ -61,57 +71,74 @@ export default class Form extends Block {
     createStateInputs(acc: PropsInput, input: Block) {
         return {
             ...acc,
-            [input.props.name]: input.props.value || null
-        }
+            [input.props.name]: input.props.value || null,
+        };
     }
 
     createStateRequired(acc: PropsInput, input: Block) {
         return {
             ...acc,
-            [input.props.name]: input.props.required
-        }
+            [input.props.name]: input.props.required,
+        };
     }
 
-    createVerifiableInput(name: string):VerifiableInput {
+    createVerifiableInput(name: string): VerifiableInput {
         return {
             name: name,
             value: this.state.inputs[name],
-            rule: this.state.required[name]
-        }
+            rule: this.state.required[name],
+        };
     }
 
     onSubmit(evt: Event) {
         evt.preventDefault();
-        const errors = Object.keys(this.state.inputs)
-            .map((name: string): ValidatedInput => this.validator.validate(this.createVerifiableInput(name)));
+        const errors = Object.keys(this.state.inputs).map(
+            (name: string): ValidatedInput =>
+                this.validator.validate(this.createVerifiableInput(name))
+        );
 
         this.bus.emit(EVENTS.FORM_INVALID, ...errors);
 
-        if (errors.every(e => e.status)) {
+        if (errors.every((e) => e.status)) {
             if (this.props.action === "signin") {
                 const { login, password } = this.state.inputs;
-                this.authService.signin(login, password)
-                    .catch(e => console.log(e));
+                this.authService
+                    .signin(login, password)
+                    .catch((e) => console.log(e));
             }
             if (this.props.action === "signup") {
-                this.authService.signup(this.state.inputs)
-                    .catch(e => console.log(e));
+                this.authService
+                    .signup(this.state.inputs)
+                    .catch((e) => console.log(e));
             }
             if (this.props.action === "profile") {
-                this.profileService.updateProfile(this.state.inputs)
-                    .catch(e => console.log(e));
+                this.profileService
+                    .updateProfile(this.state.inputs)
+                    .catch((e) => console.log(e));
             }
         }
     }
 
     render() {
-        return Handlebars.compile(this.props.template === "profile" ? templateProfile : templateMain)({
+        return Handlebars.compile(
+            this.props.template === "profile" ? templateProfile : templateMain
+        )({
             className: this.props.className,
             title: this.props.title,
-            inputs: this.props.inputs.map((input: Block) => input.renderToString()),
-            buttons: this.props.buttons.map((button: Block) => button.renderToString()),
-            avatar: this.props.template === "profile" ? this.props.avatar.renderToString() : "",
-            avatarLoadButton: this.props.template === "profile" ? this.props.avatarLoadButton.renderToString() : "",
+            inputs: this.props.inputs.map((input: Block) =>
+                input.renderToString()
+            ),
+            buttons: this.props.buttons.map((button: Block) =>
+                button.renderToString()
+            ),
+            avatar:
+                this.props.template === "profile"
+                    ? this.props.avatar.renderToString()
+                    : "",
+            avatarLoadButton:
+                this.props.template === "profile"
+                    ? this.props.avatarLoadButton.renderToString()
+                    : "",
         });
     }
 }

@@ -23,7 +23,7 @@ var UsersList = /** @class */ (function (_super) {
         var _this = _super.call(this, "div", props) || this;
         _this.usersUpdate = function (users) {
             _this.setProps({
-                users: users
+                users: users,
             });
         };
         bus.on(EVENTS.USERS_UPDATE, _this.usersUpdate);
@@ -32,7 +32,9 @@ var UsersList = /** @class */ (function (_super) {
     }
     UsersList.prototype.render = function () {
         return Handlebars.compile(template)({
-            users: this.props.users.map(function (user) { return new User(user).renderToString(); })
+            users: this.props.users.map(function (user) {
+                return new User(user).renderToString();
+            }),
         });
     };
     return UsersList;

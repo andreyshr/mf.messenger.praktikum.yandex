@@ -23,7 +23,7 @@ var Notification = /** @class */ (function (_super) {
         _this.showNotification = function (message, type) {
             _this.setProps({
                 message: message,
-                type: type
+                type: type,
             });
             _this.show();
             setTimeout(function () {
