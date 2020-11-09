@@ -11,11 +11,11 @@ var __assign = (this && this.__assign) || function () {
 };
 import { queryStringify } from "../../utils/query-stringify.js";
 export var HTTP_STATUSES = {
-    '200': 200,
-    '400': 400,
-    '401': 401,
-    '409': 409,
-    '500': 500
+    "200": 200,
+    "400": 400,
+    "401": 401,
+    "409": 409,
+    "500": 500,
 };
 export var METHODS;
 (function (METHODS) {
@@ -34,7 +34,11 @@ var HTTP = /** @class */ (function () {
                 var xhr = new XMLHttpRequest();
                 xhr.timeout = options.timeout || 5000;
                 xhr.withCredentials = true;
-                var _url = method === METHODS.GET ? url + "?" + queryStringify(data) : url;
+                var _url = method === METHODS.GET
+                    ? url +
+                        "?" +
+                        queryStringify(data)
+                    : url;
                 xhr.open(method, _url);
                 if (headers) {
                     Object.keys(headers).forEach(function (header) {
@@ -45,7 +49,7 @@ var HTTP = /** @class */ (function () {
                     reject(err);
                 };
                 xhr.onload = function () {
-                    if (xhr.status === HTTP_STATUSES['200']) {
+                    if (xhr.status === HTTP_STATUSES["200"]) {
                         resolve(xhr.response);
                     }
                     else {
@@ -85,14 +89,13 @@ var HTTP = /** @class */ (function () {
         if (options === void 0) { options = {}; }
         return this.request(this._url + url, __assign(__assign({}, options), { method: METHODS.DELETE }));
     };
-    ;
     return HTTP;
 }());
 export { HTTP };
-export var apiInstance = new HTTP('/api/v2');
-export var authAPIInstance = new HTTP('/api/v2/auth');
-export var profileAPIInstance = new HTTP('/api/v2/user/profile');
-export var chatsAPIInstance = new HTTP('/api/v2/chats');
-export var userAPIInstance = new HTTP('/api/v2/user');
+export var apiInstance = new HTTP("/api/v2");
+export var authAPIInstance = new HTTP("/api/v2/auth");
+export var profileAPIInstance = new HTTP("/api/v2/user/profile");
+export var chatsAPIInstance = new HTTP("/api/v2/chats");
+export var userAPIInstance = new HTTP("/api/v2/user");
 export default HTTP;
 //# sourceMappingURL=HTTP.js.map

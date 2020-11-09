@@ -19,6 +19,6 @@
     "node",
     "jest"
   ],
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "node_modules/handlebars"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

@@ -15,12 +15,12 @@ var Block = /** @class */ (function () {
             Object.assign(_this.props, nextProps);
         };
         var eventBus = new EventBus();
-        this._id = 'uniq' + createUniqID();
+        this._id = "uniq" + createUniqID();
         this._meta = {
             tagName: tagName,
             props: props,
             className: props.className,
-            attributes: props.attributes
+            attributes: props.attributes,
         };
         this.props = this._makePropsProxy(props);
         this.eventBus = function () { return eventBus; };
@@ -69,7 +69,7 @@ var Block = /** @class */ (function () {
                 });
             }
         }
-        (_d = this._element) === null || _d === void 0 ? void 0 : _d.setAttribute('_key', this.id);
+        (_d = this._element) === null || _d === void 0 ? void 0 : _d.setAttribute("_key", this.id);
     };
     Block.prototype.setElement = function (element) {
         this._element = element;
@@ -96,8 +96,7 @@ var Block = /** @class */ (function () {
         this.componentDidMount();
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     };
-    Block.prototype.componentDidMount = function () {
-    };
+    Block.prototype.componentDidMount = function () { };
     Block.prototype._componentDidUpdate = function (oldProp, newProp) {
         if (oldProp === newProp)
             return false;
@@ -150,7 +149,7 @@ var Block = /** @class */ (function () {
         if (parent) {
             parent.children.push(this);
         }
-        var wrapper = document.createElement('div');
+        var wrapper = document.createElement("div");
         if (this._element)
             this._element.innerHTML = this.render();
         wrapper.appendChild(this._element);
@@ -178,7 +177,7 @@ var Block = /** @class */ (function () {
             },
             deleteProperty: function () {
                 throw new Error("Нет прав");
-            }
+            },
         });
     };
     Block.prototype._createDocumentElement = function (tagName) {
@@ -203,10 +202,8 @@ var Block = /** @class */ (function () {
         this.detachEvents();
         Block._instances = [];
     };
-    Block.prototype.onShow = function () {
-    };
-    Block.prototype.onHide = function () {
-    };
+    Block.prototype.onShow = function () { };
+    Block.prototype.onHide = function () { };
     Block.EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",

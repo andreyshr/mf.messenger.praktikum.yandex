@@ -48,9 +48,6 @@
     right: 0;
 }
 
-.menu__item:not(:last-of-type) {
-}
-
 .menu__button {
     display: flex;
     align-items: center;
@@ -79,8 +76,6 @@
     display: flex;
     flex-direction: column;
 }
-
-//
 
 .menu--emoji {
     width: 384px;

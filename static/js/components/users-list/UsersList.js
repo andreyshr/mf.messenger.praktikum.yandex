@@ -14,16 +14,15 @@ var __extends = (this && this.__extends) || (function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import User from "../user/User.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var UsersList = /** @class */ (function (_super) {
     __extends(UsersList, _super);
     function UsersList(props) {
         var _this = _super.call(this, "div", props) || this;
         _this.usersUpdate = function (users) {
             _this.setProps({
-                users: users
+                users: users,
             });
         };
         bus.on(EVENTS.USERS_UPDATE, _this.usersUpdate);
@@ -32,7 +31,9 @@ var UsersList = /** @class */ (function (_super) {
     }
     UsersList.prototype.render = function () {
         return Handlebars.compile(template)({
-            users: this.props.users.map(function (user) { return new User(user).renderToString(); })
+            users: this.props.users.map(function (user) {
+                return new User(user).renderToString();
+            }),
         });
     };
     return UsersList;

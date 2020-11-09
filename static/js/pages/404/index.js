@@ -17,7 +17,7 @@ export var props = {
     title: "404",
     description: "Не туда попали",
     linkTitle: "Назад к чатам",
-    linkHref: "/messenger"
+    linkHref: "/messenger",
 };
 var Page404 = /** @class */ (function (_super) {
     __extends(Page404, _super);

@@ -204,7 +204,6 @@ li {
   line-height: 13px;
   border: none;
   border-radius: 8px;
-  outline: none;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -324,18 +323,18 @@ li {
 
 .error-message--profile {
   position: absolute;
+  top: 50%;
   right: -20px;
   width: 16px;
   height: 16px;
-  top: 50%;
   transform: translateY(-50%);
-  border: 2px solid var(--color-red);
-  border-radius: 50%;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  border: 2px solid var(--color-red);
+  border-radius: 50%;
   font-size: 14px;
   font-weight: 500;
-  padding: 0;
 }
 
 .error-message--profile.error-message--active {
@@ -345,7 +344,7 @@ li {
 .form {
   display: flex;
   min-width: 320px;
-  padding: 70px 30px 30px 30px;
+  padding: 70px 30px 30px;
   margin: auto;
   box-shadow: var(--shadow);
   border-radius: 12px;
@@ -895,7 +894,7 @@ li {
 .sidebar__profile-link {
   display: inline-block;
   width: 100%;
-  padding: 20px 0 10px 0;
+  padding: 20px 0 10px;
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
@@ -906,7 +905,7 @@ li {
 
 .sidebar__search {
   width: 100%;
-  padding: 10px 0 20px 0;
+  padding: 10px 0 20px;
 }
 
 .sidebar__search input {

@@ -17,7 +17,7 @@ export var props = {
     title: "500",
     description: "Мы уже фиксим",
     linkTitle: "Назад к чатам",
-    linkHref: "/messenger"
+    linkHref: "/messenger",
 };
 var Page500 = /** @class */ (function (_super) {
     __extends(Page500, _super);

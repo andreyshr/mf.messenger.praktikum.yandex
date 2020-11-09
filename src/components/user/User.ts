@@ -2,7 +2,7 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 
 import Avatar from "../avatar/Avatar.js";
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 export default class User extends Block {
     avatar: Block;
@@ -19,7 +19,7 @@ export default class User extends Block {
             avatar: new Avatar({
                 className: "room__avatar avatar",
                 avatarImg: this.props.avatarImg,
-            }).renderToString()
+            }).renderToString(),
         });
     }
 }

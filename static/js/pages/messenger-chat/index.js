@@ -32,15 +32,13 @@ import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.j
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 import Notification from "../../components/notification/Notification.js";
-import { ChatsService } from "../../services/chats-service.js";
-import Store from "../../modules/store/store.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { chatsService } from "../../services/chats-service.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
+import Store from "../../modules/store/store.js";
 import { last } from "../../utils/mydash/last.js";
-var chatsService = new ChatsService();
 var store = new Store();
-var bus = new AppBus();
-import { roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat } from "./initial-props.js";
+import { roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat, } from "./initial-props.js";
 import { events } from "./events.js";
 export var props = {
     notification: {},
@@ -111,14 +109,16 @@ var MessengerChat = /** @class */ (function (_super) {
     MessengerChat.prototype.render = function () {
         return Handlebars.compile(template)({
             roomsList: new RoomsList(this.props.roomsList).renderToString(),
-            messages: this.props.messages.map(function (message) { return new Message(message).renderToString(); }),
+            messages: this.props.messages.map(function (message) {
+                return new Message(message).renderToString();
+            }),
             menuEmoji: new Menu(this.props.menuEmoji).renderToString(),
             menuMessage: new Menu(this.props.menuMessage).renderToString(),
             dialogRemoveChat: new Dialog(this.props.dialogRemoveChat).renderToString(),
             messageInputForm: new MessageInputForm(this.props.messageInputForm).renderToString(),
             sidebarHeader: new SidebarHeader(this.props.sidebarHeader).renderToString(),
             workspaceHeader: new WorkSpaceHeader(this.props.workspaceHeader).renderToString(),
-            notification: new Notification(this.props.notification).renderToString()
+            notification: new Notification(this.props.notification).renderToString(),
         });
     };
     return MessengerChat;

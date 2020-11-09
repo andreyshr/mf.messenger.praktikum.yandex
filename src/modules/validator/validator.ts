@@ -1,7 +1,7 @@
-import {VerifiableInput, ValidatedInput} from "./types";
+import { VerifiableInput, ValidatedInput } from "./types";
 
 export class Validator {
-    input: VerifiableInput
+    input: VerifiableInput;
 
     required(value: string): boolean {
         if (!value) return false;
@@ -24,12 +24,12 @@ export class Validator {
     }
 
     validate(input: VerifiableInput): ValidatedInput {
-        const {name, value, rule} = input;
+        const { name, value, rule } = input;
         const validateFn = this[rule];
 
         return {
             name,
-            status: validateFn(value)
+            status: validateFn(value),
         };
     }
 }

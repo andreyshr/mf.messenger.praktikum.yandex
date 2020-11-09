@@ -25,16 +25,15 @@ var __assign = (this && this.__assign) || function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Room from "../room/Room.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var RoomsList = /** @class */ (function (_super) {
     __extends(RoomsList, _super);
     function RoomsList(props) {
         var _this = _super.call(this, "div", props) || this;
         _this.roomsUpdate = function (chats) {
             _this.setProps({
-                rooms: chats.map(_this.createRoom)
+                rooms: chats.map(_this.createRoom),
             });
         };
         bus.on(EVENTS.ROOMS_UPDATE, _this.roomsUpdate);
@@ -46,7 +45,9 @@ var RoomsList = /** @class */ (function (_super) {
     };
     RoomsList.prototype.render = function () {
         return Handlebars.compile(template)({
-            rooms: this.props.rooms.map(function (room) { return new Room(room).renderToString(); })
+            rooms: this.props.rooms.map(function (room) {
+                return new Room(room).renderToString();
+            }),
         });
     };
     return RoomsList;

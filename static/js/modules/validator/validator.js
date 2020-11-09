@@ -23,7 +23,7 @@ var Validator = /** @class */ (function () {
         var validateFn = this[rule];
         return {
             name: name,
-            status: validateFn(value)
+            status: validateFn(value),
         };
     };
     return Validator;

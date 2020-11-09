@@ -1,5 +1,5 @@
 import { ProfileApi } from "../api/profile-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 var ProfileService = /** @class */ (function () {
@@ -8,7 +8,8 @@ var ProfileService = /** @class */ (function () {
         this.updateAvatar = function (files) {
             var formData = new FormData();
             formData.append("avatar", files[0]);
-            return _this.profileApi.updateAvatar(formData)
+            return _this.profileApi
+                .updateAvatar(formData)
                 .then(function (data) {
                 _this.store.set("user", data);
                 _this.bus.emit(EVENTS.NOTIFICATION_SHOW, "Аватар обновлён", "success");
@@ -24,14 +25,15 @@ var ProfileService = /** @class */ (function () {
             return ProfileService.__instance;
         }
         this.profileApi = new ProfileApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
         this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, this.updateAvatar);
         ProfileService.__instance = this;
     }
     ProfileService.prototype.updateProfile = function (data) {
         var _this = this;
-        return this.profileApi.update(data)
+        return this.profileApi
+            .update(data)
             .then(function (data) {
             _this.store.set("user", data);
             _this.bus.emit(EVENTS.INPUT_UPDATE_VALUE, _this.store.get("user"));
@@ -47,4 +49,5 @@ var ProfileService = /** @class */ (function () {
     return ProfileService;
 }());
 export { ProfileService };
+export var profileService = new ProfileService();
 //# sourceMappingURL=profile-service.js.map

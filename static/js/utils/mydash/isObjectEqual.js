@@ -1,9 +1,9 @@
 export function isObjectEqual(a, b) {
     if (!a || !b)
         return a === b;
-    if (typeof a === 'string' || typeof b === 'string')
+    if (typeof a === "string" || typeof b === "string")
         return a === b;
-    if (typeof a === 'number' || typeof b === 'number')
+    if (typeof a === "number" || typeof b === "number")
         return a === b;
     var aKeys = Object.keys(a).sort();
     var bKeys = Object.keys(b).sort();
@@ -18,7 +18,7 @@ export function isObjectEqual(a, b) {
         var bVal = b[key];
         if (aVal == null || bVal == null)
             return aVal === bVal;
-        if (typeof aVal === 'object' && typeof bVal === 'object') {
+        if (typeof aVal === "object" && typeof bVal === "object") {
             return isObjectEqual(aVal, bVal);
         }
         return String(aVal) === String(bVal);

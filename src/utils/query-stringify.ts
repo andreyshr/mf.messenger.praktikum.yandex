@@ -1,11 +1,9 @@
-import {isArray} from "./mydash/isArray.js";
-import {isObject} from "./mydash/isObject.js";
-import {isEmpty} from "./mydash/isEmpty.js";
+import { isArray } from "./mydash/isArray.js";
+import { isObject } from "./mydash/isObject.js";
+import { isEmpty } from "./mydash/isEmpty.js";
 
 type StringIndexed = Record<string, unknown>;
-
 type Pair = [string, string];
-
 type Pairs = Pair[];
 
 function createPair(key: string, value: string): Pair {
@@ -28,7 +26,10 @@ function createPairsFromObject(obj: StringIndexed, key: string): Pairs {
         if (isObject(obj[k]) && !isEmpty(obj[k])) {
             result.push(
                 ...result,
-                ...createPairsFromObject(obj[k] as StringIndexed, `${key}[${k}]`)
+                ...createPairsFromObject(
+                    obj[k] as StringIndexed,
+                    `${key}[${k}]`
+                )
             );
         } else {
             result.push(createPair(`${key}[${k}]`, obj[k] as string));
@@ -49,7 +50,10 @@ export function queryStringify(data: StringIndexed): string | never {
         if (isArray(data[key]) && !isEmpty(data[key])) {
             result = [...result, ...createPairsFromArray(data[key] as [], key)];
         } else if (isObject(data[key]) && !isEmpty(data[key])) {
-            result = [...result, ...createPairsFromObject(data[key] as StringIndexed, key)];
+            result = [
+                ...result,
+                ...createPairsFromObject(data[key] as StringIndexed, key),
+            ];
         } else {
             result.push(createPair(key, data[key] as string));
         }

@@ -26,14 +26,11 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Button from "../button/Button.js";
 import UsersList from "../users-list/UsersList.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-import { ChatsService } from "../../services/chats-service.js";
-import { UserService } from "../../services/user-service.js";
+import { chatsService } from "../../services/chats-service.js";
+import { userService } from "../../services/user-service.js";
 import Store from "../../modules/store/store.js";
-var bus = new AppBus();
-var chatsService = new ChatsService();
-var userService = new UserService();
 var store = new Store();
 var Dialog = /** @class */ (function (_super) {
     __extends(Dialog, _super);
@@ -41,12 +38,12 @@ var Dialog = /** @class */ (function (_super) {
         var _this = _super.call(this, "div", props) || this;
         _this.onShow = function () {
             var searchInput = document.querySelector(".js-user-search");
-            if (store.get("dialog") === 'remove_user') {
+            if (store.get("dialog") === "remove_user") {
                 if (searchInput)
                     searchInput.style.display = "none";
                 chatsService.getUsers();
             }
-            if (store.get("dialog") === 'add_user') {
+            if (store.get("dialog") === "add_user") {
                 if (searchInput)
                     searchInput.style.display = "block";
                 userService.search("");
@@ -75,7 +72,9 @@ var Dialog = /** @class */ (function (_super) {
         this.hide();
     };
     Dialog.prototype.render = function () {
-        return Handlebars.compile(template)(__assign(__assign({}, this.props), { usersList: new UsersList({ users: this.props.users }).renderToString(), cancelButton: new Button("button", this.props.cancelButton).renderToString() }));
+        return Handlebars.compile(template)(__assign(__assign({}, this.props), { usersList: new UsersList({
+                users: this.props.users,
+            }).renderToString(), cancelButton: new Button("button", this.props.cancelButton).renderToString() }));
     };
     return Dialog;
 }(Block));

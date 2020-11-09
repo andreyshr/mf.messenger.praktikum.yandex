@@ -1,5 +1,5 @@
-import {PropsInput} from "../../components/input/types";
-import {Props} from "../../modules/block/types";
+import { PropsInput } from "../../components/input/types";
+import { Props } from "../../modules/block/types";
 
 export const inputsProps: PropsInput[] = [
     {
@@ -62,24 +62,24 @@ export const inputsProps: PropsInput[] = [
         placeholder: "Введите пароль",
         errorMessage: "Символы латинского алфавита и цифры(мин. 6)",
         action: "signup",
-    }
+    },
 ];
 
 export const buttons: Props[] = [
     {
-        className: 'button button--blue w-100',
+        className: "button button--blue w-100",
         tagName: "button",
         attributes: {
             type: "submit",
         },
-        title: 'Зарегистрироваться'
+        title: "Зарегистрироваться",
     },
     {
-        className: 'button button--transparent w-100 router-link',
+        className: "button button--transparent w-100 router-link",
         tagName: "a",
         attributes: {
             href: "/signin",
         },
-        title: 'Войти',
-    }
+        title: "Войти",
+    },
 ];

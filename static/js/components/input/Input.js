@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 import Block from "../../modules/block/block.js";
 import { template as templateMain } from "./template.js";
 import { template as templateProfile } from "./template-profile.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 var Input = /** @class */ (function (_super) {
     __extends(Input, _super);
@@ -31,27 +31,28 @@ var Input = /** @class */ (function (_super) {
             var nodes = Array.from(document.querySelectorAll(".error-message[data-name=" + input.name + "]"));
             if (input.status) {
                 if (nodes.length) {
-                    nodes.forEach(function (n) { return n.classList.remove('error-message--active'); });
+                    nodes.forEach(function (n) {
+                        return n.classList.remove("error-message--active");
+                    });
                 }
             }
             else {
                 if (nodes.length) {
-                    nodes.forEach(function (n) { return n.classList.add('error-message--active'); });
+                    nodes.forEach(function (n) { return n.classList.add("error-message--active"); });
                 }
             }
         };
         _this.updateValue = function (name, value, action) {
             if (action === _this.props.action && _this.props.name === name) {
                 _this.setProps({
-                    value: value
+                    value: value,
                 });
-                _this.bus.emit(EVENTS.FORM_INPUT, name, value, _this.props.action);
+                bus.emit(EVENTS.FORM_INPUT, name, value, _this.props.action);
                 _this.forceUpdate();
             }
         };
-        _this.bus = new AppBus();
-        _this.bus.on(EVENTS.FORM_INVALID, _this.showError);
-        _this.bus.on(EVENTS.INPUT_UPDATE_VALUE, _this.updateValue);
+        bus.on(EVENTS.FORM_INVALID, _this.showError);
+        bus.on(EVENTS.INPUT_UPDATE_VALUE, _this.updateValue);
         Block._instances.push(_this);
         return _this;
     }

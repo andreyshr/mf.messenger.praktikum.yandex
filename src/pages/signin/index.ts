@@ -9,32 +9,34 @@ import { addInputEvents } from "../../utils/add-input-events.js";
 
 import { inputsProps, buttons } from "./initial-props.js";
 
-import {Props} from "../../modules/block/types";
+import { Props } from "../../modules/block/types";
 
 const inputs = inputsProps.map(addInputEvents);
 
 const form: Form = new Form({
-        className: "form form--signin",
-        action: "signin",
-        title: "Вход",
-        inputs: inputs.map(props => new Input(props)),
-        buttons: buttons.map(props => new Button(props.tagName === "button"? "button" : "a", props)),
-        events: [
-            {
-                type: "submit",
-                el: ".form--signin",
-                handler: function (evt: Event) {
-                    form.onSubmit(evt);
-                }
-            }
-        ]
-    }
-);
+    className: "form form--signin",
+    action: "signin",
+    title: "Вход",
+    inputs: inputs.map((props) => new Input(props)),
+    buttons: buttons.map(
+        (props) =>
+            new Button(props.tagName === "button" ? "button" : "a", props)
+    ),
+    events: [
+        {
+            type: "submit",
+            el: ".form--signin",
+            handler: function (evt: Event) {
+                form.onSubmit(evt);
+            },
+        },
+    ],
+});
 
 export const props = {
     form,
-    notification: {}
-}
+    notification: {},
+};
 
 export default class SignInPage extends Block {
     constructor(props: Props) {
@@ -44,7 +46,9 @@ export default class SignInPage extends Block {
     render() {
         return Handlebars.compile(template)({
             form: this.props.form.renderToString(),
-            notification: new Notification(this.props.notification).renderToString()
+            notification: new Notification(
+                this.props.notification
+            ).renderToString(),
         });
     }
 }

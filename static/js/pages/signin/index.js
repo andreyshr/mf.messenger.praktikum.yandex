@@ -25,20 +25,22 @@ var form = new Form({
     action: "signin",
     title: "Вход",
     inputs: inputs.map(function (props) { return new Input(props); }),
-    buttons: buttons.map(function (props) { return new Button(props.tagName === "button" ? "button" : "a", props); }),
+    buttons: buttons.map(function (props) {
+        return new Button(props.tagName === "button" ? "button" : "a", props);
+    }),
     events: [
         {
             type: "submit",
             el: ".form--signin",
             handler: function (evt) {
                 form.onSubmit(evt);
-            }
-        }
-    ]
+            },
+        },
+    ],
 });
 export var props = {
     form: form,
-    notification: {}
+    notification: {},
 };
 var SignInPage = /** @class */ (function (_super) {
     __extends(SignInPage, _super);
@@ -48,7 +50,7 @@ var SignInPage = /** @class */ (function (_super) {
     SignInPage.prototype.render = function () {
         return Handlebars.compile(template)({
             form: this.props.form.renderToString(),
-            notification: new Notification(this.props.notification).renderToString()
+            notification: new Notification(this.props.notification).renderToString(),
         });
     };
     return SignInPage;

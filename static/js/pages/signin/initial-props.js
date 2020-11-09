@@ -19,24 +19,24 @@ export var inputsProps = [
         placeholder: "Введите пароль",
         errorMessage: "Обязательное поле",
         action: "signin",
-    }
+    },
 ];
 export var buttons = [
     {
-        className: 'button button--blue w-100',
+        className: "button button--blue w-100",
         tagName: "button",
         attributes: {
             type: "submit",
         },
-        title: 'Авторизоваться'
+        title: "Авторизоваться",
     },
     {
-        className: 'button button--transparent w-100 router-link',
+        className: "button button--transparent w-100 router-link",
         attributes: {
             href: "/signup",
         },
         tagName: "a",
-        title: 'Зарегистрироваться',
-    }
+        title: "Зарегистрироваться",
+    },
 ];
 //# sourceMappingURL=initial-props.js.map

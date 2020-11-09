@@ -1,23 +1,26 @@
 import Block from "../block/block.js";
-import {render} from "../../utils/renderDOM.js";
-import {Nullable} from "../../utils/utility-type";
-import {Constructable, RouteProps} from "./types";
-
+import { render } from "../../utils/renderDOM.js";
+import { Nullable } from "../../utils/utility-type";
+import { Constructable, RouteProps } from "./types";
 
 export class Route {
     static PARAMETER_REGEXP = /([:*])(\w+)/g;
     static WILDCARD_REGEXP = /\*/g;
-    static REPLACE_VARIABLE_REGEXP = '([^\/]+)';
-    static REPLACE_WILDCARD = '(?:.*)';
-    static FOLLOWED_BY_SLASH_REGEXP = '(?:\/$|$)';
-    static MATCH_REGEXP_FLAGS = '';
+    static REPLACE_VARIABLE_REGEXP = "([^/]+)";
+    static REPLACE_WILDCARD = "(?:.*)";
+    static FOLLOWED_BY_SLASH_REGEXP = "(?:/$|$)";
+    static MATCH_REGEXP_FLAGS = "";
 
     _pathname: string;
     _blockClass: Constructable<Block>;
     _block: Nullable<Block>;
     _props: RouteProps;
 
-    constructor(pathname: string, view: Constructable<Block>, props: RouteProps) {
+    constructor(
+        pathname: string,
+        view: Constructable<Block>,
+        props: RouteProps
+    ) {
         this._pathname = pathname;
         this._blockClass = view;
         this._block = null;
@@ -37,7 +40,7 @@ export class Route {
 
     clean(s: RegExp | string): RegExp | string {
         if (s instanceof RegExp) return s;
-        return s.replace(/\/+$/, '').replace(/^\/+/, '^/');
+        return s.replace(/\/+$/, "").replace(/^\/+/, "^/");
     }
 
     replaceDynamicURLParts(route: RegExp | string) {
@@ -48,19 +51,24 @@ export class Route {
             regexp = route;
         } else {
             regexp = new RegExp(
-                route.replace(Route.PARAMETER_REGEXP, function (name: string) {
-                    paramNames.push(name);
-                    return Route.REPLACE_VARIABLE_REGEXP;
-                })
-                    .replace(Route.WILDCARD_REGEXP, Route.REPLACE_WILDCARD) + Route.FOLLOWED_BY_SLASH_REGEXP
-                , Route.MATCH_REGEXP_FLAGS);
+                route
+                    .replace(Route.PARAMETER_REGEXP, function (name: string) {
+                        paramNames.push(name);
+                        return Route.REPLACE_VARIABLE_REGEXP;
+                    })
+                    .replace(Route.WILDCARD_REGEXP, Route.REPLACE_WILDCARD) +
+                    Route.FOLLOWED_BY_SLASH_REGEXP,
+                Route.MATCH_REGEXP_FLAGS
+            );
         }
         return { regexp, paramNames };
     }
 
     findMatchedRoutes(url: string) {
-        let { regexp, paramNames } = this.replaceDynamicURLParts(this.clean(this._pathname));
-        let match = url.replace(/^\/+/, '/').match(regexp);
+        let { regexp, paramNames } = this.replaceDynamicURLParts(
+            this.clean(this._pathname)
+        );
+        let match = url.replace(/^\/+/, "/").match(regexp);
         let params = this.regExpResultToParams(match, paramNames);
 
         return match ? { match, pathname: this._pathname, params } : false;

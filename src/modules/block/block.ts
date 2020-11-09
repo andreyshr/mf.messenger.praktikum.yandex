@@ -1,7 +1,7 @@
-import {EventBus} from "../event-bus/event-bus.js";
-import {Nullable} from "../../utils/utility-type";
-import {BlockEvent, Meta, Props} from "./types";
-import {createUniqID} from "../../utils/create-uniq-id.js";
+import { EventBus } from "../event-bus/event-bus.js";
+import { Nullable } from "../../utils/utility-type";
+import { BlockEvent, Meta, Props } from "./types";
+import { createUniqID } from "../../utils/create-uniq-id.js";
 
 abstract class Block {
     static EVENTS = {
@@ -36,21 +36,21 @@ abstract class Block {
     events: BlockEvent[];
     eventBus: () => EventBus;
 
-    listeners: any
+    listeners: any;
 
     root: boolean;
-    children: Block[]
+    children: Block[];
 
     protected constructor(tagName: string = "div", props: Props = {}) {
         const eventBus = new EventBus();
 
-        this._id = 'uniq' + createUniqID();
+        this._id = "uniq" + createUniqID();
 
         this._meta = {
             tagName,
             props,
             className: props.className,
-            attributes: props.attributes
+            attributes: props.attributes,
         };
 
         this.props = this._makePropsProxy(props);
@@ -74,7 +74,10 @@ abstract class Block {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-        eventBus.on(Block.EVENTS.FLOW_MOUNTED, this._componentMounted.bind(this));
+        eventBus.on(
+            Block.EVENTS.FLOW_MOUNTED,
+            this._componentMounted.bind(this)
+        );
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
@@ -86,15 +89,20 @@ abstract class Block {
         }
 
         if (this._element) {
-            if (this._meta?.className) this._element.className = this.props.className;
+            if (this._meta?.className)
+                this._element.className = this.props.className;
             if (this._meta?.attributes) {
                 Object.keys(this._meta.attributes).forEach((attr: string) => {
-                    if (this._meta?.attributes) this._element?.setAttribute(attr, this._meta?.attributes[attr] as string);
-                })
+                    if (this._meta?.attributes)
+                        this._element?.setAttribute(
+                            attr,
+                            this._meta?.attributes[attr] as string
+                        );
+                });
             }
         }
 
-        this._element?.setAttribute('_key', this.id);
+        this._element?.setAttribute("_key", this.id);
     }
 
     setElement(element: HTMLElement) {
@@ -119,8 +127,7 @@ abstract class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    componentDidMount() {
-    }
+    componentDidMount() {}
 
     private _componentDidUpdate(oldProp: string, newProp: string): boolean {
         if (oldProp === newProp) return false;
@@ -146,19 +153,29 @@ abstract class Block {
         const element = this.getContent();
         if (element) {
             this.events.forEach((event: BlockEvent) => {
-                this._delegate(event.type, document.documentElement, event.el, event.handler);
+                this._delegate(
+                    event.type,
+                    document.documentElement,
+                    event.el,
+                    event.handler
+                );
             });
         }
         this._mounted = true;
     }
 
     detachEvents() {
-        for (const {fn, eventName} of this.listeners) {
+        for (const { fn, eventName } of this.listeners) {
             document.documentElement.removeEventListener(eventName, fn);
         }
     }
 
-    private _delegate(eventName: string, element: HTMLElement, cssSelector: string, callback: (event?: Event) => {}) {
+    private _delegate(
+        eventName: string,
+        element: HTMLElement,
+        cssSelector: string,
+        callback: (event?: Event) => {}
+    ) {
         const fn = (event: Event) => {
             if (!(event.target as HTMLElement).closest(cssSelector)) {
                 return;
@@ -193,14 +210,14 @@ abstract class Block {
             parent.children.push(this);
         }
 
-        const wrapper = document.createElement('div');
+        const wrapper = document.createElement("div");
         if (this._element) this._element.innerHTML = this.render();
         wrapper.appendChild(this._element as HTMLElement);
         this.eventBus().emit(Block.EVENTS.FLOW_MOUNTED);
         return wrapper.innerHTML;
     }
 
-    abstract render(): string
+    abstract render(): string;
 
     forceUpdate() {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -224,7 +241,7 @@ abstract class Block {
             },
             deleteProperty: () => {
                 throw new Error("Нет прав");
-            }
+            },
         });
     }
 
@@ -251,16 +268,12 @@ abstract class Block {
     unmount() {
         this.getContent().remove();
         this.detachEvents();
-        Block._instances = []
+        Block._instances = [];
     }
 
-    onShow() {
+    onShow() {}
 
-    }
-
-    onHide() {
-
-    }
+    onHide() {}
 }
 
 export default Block;

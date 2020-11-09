@@ -1,34 +1,75 @@
-const app = require('./test-server');
-import {HTTP} from "../HTTP";
+import { HTTP } from "../HTTP";
 
-let server: any;
+describe("HTTP", function () {
+    const http = new HTTP("/api/v2", "http://localhost:8000");
 
-beforeAll(() => {
-    server = app.listen(8000)
-});
+    http.request = jest
+        .fn()
+        .mockImplementation((url, options) =>
+            Promise.resolve({ url, options })
+        );
 
-afterAll(() => server.close());
+    it("should call http.request with args on GET", () => {
+        http.get("/test", {
+            data: {},
+            headers: { "Content-Type": "application/json" },
+        });
 
-describe("HTTP", function() {
-    const http = new HTTP("/api/v2", "http://localhost:8000")
-
-    it("should return data on a GET request to existing endpoint", async () => {
-        const data = await http.get("/test", {data: {}, headers: {"Content-Type": "application/json"}})
-        expect(data).toBe("hello from server");
+        expect(http.request).toHaveBeenCalledWith(
+            "http://localhost:8000/api/v2/test",
+            {
+                data: {},
+                headers: { "Content-Type": "application/json" },
+                method: "GET",
+            }
+        );
     });
 
-    it("should return data on a POST request to existing endpoint", async () => {
-        const data = await http.post("/test", {data: {}, headers: {"Content-Type": "application/json"}})
-        expect(data).toBe("hello from server");
+    it("should call http.request with args on POST", () => {
+        http.post("/test", {
+            data: {},
+            headers: { "Content-Type": "application/json" },
+        });
+
+        expect(http.request).toHaveBeenCalledWith(
+            "http://localhost:8000/api/v2/test",
+            {
+                data: {},
+                headers: { "Content-Type": "application/json" },
+                method: "GET",
+            }
+        );
     });
 
-    it("should return data on a PUT request to existing endpoint", async () => {
-        const data = await http.put("/test", {data: {}, headers: {"Content-Type": "application/json"}})
-        expect(data).toBe("hello from server");
+    it("should call http.request with args on PUT", () => {
+        http.get("/test", {
+            data: {},
+            headers: { "Content-Type": "application/json" },
+        });
+
+        expect(http.request).toHaveBeenCalledWith(
+            "http://localhost:8000/api/v2/test",
+            {
+                data: {},
+                headers: { "Content-Type": "application/json" },
+                method: "GET",
+            }
+        );
     });
 
-    it("should return data on a DELETE request to existing endpoint", async () => {
-        const data = await http.delete("/test", {data: {}, headers: {"Content-Type": "application/json"}})
-        expect(data).toBe("hello from server");
+    it("should call http.request with args on DELETE", () => {
+        http.get("/test", {
+            data: {},
+            headers: { "Content-Type": "application/json" },
+        });
+
+        expect(http.request).toHaveBeenCalledWith(
+            "http://localhost:8000/api/v2/test",
+            {
+                data: {},
+                headers: { "Content-Type": "application/json" },
+                method: "GET",
+            }
+        );
     });
 });

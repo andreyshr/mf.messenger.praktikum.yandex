@@ -1,21 +1,21 @@
-import {EventBus} from "../event-bus";
+import { EventBus } from "../event-bus";
 
-describe("EventBus", function() {
+describe("EventBus", function () {
     const eventBus = new EventBus();
 
-    it("eventBus instanceof EventBus", function() {
+    it("eventBus instanceof EventBus", function () {
         expect(eventBus instanceof EventBus).toBe(true);
     });
 
-    it("eventBus add callback on event", function() {
-        const mockCallback = jest.fn(prop => prop);
+    it("eventBus add callback on event", function () {
+        const mockCallback = jest.fn();
         eventBus.on("event", mockCallback);
 
         expect(eventBus.listeners["event"][0]).toBe(mockCallback);
     });
 
-    it("eventBus call callback on emit event", function() {
-        const mockCallback = jest.fn(prop => prop);
+    it("eventBus call callback on emit event", function () {
+        const mockCallback = jest.fn((prop) => prop);
         eventBus.on("event", mockCallback);
         eventBus.emit("event", "prop");
 
