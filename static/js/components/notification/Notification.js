@@ -13,9 +13,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var Notification = /** @class */ (function (_super) {
     __extends(Notification, _super);
     function Notification(props) {

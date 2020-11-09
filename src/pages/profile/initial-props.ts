@@ -2,10 +2,8 @@ import { PropsInput } from "../../components/input/types";
 import { Props } from "../../modules/block/types";
 import { addInputEvents } from "../../utils/add-input-events.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-
-const bus = new AppBus();
 
 const inputsProps: PropsInput[] = [
     {

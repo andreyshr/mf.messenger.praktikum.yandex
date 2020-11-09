@@ -1,5 +1,3 @@
-export type EmptyRequest = {};
-
 export type SigninRequest = {
     login: string;
     password: string;

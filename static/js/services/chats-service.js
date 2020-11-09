@@ -1,5 +1,5 @@
 import { ChatsApi } from "../api/chats-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 var ChatsService = /** @class */ (function () {
@@ -80,8 +80,8 @@ var ChatsService = /** @class */ (function () {
             return ChatsService.__instance;
         }
         this.chatsApi = new ChatsApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
         this.bus.on(EVENTS.CREATE_CHAT, this.createChat);
         this.bus.on(EVENTS.CHAT_USER_ACTION, this.userAction);
         ChatsService.__instance = this;
@@ -130,4 +130,5 @@ var ChatsService = /** @class */ (function () {
     return ChatsService;
 }());
 export { ChatsService };
+export var chatsService = new ChatsService();
 //# sourceMappingURL=chats-service.js.map

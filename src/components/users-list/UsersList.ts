@@ -4,10 +4,8 @@ import { Props } from "../../modules/block/types";
 
 import User from "../user/User.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-
-const bus = new AppBus();
 
 export default class UsersList extends Block {
     constructor(props: Props) {

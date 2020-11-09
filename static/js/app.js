@@ -8,15 +8,13 @@ import Page404, { props as props404Page } from "./pages/404/index.js";
 import Page500, { props as props500Page } from "./pages/500/index.js";
 // Modules
 import { Router } from "./modules/router/router.js";
-import AppBus from "./modules/event-bus/app-bus.js";
+import { bus } from "./modules/event-bus/app-bus.js";
 import EVENTS from "./modules/event-bus/events.js";
 import Store from "./modules/store/store.js";
 // Services
-import { AuthService } from "./services/auth-service.js";
+import { authService } from "./services/auth-service.js";
 var router = new Router(".app");
 var store = new Store();
-var authService = new AuthService();
-var bus = new AppBus();
 bus.on(EVENTS.ROUTER_GO, function (route) { return router.go(route); });
 bus.on(EVENTS.ROUTER_REPLACE, function (route) { return router.replace(route); });
 router.beforeEach = function (pathname) {
@@ -45,7 +43,7 @@ router.beforeStart = function () {
             store.set("user", data);
             resolve();
         })
-            .catch(function () { return reject(); });
+            .catch(reject);
     });
 };
 router

@@ -32,11 +32,11 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 import Block from "../../modules/block/block.js";
 import { template as templateMain } from "./template.js";
 import { template as templateProfile } from "./template-profile.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 import { Validator } from "../../modules/validator/validator.js";
-import { AuthService } from "../../services/auth-service.js";
-import { ProfileService } from "../../services/profile-service.js";
+import { authService } from "../../services/auth-service.js";
+import { profileService } from "../../services/profile-service.js";
 import Store from "../../modules/store/store.js";
 var Form = /** @class */ (function (_super) {
     __extends(Form, _super);
@@ -48,29 +48,24 @@ var Form = /** @class */ (function (_super) {
             action: _this.props.action,
         };
         _this.store = new Store();
-        _this.bus = new AppBus();
-        _this.bus.on(EVENTS.FORM_INPUT, function (name, value, action) {
-            var _a;
+        bus.on(EVENTS.FORM_INPUT, function (name, value, action) {
             if (_this.state.action !== action)
                 return;
             _this.state.inputs[name] = value;
             var errors = [
                 _this.validator.validate(_this.createVerifiableInput(name)),
             ];
-            (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
+            bus.emit.apply(bus, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
-        _this.bus.on(EVENTS.FORM_VALIDATE, function (name, action) {
-            var _a;
+        bus.on(EVENTS.FORM_VALIDATE, function (name, action) {
             if (_this.state.action !== action)
                 return;
             var errors = [
                 _this.validator.validate(_this.createVerifiableInput(name)),
             ];
-            (_a = _this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
+            bus.emit.apply(bus, __spreadArrays([EVENTS.FORM_INVALID], errors));
         });
         _this.validator = new Validator();
-        _this.authService = new AuthService();
-        _this.profileService = new ProfileService();
         Block._instances.push(_this);
         return _this;
     }
@@ -90,27 +85,26 @@ var Form = /** @class */ (function (_super) {
         };
     };
     Form.prototype.onSubmit = function (evt) {
-        var _a;
         var _this = this;
         evt.preventDefault();
         var errors = Object.keys(this.state.inputs).map(function (name) {
             return _this.validator.validate(_this.createVerifiableInput(name));
         });
-        (_a = this.bus).emit.apply(_a, __spreadArrays([EVENTS.FORM_INVALID], errors));
+        bus.emit.apply(bus, __spreadArrays([EVENTS.FORM_INVALID], errors));
         if (errors.every(function (e) { return e.status; })) {
             if (this.props.action === "signin") {
-                var _b = this.state.inputs, login = _b.login, password = _b.password;
-                this.authService
+                var _a = this.state.inputs, login = _a.login, password = _a.password;
+                authService
                     .signin(login, password)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "signup") {
-                this.authService
+                authService
                     .signup(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }
             if (this.props.action === "profile") {
-                this.profileService
+                profileService
                     .updateProfile(this.state.inputs)
                     .catch(function (e) { return console.log(e); });
             }

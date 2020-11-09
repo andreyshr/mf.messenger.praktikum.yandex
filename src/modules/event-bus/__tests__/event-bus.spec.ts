@@ -8,7 +8,7 @@ describe("EventBus", function () {
     });
 
     it("eventBus add callback on event", function () {
-        const mockCallback = jest.fn((prop) => prop);
+        const mockCallback = jest.fn();
         eventBus.on("event", mockCallback);
 
         expect(eventBus.listeners["event"][0]).toBe(mockCallback);

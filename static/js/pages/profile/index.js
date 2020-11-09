@@ -19,10 +19,9 @@ import Input from "../../components/input/Input.js";
 import Avatar from "../../components/avatar/Avatar.js";
 import Notification from "../../components/notification/Notification.js";
 import Store from "../../modules/store/store.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 import { inputs, buttons, buttonBack } from "./initial-props.js";
-var bus = new AppBus();
 var store = new Store();
 var form = new Form({
     template: "profile",

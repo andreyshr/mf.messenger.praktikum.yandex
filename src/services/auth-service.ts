@@ -1,5 +1,5 @@
 import { AuthApi } from "../api/auth-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus, AppBus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 
@@ -18,8 +18,8 @@ export class AuthService {
         }
 
         this.authApi = new AuthApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
 
         this.bus.on(EVENTS.LOGOUT, this.logout);
 
@@ -86,3 +86,5 @@ export class AuthService {
         return this.store.get("user");
     }
 }
+
+export const authService = new AuthService();

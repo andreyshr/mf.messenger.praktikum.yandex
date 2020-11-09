@@ -1,8 +1,6 @@
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import { PropsInput } from "../components/input/types";
-
-const bus = new AppBus();
 
 export const addInputEvents = (input: PropsInput): PropsInput => ({
     ...input,

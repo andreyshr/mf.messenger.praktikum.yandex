@@ -25,9 +25,8 @@ var __assign = (this && this.__assign) || function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Room from "../room/Room.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var RoomsList = /** @class */ (function (_super) {
     __extends(RoomsList, _super);
     function RoomsList(props) {

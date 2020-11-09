@@ -9,9 +9,8 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
-var bus = new AppBus();
 export var addInputEvents = function (input) { return (__assign(__assign({}, input), { events: [
         {
             type: "input",

@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node ./server.js",
     "watch": "tsc --build ./tsconfig.json --watch",
+    "clean": "rimraf static/js",
     "build:scripts": "tsc --build ./tsconfig.json",
     "build:styles": "sass ./src/styles/global.scss ./static/css/styles.css",
-    "build:prod": "rm -rf ./static/js && npm run build:scripts && npm run build:styles",
+    "build:prod": "npm run clean && npm run build:scripts && npm run build:styles",
     "test:unit": "jest"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "jest": "^26.6.1",
     "jest-ts-webcompat-resolver": "^1.0.0",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "sass": "^1.27.0",
     "ts-jest": "^26.4.3",
     "typescript": "^4.0.3"

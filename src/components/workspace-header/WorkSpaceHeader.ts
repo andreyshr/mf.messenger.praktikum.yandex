@@ -4,12 +4,10 @@ import { template } from "./template.js";
 import Menu from "../menu/Menu.js";
 import Avatar from "../avatar/Avatar.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 import { Props } from "../../modules/block/types";
-
-const bus = new AppBus();
 
 export default class WorkSpaceHeader extends Block {
     constructor(props: Props) {

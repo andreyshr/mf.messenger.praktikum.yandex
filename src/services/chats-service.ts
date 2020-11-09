@@ -1,5 +1,5 @@
 import { ChatsApi } from "../api/chats-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus, AppBus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 import { Nullable } from "../utils/utility-type";
@@ -17,8 +17,8 @@ export class ChatsService {
         }
 
         this.chatsApi = new ChatsApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
 
         this.bus.on(EVENTS.CREATE_CHAT, this.createChat);
         this.bus.on(EVENTS.CHAT_USER_ACTION, this.userAction);
@@ -161,3 +161,5 @@ export class ChatsService {
             });
     };
 }
+
+export const chatsService = new ChatsService();

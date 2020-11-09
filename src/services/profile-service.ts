@@ -1,5 +1,5 @@
 import { ProfileApi } from "../api/profile-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus, AppBus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 
@@ -7,8 +7,8 @@ import { ProfileRequest, ProfileResponse, UserResponse } from "./types";
 import { Nullable } from "../utils/utility-type";
 
 export class ProfileService {
-    profileApi: ProfileApi;
     bus: AppBus;
+    profileApi: ProfileApi;
     store: Store;
     static __instance: Nullable<ProfileService> = null;
 
@@ -18,8 +18,8 @@ export class ProfileService {
         }
 
         this.profileApi = new ProfileApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
 
         this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, this.updateAvatar);
 
@@ -81,3 +81,5 @@ export class ProfileService {
             });
     };
 }
+
+export const profileService = new ProfileService();

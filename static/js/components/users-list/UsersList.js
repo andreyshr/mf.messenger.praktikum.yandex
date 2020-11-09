@@ -14,9 +14,8 @@ var __extends = (this && this.__extends) || (function () {
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import User from "../user/User.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var UsersList = /** @class */ (function (_super) {
     __extends(UsersList, _super);
     function UsersList(props) {

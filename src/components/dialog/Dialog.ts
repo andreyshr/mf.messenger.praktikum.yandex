@@ -4,18 +4,15 @@ import { template } from "./template.js";
 import Button from "../button/Button.js";
 import UsersList from "../users-list/UsersList.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-import { ChatsService } from "../../services/chats-service.js";
-import { UserService } from "../../services/user-service.js";
+import { chatsService } from "../../services/chats-service.js";
+import { userService } from "../../services/user-service.js";
 import Store from "../../modules/store/store.js";
 
 import { Props } from "../../modules/block/types";
 import { Nullable } from "../../utils/utility-type";
 
-const bus = new AppBus();
-const chatsService = new ChatsService();
-const userService = new UserService();
 const store = new Store();
 
 export default class Dialog extends Block {

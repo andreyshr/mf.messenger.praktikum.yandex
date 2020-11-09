@@ -1,6 +1,6 @@
 import { authAPIInstance } from "../modules/HTTP/HTTP.js";
 import { Options } from "../modules/HTTP/types";
-import { EmptyRequest, SigninRequest, SignupRequest } from "../services/types";
+import { SigninRequest, SignupRequest } from "../services/types";
 
 export class AuthApi {
     signin(data: SigninRequest) {
@@ -18,7 +18,7 @@ export class AuthApi {
     }
 
     getUser() {
-        const options: Options<EmptyRequest> = {
+        const options: Options<unknown> = {
             data: {},
             headers: { "Content-Type": "application/json" },
         };
@@ -46,7 +46,7 @@ export class AuthApi {
     }
 
     logout() {
-        const options: Options<EmptyRequest> = {
+        const options: Options<unknown> = {
             headers: { "Content-Type": "application/json" },
         };
 

@@ -7,8 +7,8 @@ import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
 import Notification from "../../components/notification/Notification.js";
 
-import { ChatsService } from "../../services/chats-service.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { chatsService } from "../../services/chats-service.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 import Store from "../../modules/store/store.js";
 
@@ -19,9 +19,7 @@ import {
 } from "../messenger-chat/initial-props.js";
 import { events } from "./events.js";
 
-const chatsService = new ChatsService();
 const store = new Store();
-const bus = new AppBus();
 
 export const props = {
     roomsList,

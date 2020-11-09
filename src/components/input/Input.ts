@@ -2,20 +2,17 @@ import Block from "../../modules/block/block.js";
 import { template as templateMain } from "./template.js";
 import { template as templateProfile } from "./template-profile.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 import { PropsInput } from "./types";
 
 export default class Input extends Block {
-    bus: AppBus;
-
     constructor(props: PropsInput) {
         super("div", props);
 
-        this.bus = new AppBus();
-        this.bus.on(EVENTS.FORM_INVALID, this.showError);
-        this.bus.on(EVENTS.INPUT_UPDATE_VALUE, this.updateValue);
+        bus.on(EVENTS.FORM_INVALID, this.showError);
+        bus.on(EVENTS.INPUT_UPDATE_VALUE, this.updateValue);
 
         Block._instances.push(this);
     }
@@ -46,7 +43,7 @@ export default class Input extends Block {
             this.setProps({
                 value: value,
             });
-            this.bus.emit(EVENTS.FORM_INPUT, name, value, this.props.action);
+            bus.emit(EVENTS.FORM_INPUT, name, value, this.props.action);
             this.forceUpdate();
         }
     };

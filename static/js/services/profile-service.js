@@ -1,5 +1,5 @@
 import { ProfileApi } from "../api/profile-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 var ProfileService = /** @class */ (function () {
@@ -25,8 +25,8 @@ var ProfileService = /** @class */ (function () {
             return ProfileService.__instance;
         }
         this.profileApi = new ProfileApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
         this.bus.on(EVENTS.PROFILE_UPDATE_AVATAR, this.updateAvatar);
         ProfileService.__instance = this;
     }
@@ -49,4 +49,5 @@ var ProfileService = /** @class */ (function () {
     return ProfileService;
 }());
 export { ProfileService };
+export var profileService = new ProfileService();
 //# sourceMappingURL=profile-service.js.map

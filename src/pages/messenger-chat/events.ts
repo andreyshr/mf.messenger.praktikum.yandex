@@ -1,11 +1,9 @@
 import EVENTS from "../../modules/event-bus/events.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import { UserService } from "../../services/user-service.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
+import { userService } from "../../services/user-service.js";
 import { Props } from "../../modules/block/types";
 import Store from "../../modules/store/store.js";
 
-const userService = new UserService();
-const bus = new AppBus();
 const store = new Store();
 
 export const events = [

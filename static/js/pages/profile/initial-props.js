@@ -1,7 +1,6 @@
 import { addInputEvents } from "../../utils/add-input-events.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var inputsProps = [
     {
         template: "profile",

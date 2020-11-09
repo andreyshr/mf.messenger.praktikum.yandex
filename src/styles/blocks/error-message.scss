@@ -13,18 +13,18 @@
 
 .error-message--profile {
     position: absolute;
+    top: 50%;
     right: -20px;
     width: 16px;
     height: 16px;
-    top: 50%;
     transform: translateY(-50%);
-    border: 2px solid var(--color-red);
-    border-radius: 50%;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    border: 2px solid var(--color-red);
+    border-radius: 50%;
     font-size: 14px;
     font-weight: 500;
-    padding: 0;
 }
 
 .error-message--profile.error-message--active {

@@ -26,14 +26,11 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Button from "../button/Button.js";
 import UsersList from "../users-list/UsersList.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-import { ChatsService } from "../../services/chats-service.js";
-import { UserService } from "../../services/user-service.js";
+import { chatsService } from "../../services/chats-service.js";
+import { userService } from "../../services/user-service.js";
 import Store from "../../modules/store/store.js";
-var bus = new AppBus();
-var chatsService = new ChatsService();
-var userService = new UserService();
 var store = new Store();
 var Dialog = /** @class */ (function (_super) {
     __extends(Dialog, _super);

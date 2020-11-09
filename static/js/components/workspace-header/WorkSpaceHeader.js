@@ -26,9 +26,8 @@ import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import Menu from "../menu/Menu.js";
 import Avatar from "../avatar/Avatar.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
-var bus = new AppBus();
 var WorkSpaceHeader = /** @class */ (function (_super) {
     __extends(WorkSpaceHeader, _super);
     function WorkSpaceHeader(props) {

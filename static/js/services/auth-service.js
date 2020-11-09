@@ -1,5 +1,5 @@
 import { AuthApi } from "../api/auth-api.js";
-import AppBus from "../modules/event-bus/app-bus.js";
+import { bus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 var AuthService = /** @class */ (function () {
@@ -17,8 +17,8 @@ var AuthService = /** @class */ (function () {
             return AuthService.__instance;
         }
         this.authApi = new AuthApi();
-        this.bus = new AppBus();
         this.store = new Store();
+        this.bus = bus;
         this.bus.on(EVENTS.LOGOUT, this.logout);
         AuthService.__instance = this;
     }
@@ -67,4 +67,5 @@ var AuthService = /** @class */ (function () {
     return AuthService;
 }());
 export { AuthService };
+export var authService = new AuthService();
 //# sourceMappingURL=auth-service.js.map

@@ -2,12 +2,12 @@ import Block from "../../modules/block/block.js";
 import { template as templateMain } from "./template.js";
 import { template as templateProfile } from "./template-profile.js";
 
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 import { Validator } from "../../modules/validator/validator.js";
-import { AuthService } from "../../services/auth-service.js";
-import { ProfileService } from "../../services/profile-service.js";
+import { authService } from "../../services/auth-service.js";
+import { profileService } from "../../services/profile-service.js";
 
 import { Props } from "../../modules/block/types";
 import { PropsInput } from "../input/types";
@@ -17,10 +17,7 @@ import Store from "../../modules/store/store.js";
 
 export default class Form extends Block {
     state: any;
-    bus: AppBus;
     validator: Validator;
-    authService: AuthService;
-    profileService: ProfileService;
     store: Store;
 
     constructor(props: Props) {
@@ -34,8 +31,7 @@ export default class Form extends Block {
 
         this.store = new Store();
 
-        this.bus = new AppBus();
-        this.bus.on(
+        bus.on(
             EVENTS.FORM_INPUT,
             (name: string, value: string, action: string): void => {
                 if (this.state.action !== action) return;
@@ -45,25 +41,20 @@ export default class Form extends Block {
                     this.validator.validate(this.createVerifiableInput(name)),
                 ];
 
-                this.bus.emit(EVENTS.FORM_INVALID, ...errors);
+                bus.emit(EVENTS.FORM_INVALID, ...errors);
             }
         );
-        this.bus.on(
-            EVENTS.FORM_VALIDATE,
-            (name: string, action: string): void => {
-                if (this.state.action !== action) return;
+        bus.on(EVENTS.FORM_VALIDATE, (name: string, action: string): void => {
+            if (this.state.action !== action) return;
 
-                const errors: ValidatedInput[] = [
-                    this.validator.validate(this.createVerifiableInput(name)),
-                ];
+            const errors: ValidatedInput[] = [
+                this.validator.validate(this.createVerifiableInput(name)),
+            ];
 
-                this.bus.emit(EVENTS.FORM_INVALID, ...errors);
-            }
-        );
+            bus.emit(EVENTS.FORM_INVALID, ...errors);
+        });
 
         this.validator = new Validator();
-        this.authService = new AuthService();
-        this.profileService = new ProfileService();
 
         Block._instances.push(this);
     }
@@ -97,22 +88,22 @@ export default class Form extends Block {
                 this.validator.validate(this.createVerifiableInput(name))
         );
 
-        this.bus.emit(EVENTS.FORM_INVALID, ...errors);
+        bus.emit(EVENTS.FORM_INVALID, ...errors);
 
         if (errors.every((e) => e.status)) {
             if (this.props.action === "signin") {
                 const { login, password } = this.state.inputs;
-                this.authService
+                authService
                     .signin(login, password)
                     .catch((e) => console.log(e));
             }
             if (this.props.action === "signup") {
-                this.authService
+                authService
                     .signup(this.state.inputs)
                     .catch((e) => console.log(e));
             }
             if (this.props.action === "profile") {
-                this.profileService
+                profileService
                     .updateProfile(this.state.inputs)
                     .catch((e) => console.log(e));
             }

@@ -32,14 +32,12 @@ import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.j
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 import Notification from "../../components/notification/Notification.js";
-import { ChatsService } from "../../services/chats-service.js";
-import Store from "../../modules/store/store.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { chatsService } from "../../services/chats-service.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
+import Store from "../../modules/store/store.js";
 import { last } from "../../utils/mydash/last.js";
-var chatsService = new ChatsService();
 var store = new Store();
-var bus = new AppBus();
 import { roomsList, menuEmoji, menuMessage, sidebarHeader, workspaceHeader, messageInputForm, dialogRemoveChat, } from "./initial-props.js";
 import { events } from "./events.js";
 export var props = {

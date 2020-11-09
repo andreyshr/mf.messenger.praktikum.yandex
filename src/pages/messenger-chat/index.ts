@@ -11,16 +11,14 @@ import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
 import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
 import Notification from "../../components/notification/Notification.js";
 
-import { ChatsService } from "../../services/chats-service.js";
-import Store from "../../modules/store/store.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { chatsService } from "../../services/chats-service.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
+import Store from "../../modules/store/store.js";
 
 import { last } from "../../utils/mydash/last.js";
 
-const chatsService = new ChatsService();
 const store = new Store();
-const bus = new AppBus();
 
 import {
     roomsList,

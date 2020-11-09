@@ -1,8 +1,7 @@
 import EVENTS from "../../modules/event-bus/events.js";
 import Store from "../../modules/store/store.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 var store = new Store();
-var bus = new AppBus();
 export var events = [
     {
         type: "input",

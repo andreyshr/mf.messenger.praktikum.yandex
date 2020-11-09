@@ -9,12 +9,11 @@ import Avatar from "../../components/avatar/Avatar.js";
 import Notification from "../../components/notification/Notification.js";
 
 import Store from "../../modules/store/store.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
 import EVENTS from "../../modules/event-bus/events.js";
 
 import { inputs, buttons, buttonBack } from "./initial-props.js";
 
-const bus = new AppBus();
 const store = new Store();
 
 const form: Form = new Form({

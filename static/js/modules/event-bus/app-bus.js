@@ -26,5 +26,6 @@ var AppBus = /** @class */ (function (_super) {
     AppBus.__instance = null;
     return AppBus;
 }(EventBus));
-export default AppBus;
+export { AppBus };
+export var bus = new AppBus();
 //# sourceMappingURL=app-bus.js.map

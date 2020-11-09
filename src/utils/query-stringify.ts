@@ -3,9 +3,7 @@ import { isObject } from "./mydash/isObject.js";
 import { isEmpty } from "./mydash/isEmpty.js";
 
 type StringIndexed = Record<string, unknown>;
-
 type Pair = [string, string];
-
 type Pairs = Pair[];
 
 function createPair(key: string, value: string): Pair {

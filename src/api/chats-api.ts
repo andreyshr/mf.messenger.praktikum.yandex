@@ -1,14 +1,10 @@
 import { chatsAPIInstance } from "../modules/HTTP/HTTP.js";
 import { Options } from "../modules/HTTP/types";
-import {
-    CreateChatRequest,
-    ChatUsersRequest,
-    EmptyRequest,
-} from "../services/types";
+import { CreateChatRequest, ChatUsersRequest } from "../services/types";
 
 export class ChatsApi {
     getChats() {
-        const options: Options<EmptyRequest> = {
+        const options: Options<unknown> = {
             data: {},
             headers: { "Content-Type": "application/json" },
         };
@@ -36,7 +32,7 @@ export class ChatsApi {
     }
 
     getUsers(chatId: string) {
-        const options: Options<EmptyRequest> = {
+        const options: Options<unknown> = {
             data: {},
             headers: { "Content-Type": "application/json" },
         };

@@ -10,11 +10,9 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import EVENTS from "../../modules/event-bus/events.js";
-import AppBus from "../../modules/event-bus/app-bus.js";
-import { UserService } from "../../services/user-service.js";
+import { bus } from "../../modules/event-bus/app-bus.js";
+import { userService } from "../../services/user-service.js";
 import Store from "../../modules/store/store.js";
-var userService = new UserService();
-var bus = new AppBus();
 var store = new Store();
 export var events = [
     {
