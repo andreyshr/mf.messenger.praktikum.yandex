@@ -36,13 +36,13 @@ describe("HTTP", function () {
             {
                 data: {},
                 headers: { "Content-Type": "application/json" },
-                method: "GET",
+                method: "POST",
             }
         );
     });
 
     it("should call http.request with args on PUT", () => {
-        http.get("/test", {
+        http.put("/test", {
             data: {},
             headers: { "Content-Type": "application/json" },
         });
@@ -52,13 +52,13 @@ describe("HTTP", function () {
             {
                 data: {},
                 headers: { "Content-Type": "application/json" },
-                method: "GET",
+                method: "PUT",
             }
         );
     });
 
     it("should call http.request with args on DELETE", () => {
-        http.get("/test", {
+        http.delete("/test", {
             data: {},
             headers: { "Content-Type": "application/json" },
         });
@@ -68,7 +68,7 @@ describe("HTTP", function () {
             {
                 data: {},
                 headers: { "Content-Type": "application/json" },
-                method: "GET",
+                method: "DELETE",
             }
         );
     });
