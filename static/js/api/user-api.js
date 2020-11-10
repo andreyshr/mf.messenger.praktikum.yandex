@@ -5,14 +5,10 @@ var UserAPI = /** @class */ (function () {
     UserAPI.prototype.search = function (login) {
         var options = {
             data: { login: login },
-            headers: { "Content-Type": "application/json" },
         };
         return userAPIInstance
             .post("/search", options)
-            .then(function (data) { return JSON.parse(data); })
-            .catch(function (err) {
-            throw err;
-        });
+            .then(function (data) { return JSON.parse(data); });
     };
     return UserAPI;
 }());

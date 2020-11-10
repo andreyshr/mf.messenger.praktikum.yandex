@@ -3,7 +3,12 @@ import { bus, AppBus } from "../modules/event-bus/app-bus.js";
 import EVENTS from "../modules/event-bus/events.js";
 import Store from "../modules/store/store.js";
 import { Nullable } from "../utils/utility-type";
-import { ChatResponse, ChatUsersRequest, ProfileResponse } from "./types";
+import {
+    ChatResponse,
+    ChatUsersRequest,
+    ProfileResponse,
+    UserResponse,
+} from "./types";
 
 export class ChatsService {
     chatsApi: ChatsApi;
@@ -26,19 +31,19 @@ export class ChatsService {
         ChatsService.__instance = this;
     }
 
-    get currentChat() {
+    get currentChat(): ChatResponse {
         return this.store.get("currentChat");
     }
 
-    get currentChatId() {
+    get currentChatId(): number {
         return this.currentChat.id;
     }
 
-    get user() {
+    get user(): UserResponse {
         return this.store.get("user");
     }
 
-    get dialog() {
+    get dialog(): string {
         return this.store.get("dialog");
     }
 
@@ -48,9 +53,6 @@ export class ChatsService {
             .then((data: ChatResponse[]): ChatResponse[] => {
                 this.store.set("chats", data);
                 return data;
-            })
-            .catch((err) => {
-                throw err;
             });
     }
 
@@ -67,7 +69,7 @@ export class ChatsService {
                 this.bus.emit(EVENTS.ROOMS_UPDATE, data);
                 return data;
             })
-            .then((err) => err);
+            .catch((err) => console.log(err));
     };
 
     getUsers = () => {
@@ -84,7 +86,7 @@ export class ChatsService {
                 );
                 return data;
             })
-            .catch((err) => err);
+            .catch((err) => console.log(err));
     };
 
     userAction = (userId: number) => {
@@ -104,7 +106,7 @@ export class ChatsService {
 
         return this.chatsApi
             .addUsers(data)
-            .then((data: unknown) => {
+            .then(() => {
                 this.bus.emit(
                     EVENTS.NOTIFICATION_SHOW,
                     `Пользователь добавлен в чат`,

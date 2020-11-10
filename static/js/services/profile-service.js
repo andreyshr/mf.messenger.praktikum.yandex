@@ -18,7 +18,6 @@ var ProfileService = /** @class */ (function () {
                 .catch(function (err) {
                 var errorMessage = JSON.parse(err.response).reason;
                 _this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-                throw err;
             });
         };
         if (ProfileService.__instance) {
@@ -42,7 +41,6 @@ var ProfileService = /** @class */ (function () {
             .catch(function (err) {
             var errorMessage = JSON.parse(err.response).reason;
             _this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-            throw err;
         });
     };
     ProfileService.__instance = null;

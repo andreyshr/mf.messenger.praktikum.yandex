@@ -14,7 +14,7 @@ var ChatsService = /** @class */ (function () {
                 _this.bus.emit(EVENTS.ROOMS_UPDATE, data);
                 return data;
             })
-                .then(function (err) { return err; });
+                .catch(function (err) { return console.log(err); });
         };
         this.getUsers = function () {
             return _this.chatsApi
@@ -27,7 +27,7 @@ var ChatsService = /** @class */ (function () {
                 }); }));
                 return data;
             })
-                .catch(function (err) { return err; });
+                .catch(function (err) { return console.log(err); });
         };
         this.userAction = function (userId) {
             if (_this.dialog === "remove_user") {
@@ -44,7 +44,7 @@ var ChatsService = /** @class */ (function () {
             };
             return _this.chatsApi
                 .addUsers(data)
-                .then(function (data) {
+                .then(function () {
                 _this.bus.emit(EVENTS.NOTIFICATION_SHOW, "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0447\u0430\u0442", "success");
                 return data;
             })
@@ -121,9 +121,6 @@ var ChatsService = /** @class */ (function () {
             .then(function (data) {
             _this.store.set("chats", data);
             return data;
-        })
-            .catch(function (err) {
-            throw err;
         });
     };
     ChatsService.__instance = null;

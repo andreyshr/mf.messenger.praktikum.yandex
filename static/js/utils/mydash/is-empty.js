@@ -1,5 +1,5 @@
-import { isArray } from "./isArray.js";
-import { isObject } from "./isObject.js";
+import { isArray } from "./is-array.js";
+import { isObject } from "./is-object.js";
 export function isEmpty(value) {
     if (value instanceof Map || value instanceof Set)
         return !value.size;
@@ -16,4 +16,4 @@ export function isEmpty(value) {
         return true;
     return true;
 }
-//# sourceMappingURL=isEmpty.js.map
+//# sourceMappingURL=is-empty.js.map

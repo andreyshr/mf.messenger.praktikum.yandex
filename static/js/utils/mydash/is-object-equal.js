@@ -24,4 +24,4 @@ export function isObjectEqual(a, b) {
         return String(aVal) === String(bVal);
     });
 }
-//# sourceMappingURL=isObjectEqual.js.map
+//# sourceMappingURL=is-object-equal.js.map

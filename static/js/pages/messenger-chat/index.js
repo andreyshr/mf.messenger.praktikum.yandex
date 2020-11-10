@@ -76,9 +76,14 @@ var MessengerChat = /** @class */ (function (_super) {
     MessengerChat.prototype.onShow = function () {
         var _this = this;
         if (!this.chats) {
-            chatsService.getChats().then(function (data) {
+            chatsService
+                .getChats()
+                .then(function (data) {
                 bus.emit(EVENTS.ROOMS_UPDATE, _this.setActiveChat(data, _this.chatId));
                 _this.setCurrentChat(_this.chatId);
+            })
+                .catch(function (err) {
+                console.log(err);
             });
         }
         else {

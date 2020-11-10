@@ -48,7 +48,6 @@ export class ProfileService {
                     errorMessage,
                     "warning"
                 );
-                throw err;
             });
     }
 
@@ -77,7 +76,6 @@ export class ProfileService {
                     errorMessage,
                     "warning"
                 );
-                throw err;
             });
     };
 }

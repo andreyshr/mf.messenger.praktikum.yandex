@@ -74,6 +74,10 @@ export class HTTP {
 
             xhr.open(method as string, _url);
 
+            if (!(data instanceof FormData)) {
+                xhr.setRequestHeader("Content-Type", "application/json");
+            }
+
             if (headers) {
                 Object.keys(headers).forEach((header: string) => {
                     xhr.setRequestHeader(header, headers[header]);

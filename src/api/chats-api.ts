@@ -6,70 +6,44 @@ export class ChatsApi {
     getChats() {
         const options: Options<unknown> = {
             data: {},
-            headers: { "Content-Type": "application/json" },
         };
 
         return chatsAPIInstance
             .get("/", options)
-            .then((data: string) => JSON.parse(data))
-            .catch((err) => {
-                throw err;
-            });
+            .then((data: string) => JSON.parse(data));
     }
 
     createChat(title: string) {
         const options: Options<CreateChatRequest> = {
             data: { title },
-            headers: { "Content-Type": "application/json" },
         };
 
-        return chatsAPIInstance
-            .post("/", options)
-            .then((data: string) => data)
-            .catch((err) => {
-                throw err;
-            });
+        return chatsAPIInstance.post("/", options);
     }
 
-    getUsers(chatId: string) {
+    getUsers(chatId: number) {
         const options: Options<unknown> = {
             data: {},
-            headers: { "Content-Type": "application/json" },
         };
 
         return chatsAPIInstance
             .get(`/${chatId}/users`, options)
-            .then((data: string) => JSON.parse(data))
-            .catch((err) => {
-                throw err;
-            });
+            .then((data: string) => JSON.parse(data));
     }
 
     addUsers(data: ChatUsersRequest) {
         const options: Options<ChatUsersRequest> = {
             data,
-            headers: { "Content-Type": "application/json" },
         };
 
-        return chatsAPIInstance
-            .put("/users", options)
-            .then((data: string) => data)
-            .catch((err) => {
-                throw err;
-            });
+        return chatsAPIInstance.put("/users", options);
     }
 
     removeUsers(data: ChatUsersRequest) {
         const options: Options<ChatUsersRequest> = {
             data,
-            headers: { "Content-Type": "application/json" },
         };
 
-        return chatsAPIInstance
-            .delete("/users", options)
-            .then((data: string) => data)
-            .catch((err) => {
-                throw err;
-            });
+        return chatsAPIInstance.delete("/users", options);
     }
 }

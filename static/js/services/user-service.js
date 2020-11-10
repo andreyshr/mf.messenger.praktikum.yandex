@@ -20,7 +20,6 @@ var UserService = /** @class */ (function () {
                 id: user.id,
                 avatarImg: user.avatar,
             }); }));
-            return data;
         });
     };
     UserService.__instance = null;

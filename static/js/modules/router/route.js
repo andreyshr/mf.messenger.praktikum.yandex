@@ -1,5 +1,5 @@
 import Block from "../block/block.js";
-import { render } from "../../utils/renderDOM.js";
+import { render } from "../../utils/render-dom.js";
 var Route = /** @class */ (function () {
     function Route(pathname, view, props) {
         this._pathname = pathname;
