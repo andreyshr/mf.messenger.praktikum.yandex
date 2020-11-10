@@ -5,23 +5,16 @@ var ProfileApi = /** @class */ (function () {
     ProfileApi.prototype.update = function (data) {
         var options = {
             data: data,
-            headers: { "Content-Type": "application/json" },
         };
         return profileAPIInstance
             .put("/", options)
-            .then(function (data) { return JSON.parse(data); })
-            .catch(function (err) {
-            throw err;
-        });
+            .then(function (data) { return JSON.parse(data); });
     };
     ProfileApi.prototype.updateAvatar = function (data) {
         var options = { data: data };
         return profileAPIInstance
             .put("/avatar", options)
-            .then(function (data) { return JSON.parse(data); })
-            .catch(function (err) {
-            throw err;
-        });
+            .then(function (data) { return JSON.parse(data); });
     };
     return ProfileApi;
 }());

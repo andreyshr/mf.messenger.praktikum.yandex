@@ -1,5 +1,5 @@
 import Block from "../block/block.js";
-import { render } from "../../utils/renderDOM.js";
+import { render } from "../../utils/render-dom.js";
 import { Nullable } from "../../utils/utility-type";
 import { Constructable, RouteProps } from "./types";
 
@@ -27,7 +27,7 @@ export class Route {
         this._props = props;
     }
 
-    regExpResultToParams(match: any, names: any) {
+    regExpResultToParams(match: RegExpMatchArray | null, names: string[]) {
         if (names.length === 0) return null;
         if (!match) return null;
         return match

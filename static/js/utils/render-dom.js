@@ -4,4 +4,4 @@ export function render(query, block) {
     root === null || root === void 0 ? void 0 : root.appendChild(node);
     return root;
 }
-//# sourceMappingURL=renderDOM.js.map
+//# sourceMappingURL=render-dom.js.map

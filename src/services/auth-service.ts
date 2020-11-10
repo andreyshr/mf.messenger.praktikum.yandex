@@ -26,6 +26,12 @@ export class AuthService {
         AuthService.__instance = this;
     }
 
+    getUser(): Promise<void | UserResponse> {
+        return this.authApi.getUser().catch((err) => {
+            console.log(err.response);
+        });
+    }
+
     signin(login: string, password: string) {
         return this.authApi
             .signin({ login, password })
@@ -41,16 +47,6 @@ export class AuthService {
                     errorMessage,
                     "warning"
                 );
-                throw err;
-            });
-    }
-
-    getUser() {
-        return this.authApi
-            .getUser()
-            .then((data: UserResponse) => data)
-            .catch((err) => {
-                throw err;
             });
     }
 
@@ -69,17 +65,11 @@ export class AuthService {
                     errorMessage,
                     "warning"
                 );
-                throw err;
             });
     }
 
     logout = () => {
-        return this.authApi
-            .logout()
-            .then(() => document.location.reload())
-            .catch((err) => {
-                throw err;
-            });
+        return this.authApi.logout().then(() => document.location.reload());
     };
 
     isAuth() {

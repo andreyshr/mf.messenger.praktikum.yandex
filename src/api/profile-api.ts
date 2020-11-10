@@ -6,15 +6,11 @@ export class ProfileApi {
     update(data: ProfileRequest) {
         const options: Options<ProfileRequest> = {
             data,
-            headers: { "Content-Type": "application/json" },
         };
 
         return profileAPIInstance
             .put("/", options)
-            .then((data: string) => JSON.parse(data))
-            .catch((err) => {
-                throw err;
-            });
+            .then((data: string) => JSON.parse(data));
     }
 
     updateAvatar(data: FormData) {
@@ -22,9 +18,6 @@ export class ProfileApi {
 
         return profileAPIInstance
             .put("/avatar", options)
-            .then((data: string) => JSON.parse(data))
-            .catch((err) => {
-                throw err;
-            });
+            .then((data: string) => JSON.parse(data));
     }
 }

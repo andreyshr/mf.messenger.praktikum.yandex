@@ -6,12 +6,7 @@ var AuthService = /** @class */ (function () {
     function AuthService() {
         var _this = this;
         this.logout = function () {
-            return _this.authApi
-                .logout()
-                .then(function () { return document.location.reload(); })
-                .catch(function (err) {
-                throw err;
-            });
+            return _this.authApi.logout().then(function () { return document.location.reload(); });
         };
         if (AuthService.__instance) {
             return AuthService.__instance;
@@ -22,6 +17,11 @@ var AuthService = /** @class */ (function () {
         this.bus.on(EVENTS.LOGOUT, this.logout);
         AuthService.__instance = this;
     }
+    AuthService.prototype.getUser = function () {
+        return this.authApi.getUser().catch(function (err) {
+            console.log(err.response);
+        });
+    };
     AuthService.prototype.signin = function (login, password) {
         var _this = this;
         return this.authApi
@@ -34,15 +34,6 @@ var AuthService = /** @class */ (function () {
             .catch(function (err) {
             var errorMessage = JSON.parse(err.response).reason;
             _this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-            throw err;
-        });
-    };
-    AuthService.prototype.getUser = function () {
-        return this.authApi
-            .getUser()
-            .then(function (data) { return data; })
-            .catch(function (err) {
-            throw err;
         });
     };
     AuthService.prototype.signup = function (data) {
@@ -57,7 +48,6 @@ var AuthService = /** @class */ (function () {
             .catch(function (err) {
             var errorMessage = JSON.parse(err.response).reason;
             _this.bus.emit(EVENTS.NOTIFICATION_SHOW, errorMessage, "warning");
-            throw err;
         });
     };
     AuthService.prototype.isAuth = function () {

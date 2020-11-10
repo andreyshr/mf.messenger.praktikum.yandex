@@ -1,60 +1,37 @@
 import { authAPIInstance } from "../modules/HTTP/HTTP.js";
 import { Options } from "../modules/HTTP/types";
-import { SigninRequest, SignupRequest } from "../services/types";
+import { SigninRequest, SignupRequest, UserResponse } from "../services/types";
 
 export class AuthApi {
     signin(data: SigninRequest) {
         const options: Options<SigninRequest> = {
             data,
-            headers: { "Content-Type": "application/json" },
         };
 
-        return authAPIInstance
-            .post("/signin", options)
-            .then((data) => data)
-            .catch((err) => {
-                throw err;
-            });
-    }
-
-    getUser() {
-        const options: Options<unknown> = {
-            data: {},
-            headers: { "Content-Type": "application/json" },
-        };
-
-        return authAPIInstance
-            .get("/user", options)
-            .then((data: string) => JSON.parse(data))
-            .catch((err) => {
-                throw err;
-            });
+        return authAPIInstance.post("/signin", options);
     }
 
     signup(data: SignupRequest) {
         const options: Options<SignupRequest> = {
             data,
-            headers: { "Content-Type": "application/json" },
         };
 
-        return authAPIInstance
-            .post("/signup", options)
-            .then((data) => data)
-            .catch((err) => {
-                throw err;
-            });
+        return authAPIInstance.post("/signup", options);
     }
 
     logout() {
+        const options: Options<unknown> = {};
+
+        return authAPIInstance.post("/logout", options);
+    }
+
+    getUser() {
         const options: Options<unknown> = {
-            headers: { "Content-Type": "application/json" },
+            data: {},
         };
 
         return authAPIInstance
-            .post("/logout", options)
-            .then((data) => data)
-            .catch((err) => {
-                throw err;
-            });
+            .get("/user", options)
+            .then((data: string): UserResponse => JSON.parse(data));
     }
 }

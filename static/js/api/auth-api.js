@@ -5,49 +5,26 @@ var AuthApi = /** @class */ (function () {
     AuthApi.prototype.signin = function (data) {
         var options = {
             data: data,
-            headers: { "Content-Type": "application/json" },
         };
-        return authAPIInstance
-            .post("/signin", options)
-            .then(function (data) { return data; })
-            .catch(function (err) {
-            throw err;
-        });
-    };
-    AuthApi.prototype.getUser = function () {
-        var options = {
-            data: {},
-            headers: { "Content-Type": "application/json" },
-        };
-        return authAPIInstance
-            .get("/user", options)
-            .then(function (data) { return JSON.parse(data); })
-            .catch(function (err) {
-            throw err;
-        });
+        return authAPIInstance.post("/signin", options);
     };
     AuthApi.prototype.signup = function (data) {
         var options = {
             data: data,
-            headers: { "Content-Type": "application/json" },
         };
-        return authAPIInstance
-            .post("/signup", options)
-            .then(function (data) { return data; })
-            .catch(function (err) {
-            throw err;
-        });
+        return authAPIInstance.post("/signup", options);
     };
     AuthApi.prototype.logout = function () {
+        var options = {};
+        return authAPIInstance.post("/logout", options);
+    };
+    AuthApi.prototype.getUser = function () {
         var options = {
-            headers: { "Content-Type": "application/json" },
+            data: {},
         };
         return authAPIInstance
-            .post("/logout", options)
-            .then(function (data) { return data; })
-            .catch(function (err) {
-            throw err;
-        });
+            .get("/user", options)
+            .then(function (data) { return JSON.parse(data); });
     };
     return AuthApi;
 }());

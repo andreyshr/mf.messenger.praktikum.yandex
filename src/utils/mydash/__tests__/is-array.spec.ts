@@ -1,4 +1,4 @@
-import { isArray } from "../isArray";
+import { isArray } from "../is-array";
 
 describe("isArray", function () {
     it("should return true if arg is Array", function () {

@@ -1,1 +1,4 @@
+# Netlify redirect rule for SPA
+# doc - https://docs.netlify.com/routing/redirects/#rule-processing-order
+
 /*    /index.html   200

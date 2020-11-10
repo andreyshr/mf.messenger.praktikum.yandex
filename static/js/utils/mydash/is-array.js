@@ -1,4 +1,4 @@
 export function isArray(value) {
     return Array.isArray(value);
 }
-//# sourceMappingURL=isArray.js.map
+//# sourceMappingURL=is-array.js.map

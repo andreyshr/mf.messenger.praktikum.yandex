@@ -5,9 +5,9 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
-import { isArray } from "./mydash/isArray.js";
-import { isObject } from "./mydash/isObject.js";
-import { isEmpty } from "./mydash/isEmpty.js";
+import { isArray } from "./mydash/is-array.js";
+import { isObject } from "./mydash/is-object.js";
+import { isEmpty } from "./mydash/is-empty.js";
 function createPair(key, value) {
     return [key, value];
 }

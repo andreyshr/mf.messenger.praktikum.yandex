@@ -61,14 +61,19 @@ export default class MessengerChat extends Block {
 
     onShow() {
         if (!this.chats) {
-            chatsService.getChats().then((data) => {
-                bus.emit(
-                    EVENTS.ROOMS_UPDATE,
-                    this.setActiveChat(data, this.chatId)
-                );
+            chatsService
+                .getChats()
+                .then((data) => {
+                    bus.emit(
+                        EVENTS.ROOMS_UPDATE,
+                        this.setActiveChat(data, this.chatId)
+                    );
 
-                this.setCurrentChat(this.chatId);
-            });
+                    this.setCurrentChat(this.chatId);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         } else {
             bus.emit(
                 EVENTS.ROOMS_UPDATE,

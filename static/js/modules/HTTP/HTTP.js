@@ -40,6 +40,9 @@ var HTTP = /** @class */ (function () {
                         queryStringify(data)
                     : url;
                 xhr.open(method, _url);
+                if (!(data instanceof FormData)) {
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                }
                 if (headers) {
                     Object.keys(headers).forEach(function (header) {
                         xhr.setRequestHeader(header, headers[header]);
