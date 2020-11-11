@@ -93,7 +93,7 @@ var MessengerChat = /** @class */ (function (_super) {
     };
     MessengerChat.prototype.setActiveChat = function (chats, chatId) {
         return chats.map(function (chat) {
-            if (chat.id.toString() === chatId.toString()) {
+            if (chat.id.toString() === chatId) {
                 return __assign(__assign({}, chat), { active: true });
             }
             else {
@@ -102,7 +102,7 @@ var MessengerChat = /** @class */ (function (_super) {
         });
     };
     MessengerChat.prototype.setCurrentChat = function (chatId) {
-        var currentChat = this.chats.find(function (c) { return c.id.toString() === chatId.toString(); });
+        var currentChat = this.chats.find(function (c) { return c.id.toString() === chatId; });
         if (currentChat) {
             store.set("currentChat", currentChat);
             bus.emit(EVENTS.ROOM_UPDATE, currentChat);
