@@ -41,12 +41,12 @@ var Router = /** @class */ (function () {
         this.attachEvent();
         window.onpopstate = (function (event) {
             var _a, _b, _c, _d;
-            if (!_this._beforeEach((_b = (_a = event.currentTarget) === null || _a === void 0 ? void 0 : _a.location) === null || _b === void 0 ? void 0 : _b.pathname))
+            if (!_this._validatePath((_b = (_a = event.currentTarget) === null || _a === void 0 ? void 0 : _a.location) === null || _b === void 0 ? void 0 : _b.pathname))
                 return;
             _this._onRoute((_d = (_c = event.currentTarget) === null || _c === void 0 ? void 0 : _c.location) === null || _d === void 0 ? void 0 : _d.pathname);
         }).bind(this);
         return this.beforeStart().finally(function () {
-            if (!_this._beforeEach(window.location.pathname))
+            if (!_this._validatePath(window.location.pathname))
                 return;
             _this._onRoute(window.location.pathname);
         });
@@ -62,13 +62,13 @@ var Router = /** @class */ (function () {
         }
     };
     Router.prototype.go = function (pathname) {
-        if (!this._beforeEach(pathname))
+        if (!this._validatePath(pathname))
             return;
         this.history.pushState({ id: createUniqID() }, "", pathname);
         this._onRoute(pathname);
     };
     Router.prototype.replace = function (pathname) {
-        if (!this._beforeEach(pathname))
+        if (!this._validatePath(pathname))
             return;
         this.history.replaceState({ id: createUniqID() }, "", pathname);
         this._onRoute(pathname);
@@ -84,10 +84,10 @@ var Router = /** @class */ (function () {
             return route.match(pathname);
         }) || null);
     };
-    Router.prototype._beforeEach = function (pathname) {
-        return this.beforeEach(pathname);
+    Router.prototype._validatePath = function (pathname) {
+        return this.validatePath(pathname);
     };
-    Router.prototype.beforeEach = function (pathname) {
+    Router.prototype.validatePath = function (pathname) {
         return !!pathname;
     };
     Router.prototype.beforeStart = function () {
