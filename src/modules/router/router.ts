@@ -62,20 +62,20 @@ export class Router {
         this.attachEvent();
 
         window.onpopstate = ((event: any) => {
-            if (!this._beforeEach(event.currentTarget?.location?.pathname))
+            if (!this._validatePath(event.currentTarget?.location?.pathname))
                 return;
 
             this._onRoute(event.currentTarget?.location?.pathname);
         }).bind(this);
 
         return this.beforeStart().finally(() => {
-            if (!this._beforeEach(window.location.pathname)) return;
+            if (!this._validatePath(window.location.pathname)) return;
 
             this._onRoute(window.location.pathname);
         });
     }
 
-    _onRoute(pathname: string) {
+    private _onRoute(pathname: string) {
         const route = this.getRoute(pathname);
 
         if (this._currentRoute) {
@@ -89,7 +89,7 @@ export class Router {
     }
 
     go(pathname: string) {
-        if (!this._beforeEach(pathname)) return;
+        if (!this._validatePath(pathname)) return;
 
         this.history.pushState({ id: createUniqID() }, "", pathname);
 
@@ -97,7 +97,7 @@ export class Router {
     }
 
     replace(pathname: string) {
-        if (!this._beforeEach(pathname)) return;
+        if (!this._validatePath(pathname)) return;
 
         this.history.replaceState({ id: createUniqID() }, "", pathname);
 
@@ -120,11 +120,11 @@ export class Router {
         );
     }
 
-    _beforeEach(pathname: string): boolean {
-        return this.beforeEach(pathname);
+    private _validatePath(pathname: string): boolean {
+        return this.validatePath(pathname);
     }
 
-    beforeEach(pathname: string): boolean {
+    validatePath(pathname: string): boolean {
         return !!pathname;
     }
 

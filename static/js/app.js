@@ -17,7 +17,7 @@ var router = new Router(".app");
 var store = new Store();
 bus.on(EVENTS.ROUTER_GO, function (route) { return router.go(route); });
 bus.on(EVENTS.ROUTER_REPLACE, function (route) { return router.replace(route); });
-router.beforeEach = function (pathname) {
+router.validatePath = function (pathname) {
     var _a, _b;
     var route = router.getRoute(pathname);
     var baseRoute = pathname === "/";

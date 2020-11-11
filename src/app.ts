@@ -24,7 +24,7 @@ const store = new Store();
 bus.on(EVENTS.ROUTER_GO, (route) => router.go(route));
 bus.on(EVENTS.ROUTER_REPLACE, (route) => router.replace(route));
 
-router.beforeEach = function (pathname: string): boolean {
+router.validatePath = function (pathname: string): boolean {
     const route = router.getRoute(pathname);
     const baseRoute = pathname === "/";
 
