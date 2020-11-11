@@ -1,6 +1,7 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import { Props } from "../../modules/block/types";
+import { ChatResponse } from "../../services/types";
 
 import RoomsList from "../../components/rooms-list/RoomsList.js";
 import Message from "../../components/message/Message.js";
@@ -51,11 +52,11 @@ export default class MessengerChat extends Block {
         Block._instances.push(this);
     }
 
-    get chats() {
+    get chats(): ChatResponse[] {
         return store.get("chats");
     }
 
-    get chatId() {
+    get chatId(): string {
         return last<string>(document.location.pathname.split("/"));
     }
 
@@ -63,7 +64,7 @@ export default class MessengerChat extends Block {
         if (!this.chats) {
             chatsService
                 .getChats()
-                .then((data) => {
+                .then((data: ChatResponse[]) => {
                     bus.emit(
                         EVENTS.ROOMS_UPDATE,
                         this.setActiveChat(data, this.chatId)
@@ -84,10 +85,10 @@ export default class MessengerChat extends Block {
         }
     }
 
-    setActiveChat(chats: Props, chatId: string) {
+    setActiveChat(chats: ChatResponse[], chatId: string) {
         return chats.map(
-            (chat: Props): Props => {
-                if (chat.id.toString() === chatId.toString()) {
+            (chat: ChatResponse): Props => {
+                if (chat.id.toString() === chatId) {
                     return {
                         ...chat,
                         active: true,
@@ -99,9 +100,9 @@ export default class MessengerChat extends Block {
         );
     }
 
-    setCurrentChat(chatId: string | number) {
+    setCurrentChat(chatId: string) {
         const currentChat = this.chats.find(
-            (c: Props): boolean => c.id.toString() === chatId.toString()
+            (c: ChatResponse): boolean => c.id.toString() === chatId
         );
 
         if (currentChat) {

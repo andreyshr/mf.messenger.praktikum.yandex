@@ -1,6 +1,7 @@
 import Block from "../../modules/block/block.js";
 import { template } from "./template.js";
 import { Props } from "../../modules/block/types";
+import { ChatResponse } from "../../services/types";
 
 import RoomsList from "../../components/rooms-list/RoomsList.js";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
@@ -36,7 +37,7 @@ export default class Messenger extends Block {
         Block._instances.push(this);
     }
 
-    get chats() {
+    get chats(): ChatResponse[] {
         return store.get("chats");
     }
 
