@@ -1,2 +1,0 @@
-export var template = "\n    <main class=\"container overflow-hidden\">\n    <div class=\"profile h-100\">\n    \n        {{{ buttonBack }}}\n    \n        <div class=\"profile__wrapper\">\n            {{{ form }}}\n        </div>\n    </div>\n    \n    {{{ notification }}}\n</main>\n";
-//# sourceMappingURL=template.js.map

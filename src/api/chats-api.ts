@@ -1,4 +1,4 @@
-import { chatsAPIInstance } from "../modules/HTTP/HTTP.js";
+import { chatsAPIInstance } from "../modules/HTTP/HTTP";
 import { Options } from "../modules/HTTP/types";
 import { CreateChatRequest, ChatUsersRequest } from "../services/types";
 

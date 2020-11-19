@@ -1,8 +1,8 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 import { Props } from "../../modules/block/types";
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
 
 export default class Notification extends Block {
     constructor(props: Props) {
@@ -29,6 +29,6 @@ export default class Notification extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)(this.props);
+        return template(this.props);
     }
 }

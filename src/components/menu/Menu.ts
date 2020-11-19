@@ -1,6 +1,6 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
-import Button from "../button/Button.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
+import Button from "../button/Button";
 import { Props } from "../../modules/block/types";
 
 export default class Menu extends Block {
@@ -11,7 +11,7 @@ export default class Menu extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             ...this.props,
             buttonMenuOpener: new Button(
                 "button",

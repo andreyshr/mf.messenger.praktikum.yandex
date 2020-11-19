@@ -1,4 +1,4 @@
-import { profileAPIInstance } from "../modules/HTTP/HTTP.js";
+import { profileAPIInstance } from "../modules/HTTP/HTTP";
 import { Options } from "../modules/HTTP/types";
 import { ProfileRequest } from "../services/types";
 

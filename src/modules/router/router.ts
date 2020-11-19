@@ -1,6 +1,6 @@
-import Block from "../block/block.js";
-import { Route } from "./route.js";
-import { createUniqID } from "../../utils/create-uniq-id.js";
+import Block from "../block/block";
+import { Route } from "./route";
+import { createUniqID } from "../../utils/create-uniq-id";
 
 import { Nullable } from "../../utils/utility-type";
 import { Constructable } from "./types";

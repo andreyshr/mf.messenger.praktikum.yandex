@@ -1,9 +1,9 @@
-import { UserAPI } from "../api/user-api.js";
-import { bus, AppBus } from "../modules/event-bus/app-bus.js";
-import Store from "../modules/store/store.js";
+import { UserAPI } from "../api/user-api";
+import { bus, AppBus } from "../modules/event-bus/app-bus";
+import Store from "../modules/store/store";
 import { Nullable } from "../utils/utility-type";
 import { Props } from "../modules/block/types";
-import EVENTS from "../modules/event-bus/events.js";
+import EVENTS from "../modules/event-bus/events";
 import { UserResponse } from "./types";
 
 export class UserService {

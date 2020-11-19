@@ -1,7 +1,7 @@
-import { AuthApi } from "../api/auth-api.js";
-import { bus, AppBus } from "../modules/event-bus/app-bus.js";
-import EVENTS from "../modules/event-bus/events.js";
-import Store from "../modules/store/store.js";
+import { AuthApi } from "../api/auth-api";
+import { bus, AppBus } from "../modules/event-bus/app-bus";
+import EVENTS from "../modules/event-bus/events";
+import Store from "../modules/store/store";
 
 import { SignupRequest, UserResponse } from "./types";
 import { Nullable } from "../utils/utility-type";

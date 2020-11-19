@@ -1,23 +1,23 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 import { Props } from "../../modules/block/types";
 import { ChatResponse } from "../../services/types";
 
-import RoomsList from "../../components/rooms-list/RoomsList.js";
-import Message from "../../components/message/Message.js";
-import Menu from "../../components/menu/Menu.js";
-import Dialog from "../../components/dialog/Dialog.js";
-import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader.js";
-import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
-import MessageInputForm from "../../components/message-input-form/MessageInputForm.js";
-import Notification from "../../components/notification/Notification.js";
+import RoomsList from "../../components/rooms-list/RoomsList";
+import Message from "../../components/message/message";
+import Menu from "../../components/menu/Menu";
+import Dialog from "../../components/dialog/Dialog";
+import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader";
+import SidebarHeader from "../../components/sidebar-header/SidebarHeader";
+import MessageInputForm from "../../components/message-input-form/MessageInputForm";
+import Notification from "../../components/notification/Notification";
 
-import { chatsService } from "../../services/chats-service.js";
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
-import Store from "../../modules/store/store.js";
+import { chatsService } from "../../services/chats-service";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
+import Store from "../../modules/store/store";
 
-import { last } from "../../utils/mydash/last.js";
+import { last } from "../../utils/mydash/last";
 
 const store = new Store();
 
@@ -29,8 +29,8 @@ import {
     workspaceHeader,
     messageInputForm,
     dialogRemoveChat,
-} from "./initial-props.js";
-import { events } from "./events.js";
+} from "./initial-props";
+import { events } from "./events";
 
 export const props = {
     notification: {},
@@ -115,7 +115,7 @@ export default class MessengerChat extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             roomsList: new RoomsList(this.props.roomsList).renderToString(),
             messages: this.props.messages.map((message: Props): string =>
                 new Message(message).renderToString()

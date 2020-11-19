@@ -1,7 +1,7 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 import { Props } from "../../modules/block/types";
-import Button from "../button/Button.js";
+import Button from "../button/Button";
 
 export default class WorkSpaceEmpty extends Block {
     constructor(props: Props) {
@@ -11,7 +11,7 @@ export default class WorkSpaceEmpty extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             ...this.props,
             buttonCreateChat: new Button(
                 "button",

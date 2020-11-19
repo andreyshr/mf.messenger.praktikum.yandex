@@ -1,7 +1,7 @@
-import { EventBus } from "../event-bus/event-bus.js";
+import { EventBus } from "../event-bus/event-bus";
 import { Nullable } from "../../utils/utility-type";
 import { BlockEvent, Meta, Props } from "./types";
-import { createUniqID } from "../../utils/create-uniq-id.js";
+import { createUniqID } from "../../utils/create-uniq-id";
 
 abstract class Block {
     static EVENTS = {

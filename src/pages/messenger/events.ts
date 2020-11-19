@@ -1,7 +1,7 @@
-import EVENTS from "../../modules/event-bus/events.js";
+import EVENTS from "../../modules/event-bus/events";
 import { Props } from "../../modules/block/types";
-import Store from "../../modules/store/store.js";
-import { bus } from "../../modules/event-bus/app-bus.js";
+import Store from "../../modules/store/store";
+import { bus } from "../../modules/event-bus/app-bus";
 
 const store = new Store();
 

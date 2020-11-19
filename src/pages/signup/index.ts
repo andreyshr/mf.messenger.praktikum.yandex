@@ -1,13 +1,13 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 
-import Form from "../../components/form/Form.js";
-import Button from "../../components/button/Button.js";
-import Input from "../../components/input/Input.js";
-import Notification from "../../components/notification/Notification.js";
-import { addInputEvents } from "../../utils/add-input-events.js";
+import Form from "../../components/form/Form";
+import Button from "../../components/button/Button";
+import Input from "../../components/input/Input";
+import Notification from "../../components/notification/Notification";
+import { addInputEvents } from "../../utils/add-input-events";
 
-import { inputsProps, buttons } from "./initial-props.js";
+import { inputsProps, buttons } from "./initial-props";
 
 import { Props } from "../../modules/block/types";
 
@@ -44,7 +44,7 @@ export default class SignUpPage extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             form: this.props.form.renderToString(),
             notification: new Notification(
                 this.props.notification

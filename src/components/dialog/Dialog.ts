@@ -1,14 +1,14 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 
-import Button from "../button/Button.js";
-import UsersList from "../users-list/UsersList.js";
+import Button from "../button/Button";
+import UsersList from "../users-list/UsersList";
 
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
-import { chatsService } from "../../services/chats-service.js";
-import { userService } from "../../services/user-service.js";
-import Store from "../../modules/store/store.js";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
+import { chatsService } from "../../services/chats-service";
+import { userService } from "../../services/user-service";
+import Store from "../../modules/store/store";
 
 import { Props } from "../../modules/block/types";
 import { Nullable } from "../../utils/utility-type";
@@ -64,7 +64,7 @@ export default class Dialog extends Block {
     };
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             ...this.props,
             usersList: new UsersList({
                 users: this.props.users,

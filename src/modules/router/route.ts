@@ -1,5 +1,5 @@
-import Block from "../block/block.js";
-import { render } from "../../utils/render-dom.js";
+import Block from "../block/block";
+import { render } from "../../utils/render-dom";
 import { Nullable } from "../../utils/utility-type";
 import { Constructable, RouteProps } from "./types";
 
@@ -44,7 +44,7 @@ export class Route {
     }
 
     replaceDynamicURLParts(route: RegExp | string) {
-        let paramNames: string[] = [];
+        const paramNames: string[] = [];
         let regexp: RegExp | string;
 
         if (route instanceof RegExp) {
@@ -65,11 +65,11 @@ export class Route {
     }
 
     findMatchedRoutes(url: string) {
-        let { regexp, paramNames } = this.replaceDynamicURLParts(
+        const { regexp, paramNames } = this.replaceDynamicURLParts(
             this.clean(this._pathname)
         );
-        let match = url.replace(/^\/+/, "/").match(regexp);
-        let params = this.regExpResultToParams(match, paramNames);
+        const match = url.replace(/^\/+/, "/").match(regexp);
+        const params = this.regExpResultToParams(match, paramNames);
 
         return match ? { match, pathname: this._pathname, params } : false;
     }

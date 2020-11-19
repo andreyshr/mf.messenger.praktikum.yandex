@@ -1,7 +1,7 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 
-import Avatar from "../avatar/Avatar.js";
+import Avatar from "../avatar/Avatar";
 import { Props } from "../../modules/block/types";
 
 export default class User extends Block {
@@ -13,7 +13,7 @@ export default class User extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             ...this.props,
             id: this.props.id,
             avatar: new Avatar({

@@ -1,19 +1,19 @@
-import Block from "../../modules/block/block.js";
-import { template as templateMain } from "./template.js";
-import { template as templateProfile } from "./template-profile.js";
+import Block from "../../modules/block/block";
+import templateMain from "./template.hbs";
+import templateProfile from "./template-profile.hbs";
 
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
 
-import { Validator } from "../../modules/validator/validator.js";
-import { authService } from "../../services/auth-service.js";
-import { profileService } from "../../services/profile-service.js";
+import { Validator } from "../../modules/validator/validator";
+import { authService } from "../../services/auth-service";
+import { profileService } from "../../services/profile-service";
 
 import { Props } from "../../modules/block/types";
 import { PropsInput } from "../input/types";
 import { VerifiableInput, ValidatedInput } from "../../modules/validator/types";
 
-import Store from "../../modules/store/store.js";
+import Store from "../../modules/store/store";
 
 export default class Form extends Block {
     state: any;
@@ -110,10 +110,14 @@ export default class Form extends Block {
         }
     }
 
+    get template() {
+        return this.props.template === "profile"
+            ? templateProfile
+            : templateMain;
+    }
+
     render() {
-        return Handlebars.compile(
-            this.props.template === "profile" ? templateProfile : templateMain
-        )({
+        return this.template({
             className: this.props.className,
             title: this.props.title,
             inputs: this.props.inputs.map((input: Block) =>

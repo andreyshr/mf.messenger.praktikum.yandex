@@ -1,4 +1,4 @@
-import { EventBus } from "./event-bus.js";
+import { EventBus } from "./event-bus";
 import { Nullable } from "../../utils/utility-type";
 
 export class AppBus extends EventBus {

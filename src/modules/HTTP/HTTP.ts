@@ -1,4 +1,4 @@
-import { queryStringify } from "../../utils/query-stringify.js";
+import { queryStringify } from "../../utils/query-stringify";
 import { Options } from "./types";
 
 export const HTTP_STATUSES = {

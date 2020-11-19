@@ -1,4 +1,4 @@
-import { userAPIInstance } from "../modules/HTTP/HTTP.js";
+import { userAPIInstance } from "../modules/HTTP/HTTP";
 import { Options } from "../modules/HTTP/types";
 import { SearchRequest, UserResponse } from "../services/types";
 

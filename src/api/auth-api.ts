@@ -1,4 +1,4 @@
-import { authAPIInstance } from "../modules/HTTP/HTTP.js";
+import { authAPIInstance } from "../modules/HTTP/HTTP";
 import { Options } from "../modules/HTTP/types";
 import { SigninRequest, SignupRequest, UserResponse } from "../services/types";
 

@@ -1,7 +1,7 @@
-import { ChatsApi } from "../api/chats-api.js";
-import { bus, AppBus } from "../modules/event-bus/app-bus.js";
-import EVENTS from "../modules/event-bus/events.js";
-import Store from "../modules/store/store.js";
+import { ChatsApi } from "../api/chats-api";
+import { bus, AppBus } from "../modules/event-bus/app-bus";
+import EVENTS from "../modules/event-bus/events";
+import Store from "../modules/store/store";
 import { Nullable } from "../utils/utility-type";
 import {
     ChatResponse,

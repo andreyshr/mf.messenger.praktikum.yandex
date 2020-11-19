@@ -1,9 +1,9 @@
-import Block from "../../modules/block/block.js";
-import { template as templateMain } from "./template.js";
-import { template as templateProfile } from "./template-profile.js";
+import Block from "../../modules/block/block";
+import templateMain from "./template.hbs";
+import templateProfile from "./template-profile.hbs";
 
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
 
 import { PropsInput } from "./types";
 
@@ -48,9 +48,13 @@ export default class Input extends Block {
         }
     };
 
+    get template() {
+        return this.props.template === "profile"
+            ? templateProfile
+            : templateMain;
+    }
+
     render() {
-        return Handlebars.compile(
-            this.props.template === "profile" ? templateProfile : templateMain
-        )(this.props);
+        return this.template(this.props);
     }
 }

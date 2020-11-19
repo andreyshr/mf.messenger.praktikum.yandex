@@ -1,11 +1,11 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 
-import Menu from "../menu/Menu.js";
-import Avatar from "../avatar/Avatar.js";
+import Menu from "../menu/Menu";
+import Avatar from "../avatar/Avatar";
 
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
 
 import { Props } from "../../modules/block/types";
 
@@ -24,7 +24,7 @@ export default class WorkSpaceHeader extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             ...this.props,
             historyTime: this.props.historyTime || "Сегодня",
             menuChat: new Menu(this.props.menuChat).renderToString(),

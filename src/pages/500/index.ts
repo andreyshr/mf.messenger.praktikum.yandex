@@ -1,5 +1,5 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 
 import { Props } from "../../modules/block/types";
 
@@ -16,6 +16,6 @@ export default class Page500 extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)(this.props);
+        return template(this.props);
     }
 }

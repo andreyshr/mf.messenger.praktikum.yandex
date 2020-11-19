@@ -1,24 +1,24 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 import { Props } from "../../modules/block/types";
 import { ChatResponse } from "../../services/types";
 
-import RoomsList from "../../components/rooms-list/RoomsList.js";
-import SidebarHeader from "../../components/sidebar-header/SidebarHeader.js";
-import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty.js";
-import Notification from "../../components/notification/Notification.js";
+import RoomsList from "../../components/rooms-list/RoomsList";
+import SidebarHeader from "../../components/sidebar-header/SidebarHeader";
+import WorkSpaceEmpty from "../../components/workspace-empty/WorkSpaceEmpty";
+import Notification from "../../components/notification/Notification";
 
-import { chatsService } from "../../services/chats-service.js";
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
-import Store from "../../modules/store/store.js";
+import { chatsService } from "../../services/chats-service";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
+import Store from "../../modules/store/store";
 
 import {
     roomsList,
     sidebarHeader,
     workspaceEmpty,
-} from "../messenger-chat/initial-props.js";
-import { events } from "./events.js";
+} from "../messenger-chat/initial-props";
+import { events } from "./events";
 
 const store = new Store();
 
@@ -52,7 +52,7 @@ export default class Messenger extends Block {
     };
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             roomsList: new RoomsList(this.props.roomsList).renderToString(),
             sidebarHeader: new SidebarHeader(
                 this.props.sidebarHeader

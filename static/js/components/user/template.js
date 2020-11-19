@@ -1,2 +1,0 @@
-export var template = "\n                <div data-user-id=\"{{ id }}\" class=\"room js-user-button\">\n                    \n                     {{{ avatar }}}\n                    \n                    <div class=\"room__info\">\n                        <div class=\"room__info-row\">\n                            <h3 class=\"room__title\">{{ title }}</h3>\n                        </div>\n                    </div>\n                </div>\n";
-//# sourceMappingURL=template.js.map

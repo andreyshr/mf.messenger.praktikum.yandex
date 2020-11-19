@@ -1,22 +1,22 @@
 // Pages
-import SignInPage, { props as propsSignIn } from "./pages/signin/index.js";
-import SignUpPage, { props as propsSignUp } from "./pages/signup/index.js";
-import Messenger, { props as propsMessenger } from "./pages/messenger/index.js";
+import SignInPage, { props as propsSignIn } from "./pages/signin/index";
+import SignUpPage, { props as propsSignUp } from "./pages/signup/index";
+import Messenger, { props as propsMessenger } from "./pages/messenger/index";
 import MessengerChat, {
     props as propsMessengerChat,
-} from "./pages/messenger-chat/index.js";
-import Profile, { props as propsProfile } from "./pages/profile/index.js";
-import Page404, { props as props404Page } from "./pages/404/index.js";
-import Page500, { props as props500Page } from "./pages/500/index.js";
+} from "./pages/messenger-chat/index";
+import Profile, { props as propsProfile } from "./pages/profile/index";
+import Page404, { props as props404Page } from "./pages/404/index";
+import Page500, { props as props500Page } from "./pages/500/index";
 
 // Modules
-import { Router } from "./modules/router/router.js";
-import { bus } from "./modules/event-bus/app-bus.js";
-import EVENTS from "./modules/event-bus/events.js";
-import Store from "./modules/store/store.js";
+import { Router } from "./modules/router/router";
+import { bus } from "./modules/event-bus/app-bus";
+import EVENTS from "./modules/event-bus/events";
+import Store from "./modules/store/store";
 
 // Services
-import { authService } from "./services/auth-service.js";
+import { authService } from "./services/auth-service";
 
 const router = new Router(".app");
 const store = new Store();

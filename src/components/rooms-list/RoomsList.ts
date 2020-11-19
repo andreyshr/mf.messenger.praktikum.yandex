@@ -1,11 +1,11 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 import { Props } from "../../modules/block/types";
 
-import Room from "../room/Room.js";
+import Room from "../room/Room";
 
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
 
 export default class RoomsList extends Block {
     constructor(props: Props) {
@@ -30,7 +30,7 @@ export default class RoomsList extends Block {
     }
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             rooms: this.props.rooms.map((room: Props) =>
                 new Room(room).renderToString()
             ),

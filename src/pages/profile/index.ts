@@ -1,18 +1,18 @@
-import Block from "../../modules/block/block.js";
-import { template } from "./template.js";
+import Block from "../../modules/block/block";
+import template from "./template.hbs";
 import { Props } from "../../modules/block/types";
 
-import Button from "../../components/button/Button.js";
-import Form from "../../components/form/Form.js";
-import Input from "../../components/input/Input.js";
-import Avatar from "../../components/avatar/Avatar.js";
-import Notification from "../../components/notification/Notification.js";
+import Button from "../../components/button/Button";
+import Form from "../../components/form/Form";
+import Input from "../../components/input/Input";
+import Avatar from "../../components/avatar/Avatar";
+import Notification from "../../components/notification/Notification";
 
-import Store from "../../modules/store/store.js";
-import { bus } from "../../modules/event-bus/app-bus.js";
-import EVENTS from "../../modules/event-bus/events.js";
+import Store from "../../modules/store/store";
+import { bus } from "../../modules/event-bus/app-bus";
+import EVENTS from "../../modules/event-bus/events";
 
-import { inputs, buttons, buttonBack } from "./initial-props.js";
+import { inputs, buttons, buttonBack } from "./initial-props";
 
 const store = new Store();
 
@@ -85,7 +85,7 @@ export default class Profile extends Block {
     };
 
     render() {
-        return Handlebars.compile(template)({
+        return template({
             form: this.props.form.renderToString(),
             buttonBack: this.props.buttonBack.renderToString(),
             notification: new Notification(

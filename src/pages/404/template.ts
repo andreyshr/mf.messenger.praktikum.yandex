@@ -1,9 +1,0 @@
-export const template = `
-    <main class="container vh-100">
-        <div class="error m-auto">
-            <h1 class="error__title">{{ title }}</h1>
-            <p class="error__description">{{ description }}</p>
-            <a class="link router-link" href="{{ linkHref }}">{{ linkTitle }}</a>
-        </div>
-    </main>
-`;

@@ -1,6 +1,6 @@
-import { isArray } from "./mydash/is-array.js";
-import { isObject } from "./mydash/is-object.js";
-import { isEmpty } from "./mydash/is-empty.js";
+import { isArray } from "./mydash/is-array";
+import { isObject } from "./mydash/is-object";
+import { isEmpty } from "./mydash/is-empty";
 
 type StringIndexed = Record<string, unknown>;
 type Pair = [string, string];
