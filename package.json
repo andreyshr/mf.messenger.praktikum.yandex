@@ -16,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run fix:scripts && npm run fix:styles",
+      "pre-commit": "echo \"[Husky] pre-commit\" && npm run fix:scripts && npm run fix:styles",
       "pre-push": "npm run test:unit"
     }
   },
