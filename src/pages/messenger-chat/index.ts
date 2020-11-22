@@ -4,8 +4,7 @@ import { Props } from "../../modules/block/types";
 import { ChatResponse } from "../../services/types";
 
 import RoomsList from "../../components/rooms-list/RoomsList";
-import Message from "../../components/message/message";
-import Menu from "../../components/menu/Menu";
+import MessagesList from "../../components/messages-list/MessagesList";
 import Dialog from "../../components/dialog/Dialog";
 import WorkSpaceHeader from "../../components/workspace-header/WorkSpaceHeader";
 import SidebarHeader from "../../components/sidebar-header/SidebarHeader";
@@ -23,8 +22,6 @@ const store = new Store();
 
 import {
     roomsList,
-    menuEmoji,
-    menuMessage,
     sidebarHeader,
     workspaceHeader,
     messageInputForm,
@@ -36,8 +33,6 @@ export const props = {
     notification: {},
     messages: [],
     roomsList,
-    menuEmoji,
-    menuMessage,
     dialogRemoveChat,
     messageInputForm,
     sidebarHeader,
@@ -71,6 +66,7 @@ export default class MessengerChat extends Block {
                     );
 
                     this.setCurrentChat(this.chatId);
+                    bus.emit(EVENTS.CREATE_CHAT_SESSION);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -82,7 +78,12 @@ export default class MessengerChat extends Block {
             );
 
             this.setCurrentChat(this.chatId);
+            bus.emit(EVENTS.CREATE_CHAT_SESSION);
         }
+    }
+
+    onHide() {
+        bus.emit(EVENTS.CLOSE_CHAT_SESSION);
     }
 
     setActiveChat(chats: ChatResponse[], chatId: string) {
@@ -117,11 +118,9 @@ export default class MessengerChat extends Block {
     render() {
         return template({
             roomsList: new RoomsList(this.props.roomsList).renderToString(),
-            messages: this.props.messages.map((message: Props): string =>
-                new Message(message).renderToString()
-            ),
-            menuEmoji: new Menu(this.props.menuEmoji).renderToString(),
-            menuMessage: new Menu(this.props.menuMessage).renderToString(),
+            messagesList: new MessagesList({
+                messages: this.props.messages,
+            }).renderToString(),
             dialogRemoveChat: new Dialog(
                 this.props.dialogRemoveChat
             ).renderToString(),

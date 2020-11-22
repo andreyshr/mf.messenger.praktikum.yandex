@@ -19,4 +19,9 @@ export default {
     OPEN_ADD_USER_DIALOG: "open_add_user_dialog",
     OPEN_REMOVE_USER_DIALOG: "open_remove_user_dialog",
     CLOSE_DIALOG: "close_dialog",
+    // Message events
+    CREATE_CHAT_SESSION: "create_chat_session",
+    CLOSE_CHAT_SESSION: "close_chat_session",
+    SEND_MESSAGE: "send_message",
+    MESSAGES_UPDATE: "update_messages",
 };

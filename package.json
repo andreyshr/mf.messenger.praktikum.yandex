@@ -6,10 +6,19 @@
   "scripts": {
     "clean": "rimraf dist",
     "serve": "webpack serve",
-    "build:production": "npm run clean && webpack --mode production",
     "lint:scripts": "eslint \"src/**/*.+(js|ts)\"",
+    "lint:styles": "stylelint \"src/**/*.scss\"",
     "fix:scripts": "eslint \"src/**/*.+(js|ts)\" --fix",
-    "test:unit": "jest"
+    "fix:styles": "stylelint \"src/**/*.scss\" --fix",
+    "test:unit": "jest",
+    "build:production": "npm run clean && webpack --mode production",
+    "heroku:deploy": "heroku container:push web && heroku container:release web"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run fix:scripts && npm run fix:styles",
+      "pre-push": "npm run test:unit"
+    }
   },
   "repository": {
     "type": "git",
@@ -40,6 +49,8 @@
     "rimraf": "^3.0.2",
     "sass": "^1.27.0",
     "sass-loader": "^10.1.0",
+    "stylelint": "13.8.0",
+    "stylelint-config-standard": "20.0.0",
     "terser-webpack-plugin": "^5.0.3",
     "ts-jest": "^26.4.3",
     "ts-loader": "^8.0.11",
@@ -49,7 +60,6 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "core-js": "^3.7.0",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
     "normalize.css": "^8.0.1"

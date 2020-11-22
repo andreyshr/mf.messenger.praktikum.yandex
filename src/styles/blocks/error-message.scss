@@ -1,32 +1,32 @@
 .error-message {
-    display: none;
-    padding-top: 7px;
-    font-weight: 400;
-    font-size: 8px;
-    line-height: 8px;
-    color: var(--color-red);
+  display: none;
+  padding-top: 7px;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 8px;
+  color: var(--color-red);
 }
 
 .error-message--active {
-    display: inline-block;
+  display: inline-block;
 }
 
 .error-message--profile {
-    position: absolute;
-    top: 50%;
-    right: -20px;
-    width: 16px;
-    height: 16px;
-    transform: translateY(-50%);
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: 2px solid var(--color-red);
-    border-radius: 50%;
-    font-size: 14px;
-    font-weight: 500;
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 2px solid var(--color-red);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .error-message--profile.error-message--active {
-    display: flex;
+  display: flex;
 }

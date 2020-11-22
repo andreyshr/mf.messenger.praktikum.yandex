@@ -44,6 +44,20 @@ export const events = [
         },
     },
     {
+        type: "submit",
+        el: ".js-message-form",
+        handler: function (evt: Event) {
+            evt.preventDefault();
+
+            const input = (evt.target as HTMLFormElement)[0];
+            const value: string = (input as HTMLInputElement).value;
+
+            if (!value) return;
+            bus.emit(EVENTS.SEND_MESSAGE, value);
+            (input as HTMLInputElement).value = "";
+        },
+    },
+    {
         type: "click",
         el: ".js-user-button",
         handler: function (evt: Event) {

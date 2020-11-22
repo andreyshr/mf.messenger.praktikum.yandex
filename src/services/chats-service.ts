@@ -9,11 +9,13 @@ import {
     ProfileResponse,
     UserResponse,
 } from "./types";
+import { WebSocketService } from "./websocket/websocket";
 
 export class ChatsService {
     chatsApi: ChatsApi;
     bus: AppBus;
     store: Store;
+    socket: Nullable<WebSocketService>;
     static __instance: Nullable<ChatsService> = null;
 
     constructor() {
@@ -24,9 +26,12 @@ export class ChatsService {
         this.chatsApi = new ChatsApi();
         this.store = new Store();
         this.bus = bus;
+        this.socket = null;
 
         this.bus.on(EVENTS.CREATE_CHAT, this.createChat);
         this.bus.on(EVENTS.CHAT_USER_ACTION, this.userAction);
+        this.bus.on(EVENTS.CREATE_CHAT_SESSION, this.createChatSession);
+        this.bus.on(EVENTS.CLOSE_CHAT_SESSION, this.closeChatSession);
 
         ChatsService.__instance = this;
     }
@@ -54,6 +59,26 @@ export class ChatsService {
                 this.store.set("chats", data);
                 return data;
             });
+    }
+
+    createChatSession = () => {
+        this.getChatToken(this.currentChatId).then((data) => {
+            this.store.set("messages", []);
+            this.socket = new WebSocketService(
+                this.user.id,
+                this.currentChatId,
+                data.token
+            );
+        });
+    };
+
+    closeChatSession = () => {
+        this.store.set("messages", []);
+        this.socket?.close();
+    };
+
+    getChatToken(id: number) {
+        return this.chatsApi.getChatToken(id);
     }
 
     createChat = (title: string) => {

@@ -13,6 +13,16 @@ export class ChatsApi {
             .then((data: string) => JSON.parse(data));
     }
 
+    getChatToken(id: number) {
+        const options: Options<unknown> = {
+            data: {},
+        };
+
+        return chatsAPIInstance
+            .post(`/token/${id}`, options)
+            .then((data: string) => JSON.parse(data));
+    }
+
     createChat(title: string) {
         const options: Options<CreateChatRequest> = {
             data: { title },
