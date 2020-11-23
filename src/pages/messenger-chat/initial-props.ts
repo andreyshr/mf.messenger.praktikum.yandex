@@ -47,7 +47,6 @@ export const workspaceHeader: Props = {
     className: "workspace__header",
     title: "",
     userLastActiveTime: "",
-    historyTime: "",
     avatar: "",
     menuChat,
 };

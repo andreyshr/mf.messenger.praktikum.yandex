@@ -26,7 +26,6 @@ export default class WorkSpaceHeader extends Block {
     render() {
         return template({
             ...this.props,
-            historyTime: this.props.historyTime || "Сегодня",
             menuChat: new Menu(this.props.menuChat).renderToString(),
             avatar: new Avatar({
                 className: "room__avatar avatar avatar--sm",
