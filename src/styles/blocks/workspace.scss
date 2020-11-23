@@ -67,14 +67,11 @@
 }
 
 .workspace__user-panel {
+  display: flex;
+  align-items: center;
   position: relative;
   padding-top: 10px;
   border-top: 1px solid var(--color-gray-3);
-}
-
-.workspace__user-panel {
-  display: flex;
-  align-items: center;
 }
 
 .workspace__user-form {

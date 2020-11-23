@@ -23,5 +23,6 @@ export default {
     CREATE_CHAT_SESSION: "create_chat_session",
     CLOSE_CHAT_SESSION: "close_chat_session",
     SEND_MESSAGE: "send_message",
+    MESSAGES_RECEIVED: "messages received",
     MESSAGES_UPDATE: "update_messages",
 };

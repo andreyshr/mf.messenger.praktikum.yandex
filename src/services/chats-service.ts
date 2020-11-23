@@ -9,7 +9,9 @@ import {
     ProfileResponse,
     UserResponse,
 } from "./types";
-import { WebSocketService } from "./websocket/websocket";
+import { WebSocketService } from "./websocket-service";
+import { isArray } from "../utils/mydash/is-array";
+import { isObject } from "../utils/mydash/is-object";
 
 export class ChatsService {
     chatsApi: ChatsApi;
@@ -32,6 +34,7 @@ export class ChatsService {
         this.bus.on(EVENTS.CHAT_USER_ACTION, this.userAction);
         this.bus.on(EVENTS.CREATE_CHAT_SESSION, this.createChatSession);
         this.bus.on(EVENTS.CLOSE_CHAT_SESSION, this.closeChatSession);
+        this.bus.on(EVENTS.MESSAGES_RECEIVED, this.messagesHandler);
 
         ChatsService.__instance = this;
     }
@@ -44,21 +47,16 @@ export class ChatsService {
         return this.currentChat.id;
     }
 
+    get messages() {
+        return this.store.get("messages");
+    }
+
     get user(): UserResponse {
         return this.store.get("user");
     }
 
     get dialog(): string {
         return this.store.get("dialog");
-    }
-
-    getChats() {
-        return this.chatsApi
-            .getChats()
-            .then((data: ChatResponse[]): ChatResponse[] => {
-                this.store.set("chats", data);
-                return data;
-            });
     }
 
     createChatSession = () => {
@@ -76,6 +74,25 @@ export class ChatsService {
         this.store.set("messages", []);
         this.socket?.close();
     };
+
+    messagesHandler = (data: Record<string, any>) => {
+        if (isArray(data))
+            this.store.set("messages", [...this.messages, ...data.reverse()]);
+
+        if (isObject(data) && !isArray(data) && data.type === "message")
+            this.store.set("messages", [...this.messages, data]);
+
+        this.bus.emit(EVENTS.MESSAGES_UPDATE, this.store.get("messages"));
+    };
+
+    getChats() {
+        return this.chatsApi
+            .getChats()
+            .then((data: ChatResponse[]): ChatResponse[] => {
+                this.store.set("chats", data);
+                return data;
+            });
+    }
 
     getChatToken(id: number) {
         return this.chatsApi.getChatToken(id);
