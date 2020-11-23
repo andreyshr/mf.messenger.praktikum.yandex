@@ -77,7 +77,7 @@ export class ChatsService {
 
     messagesHandler = (data: Record<string, any>) => {
         if (isArray(data))
-            this.store.set("messages", [...this.messages, ...data.reverse()]);
+            this.store.set("messages", [...data.reverse(), ...this.messages]);
 
         if (isObject(data) && !isArray(data) && data.type === "message")
             this.store.set("messages", [...this.messages, data]);

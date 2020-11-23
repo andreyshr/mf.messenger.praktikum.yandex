@@ -54,6 +54,6 @@ export class WebSocketService {
     }
 
     private ping() {
-        this.send("", "");
+        this.send("ping", "");
     }
 }
