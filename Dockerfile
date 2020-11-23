@@ -8,5 +8,3 @@ RUN npm ci --production
 EXPOSE 4000
 
 CMD node app/server.js
-
-
