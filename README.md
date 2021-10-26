@@ -1,6 +1,6 @@
 ## messenger
 
-![Messenger](https://i.ibb.co/dgQSTcQ/messenger-gallery.png)
+![Messenger](https://i.ibb.co/Sf8QBCk/messenger-gallery.png)
 
 Приложение для обмена сообщениями. Доступно по **[ссылке](https://mf-messenger.herokuapp.com/)**. Написано в рамках курса Яндекс.Практикум Мидл фронтенд разработчик.
 
