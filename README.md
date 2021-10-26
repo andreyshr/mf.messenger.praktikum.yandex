@@ -1,9 +1,8 @@
-## mf.messenger.praktikum.yandex
+## messenger
 
-Приложение для обмена мгновенными сообщениями.
+![Messenger](https://i.ibb.co/dgQSTcQ/messenger-gallery.png)
 
-- Прототип проекта(Figma) - https://www.figma.com/file/lfRT7bwwC6lsibAPMWsAHK/mf.messenger.praktikum.yandex
-- Хостинг проекта(Heroku) - https://mf-messenger.herokuapp.com/
+Приложение для обмена сообщениями. Написано в рамках курса Яндекс.Практикум Мидл фронтенд разработчик.
 
 #### Доступные роуты:
 
